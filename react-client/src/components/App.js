@@ -1,12 +1,16 @@
 import React from 'react';
 import '../style.scss';
+import AppBar from 'material-ui/AppBar';
 
 export default class App extends React.Component {
   
   render () {
     return (
         <div>
-          <h1>Hello World!</h1>
+          <AppBar
+            title="Ooh La Carte"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+          />
         </div>
     )
   }
