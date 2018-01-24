@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-eslint": "^8.2.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.0",
     "knex": "^0.14.2",
@@ -36,6 +37,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.0.0",
     "redux": "^3.7.2"
   }
 }
