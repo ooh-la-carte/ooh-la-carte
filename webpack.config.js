@@ -7,7 +7,8 @@ module.exports = {
   entry: `${SRC_DIR}/index.js`,
   output: {
     path: DIST_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   module : {
     rules : [
@@ -17,7 +18,7 @@ module.exports = {
         include : SRC_DIR,
         loader : 'babel-loader',
         options: {
-          presets: ['react']
+          presets: ['react','es2015']
         }
       },
       {
