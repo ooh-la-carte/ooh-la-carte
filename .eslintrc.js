@@ -1,6 +1,4 @@
 module.exports = {
-    "extends": "airbnb"
-};module.exports = {
   "extends": "airbnb-base",
 
   "parserOptions": {
