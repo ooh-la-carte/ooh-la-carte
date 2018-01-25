@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js",
+    "server-dev": "./setvars.sh && nodemon server/index.js",
     "lint": "./node_modules/.bin/eslint .",
     "start": "node server/index.js",
     "postinstall": "webpack -p --config ./webpack.config.js --progress"
