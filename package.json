@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js",
+    "server-dev": "./setvars.sh && nodemon server/index.js",
     "lint": "./node_modules/.bin/eslint .",
     "start": "node server/index.js",
     "postinstall": "webpack -p --config ./webpack.config.js --progress"
@@ -36,12 +36,16 @@
     "knex": "^0.14.2",
     "material-ui": "^0.20.0",
     "node-sass": "^4.7.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1",
     "pg": "^7.4.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.0.0",
     "redux": "^3.7.2",
     "sass-loader": "^6.0.6",
+    "semantic-ui-react": "^0.77.2",
     "style-loader": "^0.19.1",
     "webpack": "^2.2.1"
   }

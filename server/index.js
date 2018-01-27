@@ -1,33 +1,28 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/../react-client/dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '/../react-client/dist')));
 
-app.get('/test', (req, res) => {
+app.get('/api/test', (req, res) => {
   res.json({ text: 'response' });
 });
 
-// get route for login requests
-app.post('/login', (req, res) => {
-  // verify user and password against database
-  // \/ remove the following line after database holds passwords
-  const users = ['jake', 'mark', 'rick', 'jason'];
-
+// post route for login requests
+app.post('/api/login', (req, res) => {
   console.log('body', req.body);
-
+  // verify user and password against database
   // \/ if login data is stored in the database change this to database call
-  if (users.includes(req.body.user)) {
-    const { user } = req.body;
-
+  const { username } = req.body;
+  if (auth.fakeVerifyUser(username)) {
     // create the token
-    const token = jwt.sign({ user }, 'super-secret');
+    const token = jwt.sign({ username }, 'super-secret');
     // send the token back to the client
     res.json({ token });
   } else {
@@ -36,7 +31,7 @@ app.post('/login', (req, res) => {
 });
 
 // example route that validates a token before sending a response
-app.get('/protected', auth.ensureToken, (req, res) => {
+app.get('/api/protected', auth.ensureToken, (req, res) => {
   // check the token against the secret to validate
   jwt.verify(req.token, 'super-secret', (err, data) => {
     if (err) {
@@ -48,6 +43,10 @@ app.get('/protected', auth.ensureToken, (req, res) => {
       });
     }
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(path.join(__dirname, '/../react-client/dist/index.html')));
 });
 
 app.listen(3000, () => {
