@@ -1,4 +1,4 @@
 node_modules
-react-client/dist/bundle.js
+public/bundle.js
 setvars.sh
 config.js
