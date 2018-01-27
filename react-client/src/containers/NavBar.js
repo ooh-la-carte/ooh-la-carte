@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
+import SignUpModal from '../components/SignUpModal';
 import '../style.scss';
 
 class NavBar extends Component {
@@ -11,7 +12,6 @@ class NavBar extends Component {
   }
 
   toggleDropDown() {
-    console.log(this.state.dropdown);
     this.setState({ dropdown: !this.state.dropdown });
   }
 
@@ -46,8 +46,8 @@ class NavBar extends Component {
                       <div className='dropdownLinkContainer'>
                         <LoginModal />
                       </div>
-                      <div>
-                        <a className='loginLink'>Sign up</a>
+                      <div className='dropdownLinkContainer'>
+                        <SignUpModal />
                       </div>
                     </div>
                   : null
