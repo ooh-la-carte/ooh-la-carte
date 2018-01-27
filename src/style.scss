@@ -14,19 +14,50 @@ body {
   z-index: 999;
   width: 100%;
   display: flex;
-  align-items: left;
   background-color: rgb(0, 188, 212);
   margin-bottom: 10px;
   color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
-.navBar {
+
+.navBarTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0% 0% 0% 5%;
   padding: 0%;
+  letter-spacing: 0%;
+  font-size: 150%;
+  font-weight: 400;
+  color: rgb(255, 255, 255) !important;
+  height: 64px;
+  line-height: 64px;
+  width: 75% !important;
+}
+
+.navBarLink {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0% 0% 0% 5%;
+  padding: 0%;
+  letter-spacing: 0%;
+  font-size: 150%;
+  font-weight: 400;
+  color: rgb(255, 255, 255) !important;
+  height: 64px;
+  line-height: 64px;
+  width: 25% !important;
+}
+
+.navBarLogin {
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 5%;
+  text-overflow: ellipsis;
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
@@ -52,13 +83,31 @@ body {
   justify-content: center;
 }
 
+.loginDropdown {
+  position: fixed;
+  width: 25%;
+  margin: 0% 0% 0% 0%;
+  text-align: center;
+  background-color: rgb(0, 188, 212) !important;
+  color: rgb(255, 255, 255) !important;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
 
+.loginLink {
+  color: rgb(255, 255, 255) !important;
+  margin: 0px auto;
 
+}
 
+.dropdownLinkContainer {
+  border-bottom-style: solid;
+  border-color: white;
+  border-bottom-width: thin;
+}
 
-
-
-
+.loginDropdownText {
+  color: rgb(255, 255, 255) !important;
+}
 
 
 
