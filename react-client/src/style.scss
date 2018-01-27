@@ -1,7 +1,16 @@
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: white;
-    margin-top: 10%;
+    // background-color: #e5f8fa;
+    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x900");
+}
+
+.topLevelDiv {
+  margin: 20% 0% 0% 0%;
+}
+
+.pageHeader {
+  color: black;
+  margin-left: 5% !important;
 }
 
 .navBarContainer {
@@ -60,6 +69,18 @@ body {
   height: 64px;
   line-height: 64px;
   width: 25% !important;
+}
+
+.browseEventCards {
+  margin: 5% auto !important;
+}
+
+.yearsExperienceCard {
+  margin-left: 15% !important;
+}
+
+.eventBudget {
+  float: right;
 }
 
 .cardHolder {

@@ -2,3 +2,4 @@ node_modules
 react-client/dist/bundle.js
 setvars.sh
 config.js
+database/MockData.js

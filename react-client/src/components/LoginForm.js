@@ -17,14 +17,20 @@ const LoginForm = props => (
     <br/>
     <Button
     color='grey'
-    onClick={props.handleClose}
+    onClick={() => {
+      props.handleClose();
+      props.toggleDropDown();
+    }}
     inverted>
       <Icon name='x' /> Cancel
     </Button>
     <Button
     type='submit'
     color='green'
-    onClick={props.handleClose}
+    onClick={() => {
+      props.handleClose();
+      props.toggleDropDown();
+    }}
     inverted>
       <Icon name='checkmark' /> Login
     </Button>
