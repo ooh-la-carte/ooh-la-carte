@@ -44,10 +44,10 @@ class NavBar extends Component {
                   ?
                     <div className='loginDropdown'>
                       <div className='dropdownLinkContainer'>
-                        <LoginModal />
+                        <LoginModal toggleDropDown={this.toggleDropDown}/>
                       </div>
                       <div className='dropdownLinkContainer'>
-                        <SignUpModal />
+                        <SignUpModal toggleDropDown={this.toggleDropDown}/>
                       </div>
                     </div>
                   : null

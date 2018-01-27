@@ -31,7 +31,7 @@ class LoginModal extends Component {
         <Header icon='user circle' content='Login' />
         <Modal.Content>
           <div>
-            <LoginForm handleClose={this.handleClose}/>
+            <LoginForm handleClose={this.handleClose} toggleDropDown={this.props.toggleDropDown}/>
           </div>
         </Modal.Content>
       </Modal>

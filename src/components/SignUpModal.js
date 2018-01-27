@@ -31,7 +31,7 @@ class SignUpModal extends Component {
         <Header icon='user circle' content='Sign Up' />
         <Modal.Content>
           <div>
-            <SignUpForm handleClose={this.handleClose}/>
+            <SignUpForm handleClose={this.handleClose} toggleDropDown={this.props.toggleDropDown}/>
           </div>
         </Modal.Content>
       </Modal>

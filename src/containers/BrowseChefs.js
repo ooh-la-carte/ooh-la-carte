@@ -4,26 +4,27 @@ import '../style.scss';
 import data from '../../database/MockData';
 
 
-const BrowseEvents = () => (
+const BrowseChefs = () => (
     <div className='topLevelDiv'>
-      <h1 className='pageHeader'>Browse Events</h1>
-      {data.events.map(event => (
+      <h1 className='pageHeader'>Browse Chefs</h1>
+      {data.chefs.map(event => (
             <Card key={event.id} className='browseEventCards'>
               <Card.Content>
                 <Image floated='right' size='mini' src={event.image} />
                 <Card.Header>
-                  {event.name} ({event.cuisine})
+                  {event.name}
                 </Card.Header>
                 <Card.Meta>
-                  <div>{event.host}</div>
+                  <div>{event.specialty}</div>
                 </Card.Meta>
                 <Card.Description>
-                  <div>{event.description}</div>
+                  <div>{event.bio}</div>
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <span className='partySize'>Size: {event.guests}</span>
-                <span className='eventBudget'>Budget: {event.budget}</span>
+                <span className=''>{event.rating} stars</span>
+                <span className='yearsExperienceCard'>{event.experience} years</span>
+                <span className='eventBudget'>{event.rate}</span>
               </Card.Content>
             </Card>
           ))}
@@ -31,4 +32,4 @@ const BrowseEvents = () => (
 );
 
 
-export default BrowseEvents;
+export default BrowseChefs;
