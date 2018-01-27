@@ -6,10 +6,10 @@ const app = express();
 
 app.use(bodyParser());
 
-app.use(express.static(path.join(__dirname, '/../react-client/dist')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(path.join(__dirname, '/../react-client/dist/index.html')));
+  res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
 app.listen(3000, () => {
