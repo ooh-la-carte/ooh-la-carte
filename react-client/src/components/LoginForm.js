@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Icon, Form } from 'semantic-ui-react';
 import '../style.scss';
 
