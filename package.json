@@ -6,8 +6,8 @@
   "scripts": {
     "react-dev": "webpack -d --watch",
     "server-dev": "./setvars.sh && nodemon server/index.js",
-    "start": "react-scripts start && node server/index.js"
-    "postinstall": "webpack -p --config ./webpack.config.js --progress",
+    "start": "react-scripts start && node server/index.js",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "Jake Lee",
   "license": "ISC",
