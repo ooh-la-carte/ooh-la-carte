@@ -2,4 +2,3 @@ node_modules
 public/bundle.js
 setvars.sh
 config.js
-package-lock.json
