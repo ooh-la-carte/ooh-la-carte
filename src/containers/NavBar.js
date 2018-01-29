@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
+import SignUpModal from '../components/SignUpModal';
 import '../style.scss';
 
 class NavBar extends Component {
@@ -11,31 +12,31 @@ class NavBar extends Component {
   }
 
   toggleDropDown() {
-    console.log(this.state.dropdown);
     this.setState({ dropdown: !this.state.dropdown });
   }
 
   render() {
     return (
       <div>
+      {console.log(window.localStorage)},
         <div className='navBarContainer'>
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Home</Link></div>
             : <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/chat' style={{ color: 'white' }}>Chat</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? null
             :
               <span className='navBarLogin' >
@@ -44,10 +45,10 @@ class NavBar extends Component {
                   ?
                     <div className='loginDropdown'>
                       <div className='dropdownLinkContainer'>
-                        <LoginModal />
+                        <LoginModal toggleDropDown={this.toggleDropDown}/>
                       </div>
-                      <div>
-                        <a className='loginLink'>Sign up</a>
+                      <div className='dropdownLinkContainer'>
+                        <SignUpModal toggleDropDown={this.toggleDropDown}/>
                       </div>
                     </div>
                   : null

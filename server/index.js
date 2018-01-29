@@ -6,9 +6,10 @@ const auth = require('./authHelpers.js');
 
 const app = express();
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/../react-client/dist')));
+app.use(express.static(path.join(__dirname, '/../public')));
 
 app.get('/api/test', (req, res) => {
   res.json({ text: 'response' });
@@ -24,7 +25,10 @@ app.post('/api/login', (req, res) => {
     // create the token
     const token = jwt.sign({ username }, 'super-secret');
     // send the token back to the client
-    res.json({ token });
+    res.json({
+      token,
+      userId: true,
+    });
   } else {
     res.sendStatus(403);
   }
@@ -46,7 +50,7 @@ app.get('/api/protected', auth.ensureToken, (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(path.join(__dirname, '/../react-client/dist/index.html')));
+  res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
 app.listen(3000, () => {

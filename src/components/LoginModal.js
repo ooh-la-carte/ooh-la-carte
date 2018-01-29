@@ -44,6 +44,7 @@ class LoginModal extends Component {
         .then((response) => {
           if (response.status === 200) {
             window.localStorage.accessToken = response.data.token;
+            window.localStorage.userId = response.data.userId;
             this.handleClose();
           }
         })

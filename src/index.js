@@ -8,6 +8,7 @@ import reducers from './reducers';
 import NavBar from './containers/NavBar';
 import LandingPage from './components/LandingPage';
 import BrowseEvents from './containers/BrowseEvents';
+import BrowseChefs from './containers/BrowseChefs';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -18,6 +19,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route path='/' component={NavBar} />
                         <Route exact path='/' component={LandingPage} />
                         <Route exact path='/browseEvents' component={BrowseEvents}/>
+                        <Route exact path='/browseChefs' component={BrowseChefs} />
                       </div>
                     </MuiThemeProvider>
                   </BrowserRouter>
