@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import '../style.scss';
-import data from '../../database/MockData';
+import data from '../MockData';
 
 
 const BrowseChefs = () => (
