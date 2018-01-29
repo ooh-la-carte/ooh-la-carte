@@ -21,7 +21,7 @@ class NavBar extends Component {
       {console.log(window.localStorage)},
         <div className='navBarContainer'>
           {window.localStorage.getItem('userId')
-            ? <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Home</Link></div>
+            ? <div className='navBarLink'><Link to='/' style={{ color: 'white' }}>Home</Link></div>
             : <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
           }
           {window.localStorage.getItem('userId')
