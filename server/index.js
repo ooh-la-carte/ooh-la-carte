@@ -17,7 +17,6 @@ app.get('/api/test', (req, res) => {
 
 // post route for login requests
 app.post('/api/login', (req, res) => {
-  console.log('body', req.body);
   // verify user and password against database
   // \/ if login data is stored in the database change this to database call
   const { username } = req.body;
