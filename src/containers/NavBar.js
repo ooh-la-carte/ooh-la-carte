@@ -18,24 +18,25 @@ class NavBar extends Component {
   render() {
     return (
       <div>
+      {console.log(window.localStorage)},
         <div className='navBarContainer'>
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Home</Link></div>
             : <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? <span className='navBarLink'><Link to='/chat' style={{ color: 'white' }}>Chat</Link></span>
             : null
           }
-          {localStorage.getItem('userId')
+          {window.localStorage.getItem('userId')
             ? null
             :
               <span className='navBarLogin' >

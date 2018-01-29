@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: DIST_DIR,
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/',
   },
   module : {
     rules : [
@@ -18,7 +18,8 @@ module.exports = {
         include : SRC_DIR,
         loader : 'babel-loader',
         options: {
-          presets: ['react','es2015']
+          presets: ['react','env'],
+          plugins: ["transform-class-properties"],
         }
       },
       {
