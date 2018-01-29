@@ -51,7 +51,7 @@ class LoginForm extends Component {
         <Button
           type='submit'
           color='green'
-          onClick={() => { this.props.submitCreds('jason', 'jason'); } }
+          onClick={() => { this.props.submitCreds(this.state.username, this.state.password); } }
           inverted
         >
           <Icon name='checkmark' /> Login
