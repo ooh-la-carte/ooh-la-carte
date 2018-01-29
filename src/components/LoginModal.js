@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { Header, Modal } from 'semantic-ui-react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import changeCurrentPage from '../actions';
 import LoginForm from './LoginForm';
 import '../style.scss';
 
@@ -21,11 +24,7 @@ class LoginModal extends Component {
 
   handleClose = () => {
     this.setState({ modalOpen: false });
-  }
-
-  handleSubmit = () => {
-    this.submitCreds();
-    this.handleClose();
+    this.props.toggleDropDown();
   }
 
   submitCreds = (username, password) => {
@@ -46,6 +45,7 @@ class LoginModal extends Component {
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
             this.handleClose();
+            this.props.changeCurrentPage('Home');
           }
         })
         .catch((error) => {
@@ -82,5 +82,9 @@ class LoginModal extends Component {
   }
 }
 
-export default LoginModal;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ changeCurrentPage }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(LoginModal);
 
