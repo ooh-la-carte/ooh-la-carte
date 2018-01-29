@@ -36,7 +36,6 @@ class CurrentPageNavBar extends Component {
                   : null
                 }
               </span>
-            }
           </div>
         : null
       }
