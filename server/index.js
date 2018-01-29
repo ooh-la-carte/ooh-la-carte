@@ -4,6 +4,7 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 
@@ -52,6 +53,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
-app.listen(3000, () => {
-  console.log('listening on port 3000!');
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}!`);
 });
