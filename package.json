@@ -4,24 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint .",
     "react-dev": "webpack -d --watch",
     "server-dev": "./setvars.sh && nodemon server/index.js",
-    "lint": "./node_modules/.bin/eslint .",
-    "postinstall": "webpack -p --config ./webpack.config.js --progress",
-    "start": "react-scripts start && node server/index.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "node server/index.js",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress"
   },
   "author": "Jake Lee",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^4.16.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.5.1"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -34,6 +25,12 @@
     "babel-preset-react": "^6.23.0",
     "body-parser": "^1.17.2",
     "css-loader": "^0.28.7",
+    "eslint": "^4.16.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1",
     "express": "^4.15.0",
     "jsonwebtoken": "^8.1.1",
     "knex": "^0.14.2",
