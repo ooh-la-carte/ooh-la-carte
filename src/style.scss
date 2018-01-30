@@ -12,11 +12,29 @@ body {
 .pageHeader {
   color: black;
   margin-left: 5% !important;
+  text-align: center;
 }
 
-.navVar {
-  
+/*
+  ====================
+  Profile Styling
+  ====================
+*/
+
+.profile.event {
+  font-size: 14px;
+  text-align: center;
 }
+
+.cardHeader {
+  font-size: 10px;
+}
+
+/*
+  ====================
+  NavBar Styling
+  ====================
+*/
 
 .navBarContainer {
   position: fixed;
