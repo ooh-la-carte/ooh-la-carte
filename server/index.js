@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
+const db = require('../database/index.js');
+
+db.nop();
 
 const app = express();
 

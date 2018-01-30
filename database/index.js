@@ -1,12 +1,12 @@
+const config = require('./knexfile.js');
+const knex = require('knex')(config);
 
-const knex = require('knex')({
-  client: 'pb',
-  connection: {
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-  },
+knex.migrate.latest(config).then((v) => {
+  if (v[1].length !== 0) {
+    console.log('Performed db migration: ', v[1]);
+  }
 });
 
-module.exports = knex;
+module.exports.nop = () => {
+  console.log('nop');
+};
