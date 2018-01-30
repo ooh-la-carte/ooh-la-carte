@@ -7,6 +7,19 @@ const changeCurrentPage = page => (
   }
 );
 
+const changeSelectedChef = (chef) => {
+  let selected = {};
+  data.chefs.forEach((obj) => {
+    if (obj.id === chef) {
+      selected = obj;
+    }
+  });
+  return {
+    type: 'SELECT_CHEF',
+    payload: selected,
+  };
+};
+
 const changeSelectedEvent = (event) => {
   let selected = {};
   data.events.forEach((obj) => {
@@ -21,4 +34,4 @@ const changeSelectedEvent = (event) => {
   };
 };
 
-export { changeCurrentPage, changeSelectedEvent };
+export { changeCurrentPage, changeSelectedChef, changeSelectedEvent };

@@ -1,6 +1,6 @@
 const selectedEventReducer = (state = {}, action) => {
   if (action.type === 'SELECT_EVENT') {
-    console.log('Reducer: ', action.payload);
+    console.log('Event reducer: ', action.payload);
     return action.payload;
   }
   return state;
