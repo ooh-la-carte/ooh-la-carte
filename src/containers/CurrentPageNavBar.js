@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import '../style.scss';
@@ -14,6 +15,12 @@ class CurrentPageNavBar extends Component {
     this.setState({ dropdown: !this.state.dropdown });
   }
 
+  logout = () => {
+    window.localStorage.removeItem('accessToken');
+    window.localStorage.removeItem('userId');
+    this.toggleDropDown();
+  }
+
   render() {
     return (
       <div>
@@ -26,7 +33,7 @@ class CurrentPageNavBar extends Component {
                 {this.state.dropdown
                   ?
                     <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer'>
+                      <div className='dropdownLinkContainer' onClick={this.logout}>
                         <h5>Log out</h5>
                       </div>
                       <div className='dropdownLinkContainer'>
@@ -37,7 +44,7 @@ class CurrentPageNavBar extends Component {
                 }
               </span>
           </div>
-        : null
+        : <Redirect to='/'/>
       }
       </div>
     );
