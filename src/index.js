@@ -11,6 +11,7 @@ import BrowseChefs from './containers/BrowseChefs';
 import CurrentPageNavBar from './containers/CurrentPageNavBar';
 import UserProfile from './containers/UserProfile';
 import UserEvents from './containers/UserEvents';
+import Settings from './containers/Settings';
 
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
@@ -25,6 +26,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/browseChefs' component={BrowseChefs} />
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
+                        <Route exact path='/settings' component={Settings}/>
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));
