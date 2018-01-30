@@ -9,6 +9,7 @@ import LandingPage from './components/LandingPage';
 import BrowseEvents from './containers/BrowseEvents';
 import BrowseChefs from './containers/BrowseChefs';
 import CurrentPageNavBar from './containers/CurrentPageNavBar';
+import SelectedEvent from './containers/SelectedEvent';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -19,6 +20,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route path='/' component={NavBar} />
                         <Route exact path='/' component={LandingPage} />
                         <Route exact path='/browseEvents' component={BrowseEvents}/>
+                        <Route exact path='/selectedEvent' component={SelectedEvent} />
                         <Route exact path='/browseChefs' component={BrowseChefs} />
                       </div>
                   </BrowserRouter>

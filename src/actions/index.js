@@ -1,3 +1,5 @@
+import data from '../MockData';
+
 const changeCurrentPage = page => (
   {
     type: 'CHANGE_PAGE',
@@ -5,4 +7,18 @@ const changeCurrentPage = page => (
   }
 );
 
-export default changeCurrentPage;
+const changeSelectedEvent = (event) => {
+  let selected = {};
+  data.events.forEach((obj) => {
+    if (obj.id === event) {
+      selected = obj;
+    }
+  });
+  console.log('Action: ', selected);
+  return {
+    type: 'SELECT_EVENT',
+    payload: selected,
+  };
+};
+
+export { changeCurrentPage, changeSelectedEvent };

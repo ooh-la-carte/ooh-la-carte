@@ -6,7 +6,6 @@ import data from '../MockData';
 
 const BrowseChefs = () => (
     <div className='topLevelDiv'>
-      <h1 className='pageHeader'>Browse Chefs</h1>
       {data.chefs.map(event => (
             <Card key={event.id} className='browseEventCards'>
               <Card.Content>
@@ -15,7 +14,7 @@ const BrowseChefs = () => (
                   {event.name}
                 </Card.Header>
                 <Card.Meta>
-                  <div>{event.specialty}</div>
+                  <div>Cuisine: {event.specialty}</div>
                 </Card.Meta>
                 <Card.Description>
                   <div>{event.bio}</div>
