@@ -8,6 +8,7 @@ const db = require('../database/index.js');
 
 db.nop();
 
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 
@@ -21,7 +22,6 @@ app.get('/api/test', (req, res) => {
 
 // post route for login requests
 app.post('/api/login', (req, res) => {
-  console.log('body', req.body);
   // verify user and password against database
   // \/ if login data is stored in the database change this to database call
   const { username } = req.body;
@@ -57,6 +57,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
-app.listen(3000, () => {
-  console.log('listening on port 3000!');
+app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}!`);
 });
