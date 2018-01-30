@@ -7,12 +7,10 @@ import options from '../formOptions';
 
 const axios = require('axios');
 
-const styles = {
-  btnDiv: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-};
+const styles = { btnDiv: {
+  display: 'flex',
+  justifyContent: 'space-around',
+} };
 
 class CreateEventForm extends Component {
   constructor(props) {
@@ -78,27 +76,26 @@ class CreateEventForm extends Component {
         </Form.Field>
 
         <br/>
-
-        <Form.Group>
-          <Form.Dropdown
+        <div id='datePkr'>
+          <Dropdown
             placeholder='Jan'
             fluid
             selection
             options={options.monthOptions}
           />
-          <Form.Dropdown
+          <Dropdown
             placeholder='1'
             fluid
             selection
             options={options.dateOptions}
           />
-          <Form.Dropdown
+          <Dropdown
             placeholder='2018'
             fluid
             selection
             options={options.yearOptions}
           />
-        </Form.Group>
+        </div>
 
         <br/>
 
