@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { Dropdown, Button, Icon, Form, Radio } from 'semantic-ui-react';
+import { Dropdown, Button, Form, Radio } from 'semantic-ui-react';
 import '../style.scss';
 
-import options from '../formOptions.js'
+import options from '../formOptions';
+
+const axios = require('axios');
 
 class CreateEventForm extends Component {
   constructor(props) {
@@ -14,12 +16,17 @@ class CreateEventForm extends Component {
       chefID: '',
       date: '',
       location: '',
-      meal: '', // breakfast, brunch, lunch, dinner
       cuisine: '',
       description: '',
       partySize: '',
+      value: 'breakfast', // breakfast, brunch, lunch, dinner
     };
   }
+
+  handleChange = (e, { value }) => {
+    this.setState({ value });
+  }
+
 
   handleSubmit = () => {
     const eventObj = {
@@ -27,36 +34,32 @@ class CreateEventForm extends Component {
       date: this.state.date,
       location: this.state.location,
       partySize: this.state.partySize,
-      meal: this.state.meal,
+      meal: this.state.value,
       cuisine: this.state.cuisine,
       description: this.state.desciption,
     };
     const url = '/api/events';
-    if (!username || !password) {
-      // this.handleOpen('Login Error', 'Username and Password can\'t be blank');
-      console.log('invalid credentials');
+    if (!eventObj.date || !eventObj.partySize || !eventObj.meal) {
+      console.log('Required fields not provided');
     } else {
       console.log('submitting');
-      axios.post(url, credObj)
+      axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
-            window.localStorage.accessToken = response.data.token;
-            window.localStorage.userId = response.data.userId;
-            this.handleClose();
-            this.props.changeCurrentPage('Home');
+            console.log('event submitted sucessfully');
           }
         })
         .catch((error) => {
-          console.log(error);
-          this.handleOpen('Login Error', 'Incorrect Username or Password');
+          console.log('submission error: ', error);
         });
     }
   }
 
   render() {
+    const { value } = this.state;
     return (
       <Form>
-        {this.state.submitted === true ? <Redirect to="/punishment" /> : ''}
+        {this.state.submitted === true ? <Redirect to="/events" /> : ''}
 
         <Form.Field>
           <label>Where</label>
@@ -66,6 +69,16 @@ class CreateEventForm extends Component {
             onChange={true}
           />
         </Form.Field>
+
+        <br/>
+
+        <h3>Date only</h3>
+        <div class="ui calendar" id="example2">
+          <div class="ui input left icon">
+            <i class="calendar icon"></i>
+            <input type="text" placeholder="Date" />
+          </div>
+        </div>
 
         <br/>
 
@@ -81,9 +94,14 @@ class CreateEventForm extends Component {
 
         <Form.Group inline>
           <label>Size</label>
-          <Form.Radio label='Breakfast' value='breakfast' checked={value === 'breakfast'} onChange={this.handleChange} />
-          <Form.Radio label='Lunch' value='lunch' checked={value === 'lunch'} onChange={this.handleChange} />
-          <Form.Radio label='Dinner' value='dinner' checked={value === 'dinner'} onChange={this.handleChange} />
+          <Radio
+            label='Breakfast'
+            value='breakfast'
+            checked={value === 'breakfast'}
+            onChange={this.handleChange}
+          />
+          <Radio label='Lunch' value='lunch' checked={value === 'lunch'} onChange={this.handleChange} />
+          <Radio label='Dinner' value='dinner' checked={value === 'dinner'} onChange={this.handleChange} />
         </Form.Group>
 
 

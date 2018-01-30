@@ -52,7 +52,10 @@ class LoginForm extends Component {
         <Button
           type='submit'
           color='green'
-          onClick={() => { this.props.submitCreds(this.state.username.toLowerCase(), this.state.password); } }
+          onClick={() => {
+              this.props.submitCreds(this.state.username.toLowerCase(), this.state.password);
+            }
+          }
           inverted
         >
           <Icon name='checkmark' /> Login
