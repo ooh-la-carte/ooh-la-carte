@@ -6,6 +6,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import reducers from './reducers';
 import NavBar from './containers/NavBar';
 import LandingPage from './components/LandingPage';
+import CreateEvent from './components/CreateEvent';
 import BrowseEvents from './containers/BrowseEvents';
 import BrowseChefs from './containers/BrowseChefs';
 import CurrentPageNavBar from './containers/CurrentPageNavBar';
@@ -20,6 +21,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/' component={LandingPage} />
                         <Route exact path='/browseEvents' component={BrowseEvents}/>
                         <Route exact path='/browseChefs' component={BrowseChefs} />
+                        <Route exact path='/createEvent' component={CreateEvent} />
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));
