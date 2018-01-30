@@ -1,6 +1,11 @@
+const path = require('path');
+
 const config = {
   client: process.env.DATABASE_ENGINE || 'postgresql',
-  migrations: { tableName: 'knex_migrations' },
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: path.join(__dirname, './migrations'),
+  },
 };
 
 if (process.env.DATABASE_ENGINE === 'sqlite3') {
@@ -19,4 +24,5 @@ if (process.env.DATABASE_PASSWORD) {
 if (process.env.DATABASE_USER) {
   config.connection.user = process.env.DATABASE_USER;
 }
+
 module.exports = config;
