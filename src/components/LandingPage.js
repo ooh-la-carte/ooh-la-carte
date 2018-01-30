@@ -7,7 +7,7 @@ const LandingPage = () => (
   <div>
     <div className='cardHolder'>
       <Card className='landingCards'>
-        <Image src='' />
+        <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
         <Card.Content>
           <Card.Header>
             <Link to='/browseEvents'>Browse Events</Link>
@@ -16,7 +16,7 @@ const LandingPage = () => (
       </Card>
 
       <Card className='landingCards'>
-        <Image src='' />
+        <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
         <Card.Content>
           <Card.Header>
             <Link to='/browseChefs'>Browse Chefs</Link>
