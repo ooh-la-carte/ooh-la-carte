@@ -1,19 +1,19 @@
 
 const monthOptions = [
   {
-    text: 'January',
+    text: 'Jan',
     value: 'January',
   },
   {
-    text: 'Feburary',
+    text: 'Feb',
     value: 'Feburary',
   },
   {
-    text: 'March',
+    text: 'Mar',
     value: 'March',
   },
   {
-    text: 'April',
+    text: 'Apr',
     value: 'April',
   },
   {
@@ -21,31 +21,31 @@ const monthOptions = [
     value: 'May',
   },
   {
-    text: 'June',
+    text: 'Jun',
     value: 'June',
   },
   {
-    text: 'July',
+    text: 'Jul',
     value: 'July',
   },
   {
-    text: 'August',
+    text: 'Aug',
     value: 'August',
   },
   {
-    text: 'September',
+    text: 'Sept',
     value: 'September',
   },
   {
-    text: 'October',
+    text: 'Oct',
     value: 'October',
   },
   {
-    text: 'November',
+    text: 'Nov',
     value: 'November',
   },
   {
-    text: 'December',
+    text: 'Dec',
     value: 'December',
   },
 ];
@@ -177,21 +177,41 @@ const dateOptions = [
   },
 ];
 
-const timeOptions = [
+const yearOptions = [
   {
-    text: 'breakfast',
-    value: 'breakfast',
+    text: '2018',
+    value: 2018,
   },
   {
-    text: 'lunch',
-    value: 'lunch',
+    text: '2019',
+    value: 2019,
   },
   {
-    text: 'dinner',
-    value: 'dinner',
+    text: '2020',
+    value: 2020,
+  },
+];
+
+const sizeOptions = [
+  {
+    text: 'less than 5',
+    value: '1-5',
+  },
+  {
+    text: 'between 5 and 10',
+    value: '5-10',
+  },
+  {
+    text: 'between 10 and 20',
+    value: '10-20',
+  },
+  {
+    text: 'over 20',
+    value: '20+',
   },
 ];
 
 module.exports.monthOptions = monthOptions;
 module.exports.dateOptions = dateOptions;
-module.exports.timeOptions = timeOptions;
+module.exports.yearOptions = yearOptions;
+module.exports.sizeOptions = sizeOptions;
