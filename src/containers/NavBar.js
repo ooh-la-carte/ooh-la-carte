@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import LoginModal from '../components/LoginModal';
 import SignUpModal from '../components/SignUpModal';
-import changeCurrentPage from '../actions';
+import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
