@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import '../style.scss';
 import data from '../MockData';
 
 
 const UserProfile = () => (
     <div className='topLevelDiv'>
-      <Card key={data.chefs[0].id} className='browseEventCards'>
+      <Card key={data.chefs[0].id} className='profile userCard'>
         <Card.Content>
           <Image floated='left' size='mini' src={data.chefs[0].image} />
           <Card.Header>
@@ -23,21 +24,25 @@ const UserProfile = () => (
             ({data.chefs[0].specialty})
         </Card.Content>
       </Card>
-      <h1 className='pageHeader'>Upcoming Events</h1>
-      <Card.Group itemsPerRow={2}>
-      {data.events.map(event => (
-        <Card className='profile event'>
-        <Card.Content>
-        <Card.Header>
-            <span className='profile event'>{event.name}</span>
-          </Card.Header>
-          <Card.Meta>
-            {`${event.date} \n ${event.time}`}
-          </Card.Meta>
-        </Card.Content>
-        </Card>
-      ))}
-      </Card.Group>
+      <h2 className='center'>Upcoming Events</h2>
+      <div className='profile upcomingEvents container'>
+        <Card.Group itemsPerRow={3}>
+        {data.events.map(event => (
+          <Card key={event.id} className='profile event' href={`/event/${event.id}`}>
+          <Card.Content>
+          <Card.Header>
+              <span className='profile event text'>{event.name}</span>
+            </Card.Header>
+            <Card.Meta>
+              {`${event.date} \n ${event.time}`}
+            </Card.Meta>
+          </Card.Content>
+          </Card>
+        ))}
+        </Card.Group>
+      {/* add a Link to a page for all of the user's upcoming events */}
+      </div>
+      <div className='center'><Link to='/userEvents'>See all your events</Link></div>
     </div>
 );
 

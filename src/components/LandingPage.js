@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const LandingPage = () => (
   <div>
     <div className='cardHolder'>
-      <Card className='cards'>
+      <Card className='landingCards'>
         <Image src='' />
         <Card.Content>
           <Card.Header>
@@ -15,7 +15,7 @@ const LandingPage = () => (
         </Card.Content>
       </Card>
 
-      <Card className='cards'>
+      <Card className='landingCards'>
         <Image src='' />
         <Card.Content>
           <Card.Header>
