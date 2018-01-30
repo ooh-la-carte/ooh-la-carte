@@ -34,6 +34,7 @@ class LoginForm extends Component {
           <label>Password</label>
           <input
             placeholder='Password'
+            type='password'
             onChange={this.setPassword}
             value={this.state.password}
           />
@@ -51,7 +52,10 @@ class LoginForm extends Component {
         <Button
           type='submit'
           color='green'
-          onClick={() => { this.props.submitCreds(this.state.username, this.state.password); } }
+          onClick={() => {
+              this.props.submitCreds(this.state.username.toLowerCase(), this.state.password);
+            }
+          }
           inverted
         >
           <Icon name='checkmark' /> Login
