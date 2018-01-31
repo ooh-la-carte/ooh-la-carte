@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Icon, Form } from 'semantic-ui-react';
+import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
 class LoginForm extends Component {
@@ -36,6 +39,8 @@ class LoginForm extends Component {
           if (response.status === 200) {
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
+            this.props.changeCurrentPage('Home');
+            this.props.history.push('/userProfile');
           }
         })
         .catch((error) => {
@@ -94,4 +99,9 @@ class LoginForm extends Component {
     );
   }
 }
-export default LoginForm;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ changeCurrentPage }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(LoginForm));

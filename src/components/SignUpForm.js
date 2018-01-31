@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Icon, Form, Input, Checkbox } from 'semantic-ui-react';
 import axios from 'axios';
+import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
 class SignUpForm extends Component {
@@ -50,6 +53,8 @@ class SignUpForm extends Component {
             console.log('response received from server');
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
+            this.props.changeCurrentPage('Home');
+            this.props.history.push('/userProfile');
           }
         })
         .catch((error) => {
@@ -117,4 +122,9 @@ class SignUpForm extends Component {
     );
   }
 }
-export default SignUpForm;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ changeCurrentPage }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUpForm));
