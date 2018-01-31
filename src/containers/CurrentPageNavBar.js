@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import '../style.scss';
@@ -34,10 +34,10 @@ class CurrentPageNavBar extends Component {
                   ?
                     <div className='loginDropdown'>
                       <div className='dropdownLinkContainer' onClick={this.logout}>
-                        <h5>Log out</h5>
+                        <Link to='/' className='loginLink'>Log out</Link>
                       </div>
                       <div className='dropdownLinkContainer'>
-                        <h5>Something else</h5>
+                        <Link to='/' className='loginLink'>Else</Link>
                       </div>
                     </div>
                   : null

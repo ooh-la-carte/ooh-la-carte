@@ -16,6 +16,7 @@ import UserEvents from './containers/UserEvents';
 import SelectedChef from './containers/SelectedChef';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
+import ChatTab from './containers/chatTab';
 
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
@@ -35,6 +36,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/createEvent' component={CreateEvent} />
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
+                        <Route exact path='/chatTab' component={ChatTab} />
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));
