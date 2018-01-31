@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import LoginModal from '../components/LoginModal';
-import SignUpModal from '../components/SignUpModal';
 import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
@@ -44,10 +42,10 @@ class NavBar extends Component {
                   ?
                     <div className='loginDropdown'>
                       <div className='dropdownLinkContainer'>
-                        <LoginModal toggleDropDown={this.toggleDropDown}/>
+                        <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
                       </div>
                       <div className='dropdownLinkContainer'>
-                        <SignUpModal toggleDropDown={this.toggleDropDown}/>
+                        <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
                       </div>
                     </div>
                   : null
