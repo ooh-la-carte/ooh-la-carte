@@ -7,4 +7,4 @@ knex.migrate.latest(config).then((v) => {
   }
 });
 
-module.exports.knex = knex;
+module.exports = knex;
