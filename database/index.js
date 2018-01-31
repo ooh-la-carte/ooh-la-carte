@@ -7,8 +7,4 @@ knex.migrate.latest(config).then((v) => {
   }
 });
 
-module.exports.nop = () => {
-  console.log('nop');
-};
-
 module.exports.knex = knex;
