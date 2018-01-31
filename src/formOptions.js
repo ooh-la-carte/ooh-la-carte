@@ -192,6 +192,17 @@ const yearOptions = [
   },
 ];
 
+const userOptions = [
+  {
+    text: 'Client',
+    value: 'client',
+  },
+  {
+    text: 'Chef',
+    value: 'chef',
+  },
+];
+
 const sizeOptions = [
   {
     text: 'less than 5',
@@ -215,3 +226,4 @@ module.exports.monthOptions = monthOptions;
 module.exports.dateOptions = dateOptions;
 module.exports.yearOptions = yearOptions;
 module.exports.sizeOptions = sizeOptions;
+module.exports.userOptions = userOptions;
