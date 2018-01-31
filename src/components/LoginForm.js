@@ -50,7 +50,7 @@ class LoginForm extends Component {
           <Icon name='x' /> Cancel
         </Button>
         <Button
-          type='submit'
+          type='button'
           color='green'
           onClick={() => {
               this.props.submitCreds(this.state.username.toLowerCase(), this.state.password);

@@ -34,7 +34,6 @@ class LoginModal extends Component {
     };
     const url = '/api/login';
     if (!username || !password) {
-      // this.handleOpen('Login Error', 'Username and Password can\'t be blank');
       console.log('invalid credentials');
     } else {
       console.log('submitting');
