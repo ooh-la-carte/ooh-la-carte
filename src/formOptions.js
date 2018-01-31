@@ -195,11 +195,11 @@ const yearOptions = [
 const userOptions = [
   {
     text: 'Client',
-    value: 'client',
+    value: false,
   },
   {
     text: 'Chef',
-    value: 'chef',
+    value: true,
   },
 ];
 
