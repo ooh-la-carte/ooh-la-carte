@@ -7,6 +7,11 @@ import options from '../formOptions';
 
 const axios = require('axios');
 
+const styles = { btnDiv: {
+  display: 'flex',
+  justifyContent: 'space-around',
+} };
+
 class CreateEventForm extends Component {
   constructor(props) {
     super(props);
@@ -61,8 +66,8 @@ class CreateEventForm extends Component {
       <Form>
         {this.state.submitted === true ? <Redirect to="/events" /> : ''}
 
+        <h1>Where & When</h1>
         <Form.Field>
-          <label>Where</label>
           <input
             placeholder='Austin, TX'
             value={this.state.date}
@@ -71,29 +76,31 @@ class CreateEventForm extends Component {
         </Form.Field>
 
         <br/>
-
-        <h3>Date only</h3>
-        <div class="ui calendar" id="example2">
-          <div class="ui input left icon">
-            <i class="calendar icon"></i>
-            <input type="text" placeholder="Date" />
-          </div>
-        </div>
-
-        <br/>
-
-        <Form.Field>
-          <label>When</label>
+        <div id='datePkr'>
           <Dropdown
-            placeholder='Select Month'
+            placeholder='Jan'
             fluid
             selection
             options={options.monthOptions}
           />
-        </Form.Field>
+          <Dropdown
+            placeholder='1'
+            fluid
+            selection
+            options={options.dateOptions}
+          />
+          <Dropdown
+            placeholder='2018'
+            fluid
+            selection
+            options={options.yearOptions}
+          />
+        </div>
 
+        <br/>
+
+        <h1>Meal</h1>
         <Form.Group inline>
-          <label>Size</label>
           <Radio
             label='Breakfast'
             value='breakfast'
@@ -104,35 +111,30 @@ class CreateEventForm extends Component {
           <Radio label='Dinner' value='dinner' checked={value === 'dinner'} onChange={this.handleChange} />
         </Form.Group>
 
+        <br/>
 
-          <Dropdown
-            placeholder='Select Date'
-            fluid
-            selection
-            options={options.dateOptions}
-          />
 
-        <Button
-          type='submit'
-          color='linkedin'
-          inverted
-          onClick={() => {
-            this.props.handleClose();
-            this.props.toggleDropDown();
-          }}
-        >
-          Submit
-        </Button>
-
-        <div>
+        <div style={styles.btnDiv}>
           <Link to='/'>
             <Button
-              color='linkedin'
+              className='butSec'
               inverted
-            >
-              Cancel
+            > Cancel
             </Button>
           </Link>
+
+          <Button
+            className='butPri'
+            type='submit'
+            inverted
+            onClick={() => {
+              this.props.handleClose();
+              this.props.toggleDropDown();
+            }}
+          >
+            Submit
+          </Button>
+
         </div>
 
       </Form>

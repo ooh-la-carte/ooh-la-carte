@@ -51,6 +51,38 @@ body {
 
 /*
   ====================
+  Selected Event/Chef
+  ====================
+*/
+
+#selectedEventCard {
+  width: 95% !important;
+  margin-bottom: 20% !important;
+}
+
+.selectedCardTitle {
+  font-size: 150%;
+  margin-bottom: 5%;
+}
+
+.selectedEventCardDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20%;
+}
+
+.detailSegment {
+  font-size: 150%;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color: lightgray;
+  margin: 5% 0%;
+  padding-bottom: 5%;
+}
+
+/*
+  ====================
   Landing Page Styling
   ====================
 */
@@ -220,6 +252,19 @@ body {
 
 .lightlyColored {
   background-color: $light-color !important;
+
+/*
+  ====================
+  Button Styling
+  ====================
+*/
+
+.butPri {
+  background-color: #00bcd4 !important;
+}
+
+.butSec {
+  background-color: #00bcd4 !important;
 }
 
 .boxed {
