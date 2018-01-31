@@ -103,7 +103,7 @@ class SignUpForm extends Component {
 
           <Form.Field>
             <label>Email</label>
-            <Input 
+            <Input
               placeholder='anthonyB@confidential.com'
               onChange={this.setEmail}
               value={this.state.creds.email}
