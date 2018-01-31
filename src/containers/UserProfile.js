@@ -9,19 +9,19 @@ const UserProfile = () => (
     <div className='topLevelDiv'>
       <Card key={data.chefs[0].id} className='profile userCard'>
         <Card.Content>
-          <Image floated='left' size='mini' src={data.chefs[0].image} />
+          <Image floated='right' size='tiny' src={data.chefs[0].image} />
           <Card.Header>
             {data.chefs[0].name}
           </Card.Header>
           <Card.Meta>
-            <div>{data.chefs[0].menu}</div>
+            <div>{data.chefs[0].specialty}</div>
           </Card.Meta>
           <Card.Description>
             <div>{data.chefs[0].description}</div>
           </Card.Description>
         </Card.Content>
         <Card.Content>
-            ({data.chefs[0].specialty})
+         <div className='center'><Link to='/settings'>Update User Settings</Link></div>
         </Card.Content>
       </Card>
       <h2 className='center'>Upcoming Events</h2>
@@ -33,8 +33,8 @@ const UserProfile = () => (
           <Card.Header>
               <span className='profile event text'>{event.name}</span>
             </Card.Header>
-            <Card.Meta>
-              {`${event.date} \n ${event.time}`}
+            <Card.Meta className='center'>
+              {`${event.date}\n${event.time}`}
             </Card.Meta>
           </Card.Content>
           </Card>
