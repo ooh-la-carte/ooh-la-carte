@@ -9,7 +9,7 @@ $light-color: #e6fcff;
 $soft-text: 'Arima Madurai', cursive;
 
 .softText {
-  font-family: 'Arima Madurai', cursive;
+  font-family: 'Asap', sans-serif;
 }
 
 body {
@@ -252,6 +252,16 @@ body {
 
 .lightlyColored {
   background-color: $light-color !important;
+}
+
+.boxed {
+  width: 90%;
+}
+
+.miniPadding {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
 
 /*
   ====================
@@ -267,7 +277,7 @@ body {
   background-color: #00bcd4 !important;
 }
 
-.boxed {
-  width: 90%;
-  margin-top: 5%;
+.btnDiv {
+    display: flex;
+    justify-content: space-around;
 }
