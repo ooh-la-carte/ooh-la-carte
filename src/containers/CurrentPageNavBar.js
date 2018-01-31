@@ -18,6 +18,7 @@ class CurrentPageNavBar extends Component {
   logout = () => {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('isChef');
     this.toggleDropDown();
   }
 
