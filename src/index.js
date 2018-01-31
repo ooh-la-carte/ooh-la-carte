@@ -15,6 +15,8 @@ import UserProfile from './containers/UserProfile';
 import UserEvents from './containers/UserEvents';
 import Settings from './containers/Settings';
 import SelectedChef from './containers/SelectedChef';
+import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -24,6 +26,8 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route path='/' component={CurrentPageNavBar} />
                         <Route path='/' component={NavBar} />
                         <Route exact path='/' component={LandingPage} />
+                        <Route exact path='/loginForm' component={LoginForm} />
+                        <Route exact path='/signUpForm' component={SignUpForm} />
                         <Route exact path='/browseEvents' component={BrowseEvents}/>
                         <Route exact path='/selectedEvent' component={SelectedEvent} />
                         <Route exact path='/selectedChef' component={SelectedChef} />

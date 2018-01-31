@@ -29,7 +29,6 @@ const BrowseChefs = props => (
                 </Card.Content>
                 <Card.Content extra>
                   <span className=''>{chef.rating} stars</span>
-                  <span className='yearsExperienceCard'>{chef.experience} years</span>
                   <span className='eventBudget'>{chef.rate}</span>
                 </Card.Content>
               </Card>

@@ -4,11 +4,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
-const db = require('../database/index.js');
 const User = require('../database/models/user.js');
 
-
-db.nop();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -33,15 +30,16 @@ app.get('/api/test', (req, res) => {
 app.post('/api/login', (req, res) => {
   // verify user and password against database
   User.getAndVerifyUser(req.body.username, req.body.password)
-    .then((userId) => {
-      if (userId) {
+    .then((userDetails) => {
+      if (userDetails) {
         res.status(200);
         // create the token
         const token = jwt.sign({}, 'super-secret');
         // send the token back to the client
         res.json({
           token,
-          userId,
+          userId: userDetails.userId,
+          isChef: userDetails.isChef,
         });
         res.send();
       } else {
@@ -52,16 +50,21 @@ app.post('/api/login', (req, res) => {
 
 // post route for signup requests
 app.post('/api/signup', (req, res) => {
-  User.insertUser(req.body.username, req.body.password1, `${req.body.username}@email.com`)
-    .then((userId) => {
-      if (userId) {
+  const user = req.body.username;
+  const pw = req.body.password1;
+  const email = `${req.body.username}@email.com`;
+  const accType = req.body.value;
+  User.insertUser(user, pw, email, accType)
+    .then((userObj) => {
+      if (userObj.userId) {
         res.status(200);
         // create the token
         const token = jwt.sign({}, 'super-secret');
         // send the token back to the client
         res.json({
           token,
-          userId,
+          userId: userObj.userId,
+          isChef: userObj.isChef,
         });
         res.send();
       } else {
