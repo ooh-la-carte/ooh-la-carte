@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { Accordion, Icon, Dropdown, Button, Form, Radio } from 'semantic-ui-react';
+import { Accordion, Icon, Dropdown, Grid, Checkbox, Button, Form, Radio } from 'semantic-ui-react';
 import '../style.scss';
 
 
@@ -73,22 +73,83 @@ class Settings extends Component {
     const { value } = this.state;
     return (
       <div className='topLevelDiv'>
-      <Accordion fluid styled>
-        <Accordion.Title active={this.state.activeIndex === 0} index={0} onClick={this.handleClick}>
+      <h1 className='center softText'>User Settings</h1>
+      <div className='boxed center'>
+      {/* Cuisine Accordian */}
+      <Accordion exclusive={false} className='lightlyColored' fluid styled>
+        <Accordion.Title index={0} onClick={this.handleClick}>
           <Icon name='dropdown' />
-          What is a dog?
+          Cuisines
         </Accordion.Title>
         <Accordion.Content active={this.state.activeIndex === 0}>
-          <p>
-            A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a
-            {' '}welcome guest in many households across the world.
-          </p>
+          <Grid>
+            <Grid.Column width={5}>
+              <Form>
+                <Form.Group grouped>
+                  <Form.Checkbox label='Vietnamese' value='Vietnamese' />
+                  <Form.Checkbox label='Chinese' value='Chinese' />
+                  <Form.Checkbox label='French' value='French' />
+                  <Form.Checkbox label='Sushi' value='Sushi'/>
+                  <Form.Checkbox label='Vegetarian' value='Vegetarian'/>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+            <Grid.Column width={5}>
+              <Form>
+                <Form.Group grouped>
+                  <Form.Checkbox label='BBQ' value='BBQ' />
+                  <Form.Checkbox label='Pastry' value='Pastry' />
+                  <Form.Checkbox label='Indian' value='Indian' />
+                  <Form.Checkbox label='Thai' value='Thai'/>
+                  <Form.Checkbox label='Cajun' value='Cajun'/>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+            <Grid.Column width={5}>
+              <Form>
+                <Form.Group grouped>
+                  <Form.Checkbox label='Mexican' value='Mexican' />
+                  <Form.Checkbox label='Italian' value='Italian' />
+                  <Form.Checkbox label='Southern' value='French' />
+                  <Form.Checkbox label='Greek' value='Greek'/>
+                  <Form.Checkbox label='Vegan' value='Vegan'/>
+                </Form.Group>
+              </Form>
+            </Grid.Column>
+            <Checkbox label='Custom' />
+            <Form.Field>
+            <input
+              placeholder='Description...'
+              value={this.state.custom}
+              onChange={true}
+            />
+          </Form.Field>
+          </Grid>
         </Accordion.Content>
       </Accordion>
+      {/* Rate Accordian */}
+      <Accordion className='lightlyColored' fluid styled>
+        <Accordion.Title index={1} onClick={this.handleClick}>
+          <Icon name='dropdown' />
+          Rate
+        </Accordion.Title>
+        <Accordion.Content active={this.state.activeIndex === 1}>
+          <Form>
+            <Form.Group grouped>
+              <Form.Checkbox label='Budget' value='1' />
+              <Form.Checkbox label='Moderate' value='2' />
+              <Form.Checkbox label='High' value='3' />
+              <Form.Checkbox label='Luxury' value='4'/>
+              <Form.Checkbox label='Custom' value='5'/>
+            </Form.Group>
+          </Form>
+        </Accordion.Content>
+      </Accordion>
+      </div>
       <Form>
         {this.state.submitted === true ? <Redirect to="/events" /> : ''}
 
-        <h1>Where & When</h1>
+        <h1>Cost</h1>
         <Form.Field>
           <input
             placeholder='Austin, TX'
@@ -97,29 +158,7 @@ class Settings extends Component {
           />
         </Form.Field>
 
-        <br/>
-
-        <Form.Group>
-          <Form.Dropdown
-            placeholder='Jan'
-            fluid
-            selection
-          />
-          <Form.Dropdown
-            placeholder='1'
-            fluid
-            selection
-          />
-          <Form.Dropdown
-            placeholder='2018'
-            fluid
-            selection
-          />
-        </Form.Group>
-
-        <br/>
-
-        <h1>Meal</h1>
+        <h1>Availability</h1>
         <Form.Group inline>
           <Radio
             label='Breakfast'

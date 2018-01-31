@@ -5,7 +5,12 @@
 */
 
 $primary-color: #00bcd4;
-$secondary-color: #00bcd4;
+$light-color: #e6fcff;
+$soft-text: 'Arima Madurai', cursive;
+
+.softText {
+  font-family: 'Arima Madurai', cursive;
+}
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -209,4 +214,15 @@ body {
   margin: auto;
 }
 
+.mediumFont {
+  font-size: 75% !important;
+}
 
+.lightlyColored {
+  background-color: $light-color !important;
+}
+
+.boxed {
+  width: 90%;
+  margin-top: 5%;
+}
