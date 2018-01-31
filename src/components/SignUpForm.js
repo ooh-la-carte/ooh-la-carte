@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Icon, Form, Input, Checkbox } from 'semantic-ui-react';
+import { Button, Dropdown, Icon, Form, Input } from 'semantic-ui-react';
 import axios from 'axios';
+import options from '../formOptions';
 import '../style.scss';
 
 class SignUpForm extends Component {
@@ -11,7 +12,8 @@ class SignUpForm extends Component {
       username: '',
       password1: '',
       password2: '',
-      checked: false,
+      email: '',
+      value: 'client',
     } };
   }
 
@@ -30,17 +32,20 @@ class SignUpForm extends Component {
       Object.assign(this.state.creds, { password2: e.target.value }) });
   }
 
-  changeCheck = () => {
-    console.log(this.state.creds.checked);
+  setEmail = (e) => {
     this.setState({ creds:
-      Object.assign(this.state.creds, { checked: !this.state.creds.checked }) });
+      Object.assign(this.state.creds, { email: e.target.value }) });
+  }
+
+  handleUserSelectionChange = (e, { value }) => {
+    this.setState({ creds:
+      Object.assign(this.state.creds, { value }) });
   }
 
   submitCreds = (credsObj) => {
     const { username, password1, password2 } = credsObj;
     const url = '/api/signup';
     if (!(username && password1) || !(password1 === password2)) {
-      console.log(username, password1, password2);
       console.log('invalid entries');
     } else {
       console.log('submitting');
@@ -50,6 +55,7 @@ class SignUpForm extends Component {
             console.log('response received from server');
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
+            window.localStorage.isChef = response.data.isChef;
           }
         })
         .catch((error) => {
@@ -88,11 +94,28 @@ class SignUpForm extends Component {
               value={this.state.creds.password2}
              />
           </Form.Field>
-          <Checkbox
-          label="I'm a chef looking for clients"
-          checked={false}
-          onClick={this.changeCheck}
-          className='chefCheckbox'/>
+
+          <Form.Field>
+            <label>Email</label>
+            <Input 
+              placeholder='anthonyB@confidential.com'
+              onChange={this.setEmail}
+              value={this.state.creds.email}
+             />
+          </Form.Field>
+
+          <div id='chefDrpDwn'>
+            <Dropdown
+              onChange={this.handleUserSelectionChange}
+              placeholder="Will this a client or chef account?"
+              fluid
+              selection
+              options={options.userOptions}
+            />
+          </div>
+
+          <br/>
+
           <Link to='/'>
             <Button
               color='grey'
@@ -102,7 +125,7 @@ class SignUpForm extends Component {
           </Link>
 
           <Button
-            type='submit'
+            type='button'
             color='green'
             onClick={() => {
               this.submitCreds(this.state.creds);

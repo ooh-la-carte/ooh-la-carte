@@ -36,6 +36,7 @@ class LoginForm extends Component {
           if (response.status === 200) {
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
+            window.localStorage.isChef = response.data.isChef;
           }
         })
         .catch((error) => {
