@@ -118,21 +118,21 @@ class Settings extends Component {
           <Segment className='lightlyColored'>
             <Grid>
               <Grid.Row>
-                <Grid.Column width={5}>Name:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].name}</Grid.Column>
-                <Grid.Column width={5}>Address:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].street_address}</Grid.Column>
-                <Grid.Column width={5}></Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].city_state_zip}</Grid.Column>
-                <Grid.Column width={5}>Phone:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].phone}</Grid.Column>
-                <Grid.Column width={5}>Email:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].email}</Grid.Column>
+                <Grid.Column width={4}>Name:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].name}</Grid.Column>
+                <Grid.Column width={4}>Address:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].street_address}</Grid.Column>
+                <Grid.Column width={4}></Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].city_state_zip}</Grid.Column>
+                <Grid.Column width={4}>Phone:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].phone}</Grid.Column>
+                <Grid.Column width={4}>Email:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].email}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
         </div>
-        <div className='center'><Link to='/settings'>Update Contact Info</Link></div>
+        <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
       </div>
     );
   }
