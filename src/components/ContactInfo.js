@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Button, Icon, Form } from 'semantic-ui-react';
-import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
 class ContactInfo extends Component {
@@ -109,8 +106,4 @@ class ContactInfo extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeCurrentPage }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(withRouter(ContactInfo));
+export default ContactInfo;

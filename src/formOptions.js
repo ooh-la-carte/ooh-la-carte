@@ -1,5 +1,9 @@
-
-const monthOptions = [
+/*
+  ====================
+  Create Event Form
+  ====================
+*/
+module.exports.monthOptions = [
   {
     text: 'Jan',
     value: 'January',
@@ -50,7 +54,7 @@ const monthOptions = [
   },
 ];
 
-const dateOptions = [
+module.exports.dateOptions = [
   {
     text: '1',
     value: 1,
@@ -177,7 +181,7 @@ const dateOptions = [
   },
 ];
 
-const yearOptions = [
+module.exports.yearOptions = [
   {
     text: '2018',
     value: 2018,
@@ -192,18 +196,7 @@ const yearOptions = [
   },
 ];
 
-const userOptions = [
-  {
-    text: 'Client',
-    value: 'client',
-  },
-  {
-    text: 'Chef',
-    value: 'chef',
-  },
-];
-
-const sizeOptions = [
+module.exports.partySizeOptions = [
   {
     text: 'less than 5',
     value: '1-5',
@@ -222,8 +215,19 @@ const sizeOptions = [
   },
 ];
 
-module.exports.monthOptions = monthOptions;
-module.exports.dateOptions = dateOptions;
-module.exports.yearOptions = yearOptions;
-module.exports.sizeOptions = sizeOptions;
-module.exports.userOptions = userOptions;
+/*
+  ====================
+  Signup Form
+  ====================
+*/
+
+module.exports.userOptions = [
+  {
+    text: 'Client',
+    value: 'client',
+  },
+  {
+    text: 'Chef',
+    value: 'chef',
+  },
+];

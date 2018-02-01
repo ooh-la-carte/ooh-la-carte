@@ -11,29 +11,29 @@ import data from '../MockData';
 const BrowseChefs = props => (
     <div className='topLevelDiv'>
       {data.chefs.map(chef => (
-            <Link key={chef.id} to='/selectedChef'>
-              <Card
-              className='browseEventCards'
-              onClick={() => { props.changeSelectedChef(chef.id); }}>
-                <Card.Content>
-                  <Image floated='right' size='mini' src={chef.image} />
-                  <Card.Header>
-                    {chef.name}
-                  </Card.Header>
-                  <Card.Meta>
-                    <div>Cuisine: {chef.specialty}</div>
-                  </Card.Meta>
-                  <Card.Description>
-                    <div>{chef.bio}</div>
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <span className=''>{chef.rating} stars</span>
-                  <span className='eventBudget'>{chef.rate}</span>
-                </Card.Content>
-              </Card>
-            </Link>
-          ))}
+        <Link key={chef.id} to='/selectedChef'>
+          <Card
+          className='browseEventCards'
+          onClick={() => { props.changeSelectedChef(chef.id); }}>
+            <Card.Content>
+              <Image floated='right' size='mini' src={chef.image} />
+              <Card.Header>
+                {chef.name}
+              </Card.Header>
+              <Card.Meta>
+                <div>Cuisine: {chef.specialty}</div>
+              </Card.Meta>
+              <Card.Description>
+                <div>{chef.bio}</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <span className=''>{chef.rating} stars</span>
+              <span className='eventBudget'>{chef.rate}</span>
+            </Card.Content>
+          </Card>
+        </Link>
+      ))}
     </div>
 );
 
