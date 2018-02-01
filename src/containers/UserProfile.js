@@ -31,8 +31,8 @@ const UserProfile = props => (
       <div className='profile upcomingEvents container'>
       <Card.Group itemsPerRow={3}>
         {data.events.slice(0, 3).map(event => (
-          <Link to='/selectedEvent'>
-            <Card key={event.id} className='profile event'
+          <Link to='/selectedEvent' key={event.id}>
+            <Card className='profile event'
             onClick={() => { props.changeSelectedEvent(event.id); }}>
               <Card.Content>
                 <Card.Header>

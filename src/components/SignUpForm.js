@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Button, Icon, Form, Input, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
-import { changeCurrentPage } from '../actions';
 import '../style.scss';
 import options from '../formOptions';
 
@@ -59,7 +56,6 @@ class SignUpForm extends Component {
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
             window.localStorage.isChef = response.data.isChef;
-            this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');
           }
         })
@@ -146,8 +142,4 @@ class SignUpForm extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeCurrentPage }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(withRouter(SignUpForm));
+export default withRouter(SignUpForm);
