@@ -10,6 +10,16 @@ User.findUser = username => (
     .catch((err) => { console.log(err); })
 );
 
+// OLD MODEL
+// knex.select('*').from('users').innerJoin('addresses', function() {
+//   this.on('users.address_id', 'addresses.id');
+//   this.on('users.id', id);
+// }).toSQL().sql;
+
+User.findUserById = id => (
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email').then()
+);
+
 User.insertUser = (username, password, email, accType) => {
   let isAChef = false;
   if (accType === 'chef') isAChef = true;
