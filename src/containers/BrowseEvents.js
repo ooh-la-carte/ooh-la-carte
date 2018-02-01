@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../style.scss';
-import { changeSelectedEvent } from '../actions';
+import { changeSelectedEvent, changeCurrentPage } from '../actions';
 import data from '../MockData';
 
 
@@ -14,7 +14,10 @@ const BrowseEvents = props => (
             <Link key={event.id} to='/selectedEvent'>
               <Card
               className='browseEventCards'
-              onClick={() => { props.changeSelectedEvent(event.id); }}>
+              onClick={() => {
+                props.changeSelectedEvent(event.id);
+                props.changeCurrentPage('Event Detail');
+              }}>
                 <Card.Content>
                   <Image floated='right' size='mini' src={event.image} />
                   <Card.Header>
@@ -37,8 +40,12 @@ const BrowseEvents = props => (
     </div>
 );
 
+
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeSelectedEvent }, dispatch);
+  return bindActionCreators({
+    changeSelectedEvent,
+    changeCurrentPage,
+  }, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(BrowseEvents);

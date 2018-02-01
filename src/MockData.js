@@ -44,6 +44,21 @@ const events = [
     food: false,
     requests: 'NA',
   },
+  {
+    id: 4,
+    name: 'Birthday',
+    host: 'Jonas',
+    description: 'test for life',
+    budget: '$500',
+    location: 'The diggs, Austin, Texas',
+    cuisine: 'Italian',
+    image: 'https://source.unsplash.com/Fw6nOTesO4c',
+    date: '12/2/18',
+    time: '12:00pm',
+    guests: '7',
+    food: false,
+    requests: 'NA',
+  },
 ];
 
 const chefs = [
