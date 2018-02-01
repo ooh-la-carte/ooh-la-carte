@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { changeCurrentPage } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
@@ -23,15 +20,15 @@ class NavBar extends Component {
       {window.localStorage.getItem('userId')
         ?
           <div className='loggedInNavBarContainer'>
-              <div onClick={() => { this.props.changeCurrentPage('Home'); }} className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
+              <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
               {window.localStorage.getItem('isChef') === 'true'
                 ?
-                  <span onClick={() => { this.props.changeCurrentPage('Events'); }} className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
+                  <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
                 :
-                  <span onClick={() => { this.props.changeCurrentPage('Chefs'); }} className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
+                  <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
               }
-              <span onClick={() => { this.props.changeCurrentPage('Chat'); }} className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
-              <span onClick={() => { this.props.changeCurrentPage('Notifications'); }} className='navBarLastLink'><Link to='/userProfile' style={{ color: 'white' }}>Alerts</Link></span>
+              <span className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
+              <span className='navBarLastLink'><Link to='/userProfile' style={{ color: 'white' }}>Alerts</Link></span>
 
           </div>
         :
@@ -59,9 +56,5 @@ class NavBar extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeCurrentPage }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(NavBar);
+export default NavBar;
 
