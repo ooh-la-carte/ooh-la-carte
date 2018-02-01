@@ -1,13 +1,24 @@
-const db = require('../index');
+const knex = require('../index');
 const bcrypt = require('bcrypt');
 
 const User = {};
 
-User.findUserById = username => (
-  db.knex('users')
+
+User.findUser = username => (
+  knex('users')
     .where({ username })
     .then(data => data)
     .catch((err) => { console.log(err); })
+);
+
+// OLD MODEL
+// knex.select('*').from('users').innerJoin('addresses', function() {
+//   this.on('users.address_id', 'addresses.id');
+//   this.on('users.id', id);
+// }).toSQL().sql;
+
+User.findUserById = id => (
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email').then()
 );
 
 User.insertUser = (username, password, email, accType) => {
@@ -15,7 +26,7 @@ User.insertUser = (username, password, email, accType) => {
   if (accType === 'chef') isAChef = true;
   return bcrypt.hash(password, 10)
     .then(hash => (
-      db.knex('users').insert({
+      knex('users').insert({
         username,
         password: hash,
         email,
