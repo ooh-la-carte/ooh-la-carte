@@ -1,3 +1,5 @@
+const connectedUser = {};
+
 module.exports = (socket) => {
   console.log('a user connected');
   console.log('Socket id: ', socket.id);
