@@ -39,10 +39,12 @@ body {
   margin: 5% 5% 5% 5%;
 }
 
-.profile.event.text {
+.eventText {
   font-size: 14px;
-  text-align: center;
-  display: flex;
+}
+
+.eventCard {
+  width: 50%;
 }
 
 .profile.userCard {
