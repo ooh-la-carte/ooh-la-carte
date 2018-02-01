@@ -274,6 +274,24 @@ body {
 
 /*
   ====================
+  Chat Styling
+  ====================
+*/
+
+.chatInput {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 17%;
+  z-index: 999;
+  width: 100%;
+  display: flex;
+  // background-color: $primary-color;
+  // color: white;
+  // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+/*
+  ====================
   Button Styling
   ====================
 */
