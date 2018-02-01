@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import '../style.scss';
 
@@ -69,8 +68,4 @@ class CurrentPageNavBar extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { currentPage: state.currentPage };
-}
-
-export default connect(mapStateToProps)(CurrentPageNavBar);
+export default CurrentPageNavBar;

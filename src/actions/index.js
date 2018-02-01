@@ -1,12 +1,5 @@
 import data from '../MockData';
 
-const changeCurrentPage = page => (
-  {
-    type: 'CHANGE_PAGE',
-    payload: page,
-  }
-);
-
 const changeSelectedChef = (chef) => {
   let selected = {};
   data.chefs.forEach((obj) => {
@@ -34,4 +27,4 @@ const changeSelectedEvent = (event) => {
   };
 };
 
-export { changeCurrentPage, changeSelectedChef, changeSelectedEvent };
+export { changeSelectedChef, changeSelectedEvent };

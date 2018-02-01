@@ -132,7 +132,9 @@ class Settings extends Component {
             </Grid>
           </Segment>
         </div>
-        <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
+        <div className='center miniPadding'
+        onClick={() => { this.props.changeCurrentPage('Contact Info'); }}
+        ><Link to='/contactInfo'>Update Contact Info</Link></div>
       </div>
     );
   }
