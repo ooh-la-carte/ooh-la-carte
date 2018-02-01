@@ -21,12 +21,9 @@ class CurrentPageNavBar extends Component {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('userId');
     window.localStorage.removeItem('isChef');
-<<<<<<< HEAD
     window.localStorage.removeItem('username');
-=======
     this.props.socketReducer.close();
     this.props.removeSocket();
->>>>>>> acf39d2f810b65df10cf873ce5f19699d27b4e78
     this.toggleDropDown();
   }
 
