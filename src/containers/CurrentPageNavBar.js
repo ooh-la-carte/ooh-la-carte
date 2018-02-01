@@ -23,12 +23,29 @@ class CurrentPageNavBar extends Component {
   }
 
   render() {
+    const currentPage = window.location.pathname.split('/')[1];
+
+    const pages = {
+      selectedEvent: 'Event Detail',
+      userProfile: 'Home',
+      settings: 'Settings',
+      contactInfo: 'Contact Info',
+      loginForm: 'Login',
+      signUpForm: 'Sign Up',
+      browseEvents: 'Events',
+      selectedChef: 'Chef Detail',
+      browseChefs: 'Chefs',
+      createEvent: 'Add Event',
+      userEvents: 'Events',
+      chatTab: 'Chats',
+    };
+
     return (
       <div>
       {window.localStorage.getItem('userId')
         ?
           <div className='navBarContainer'>
-            <div className='navBarTitle'><div style={{ color: 'white' }}>{this.props.currentPage}</div></div>
+            <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
               <span className='navBarLogin' >
                 <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
                 {this.state.dropdown
