@@ -37,6 +37,7 @@ const BrowseEvents = props => (
     </div>
 );
 
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ changeSelectedEvent }, dispatch);
 }

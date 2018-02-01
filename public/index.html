@@ -22,41 +22,38 @@
     margin-top: 10%;
 }
 
-.nav {
-  color: white;
-  height: 64px;
-  font-weight: 400;
-  letter-spacing: 0%;
-  width: 25% !important;
-  font-size: 150%;
-  line-height: 64px;
+.navBarTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0% 0% 0% 5%;
   padding: 0%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  letter-spacing: 0%;
+  font-size: 150%;
+  font-weight: 400;
+  color: rgb(255, 255, 255) !important;
+  height: 64px;
+  line-height: 64px;
+  width: 75% !important;
 }
 
 .navBarContainer {
   position: fixed;
   top: 0;
   z-index: 999;
-  width: 100%;`
+  width: 100%;
   display: flex;
-  align-items: left;
-  background-color: rgb(0, 188, 212);
-  margin-bottom: 10px;
+  background-color: #00bcd4;
+  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
+
   </style>
 </head>
 <body>
   <div id="app">
       <div class='navBarContainer'>
-        <div class='nav'>Home</div>
-        <span class='nav'>Events</span>
-        <span class='nav'>Chefs</span>
-        <span class='nav'>Chat</span>
+        <div class='navBarTitle'>Ooh La Carte</div>
       </div>
   </div>
     <script type="text/javascript" src="bundle.js"></script>
