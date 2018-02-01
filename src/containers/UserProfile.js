@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Grid, Segment } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';

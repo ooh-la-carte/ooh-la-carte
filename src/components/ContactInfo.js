@@ -15,7 +15,7 @@ class ContactInfo extends Component {
       password: '',
     };
   }
-// complete this component!
+  // complete this component!
   componentDidMount() {
     if (window.localStorage.userId) {
       axios.get();
