@@ -39,10 +39,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/test', (req, res) => {
-  res.json({ text: 'response' });
-});
-
 // post route for login requests
 app.post('/api/login', (req, res) => {
   // verify user and password against database
@@ -51,7 +47,7 @@ app.post('/api/login', (req, res) => {
       if (userDetails) {
         res.status(200);
         // create the token
-        const token = jwt.sign({}, 'super-secret');
+        const token = jwt.sign({ id: userDetails.userId }, 'super-secret');
         // send the token back to the client
         res.json({
           token,
@@ -91,6 +87,22 @@ app.post('/api/signup', (req, res) => {
       }
     })
     .catch((error) => { console.log(error); });
+});
+
+
+// This should be a protected route
+app.get('/api/user/info', (req, res) => {
+  // console.log(req.headers);
+  // res.end();
+  // const token = req.headers.authorization;
+  // console.log(token);
+
+  // const decoded = jwt.verify(token, 'super-secret');
+  // console.log(decoded);
+  User.findUserById(req.query.id).then((data) => {
+    res.set('Content-Type', 'application/json');
+    res.end(JSON.stringify(data[0]));
+  });
 });
 
 // post route for creating events

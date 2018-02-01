@@ -4,6 +4,10 @@ exports.up = (knex, Promise) => (
     knex.schema.createTable('users', (table) => {
       table.increments('id').unsigned().primary();
       table.boolean('is_chef').defaultTo(false);
+      table.string('street_name');
+      table.string('city');
+      table.string('state');
+      table.string('zip_code');
       table.string('name');
       table.string('username').unique().notNullable();
       table.string('phone');
@@ -31,7 +35,10 @@ exports.up = (knex, Promise) => (
       table.integer('chef_id').unsigned().references('users.id');
       table.string('name');
       table.integer('party_size').unsigned().notNullable();
-      table.string('address');
+      table.string('street_name');
+      table.string('city');
+      table.string('state');
+      table.string('zip_code');
       table.decimal('budget');
       table.string('cuisine_type');
       table.timestamp('date_time');
