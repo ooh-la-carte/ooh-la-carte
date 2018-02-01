@@ -35,7 +35,7 @@ const SelectedChef = (props) => {
         <Card.Content extra>
           <div>
             <span><Icon name='food'/>Years experience: {store.experience}</span>
-            <Link to='/conversation' onClick={() => { props.selectConversation(store); }}><div style={{ 'textAlign': 'center' }}>Send a message!</div></Link>
+            <Link to='/conversation' onClick={() => { props.selectConversation(store); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
           </div>
         </Card.Content>
       </Card>
