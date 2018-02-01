@@ -1,12 +1,15 @@
 import React from 'react';
 import io from 'socket.io-client';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { setSocket } from '../actions';
 
 const socketUrl = 'http://localhost:8888/';
-export default class ChatTab extends React.Component {
+class ChatTab extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { socket: null };
+    // this.state = { socket: null };
     this.initSocket = this.initSocket.bind(this);
   }
 
@@ -15,12 +18,14 @@ export default class ChatTab extends React.Component {
   }
 
   initSocket() {
-    if (!this.state.socket) {
+    if (!this.props.socketReducer) {
       const socket = io(socketUrl);
       socket.on('connect', () => {
         console.log('Connected');
+        console.log('Socket: ', socket.id);
+        this.props.setSocket(socket.id);
       });
-      this.setState({ socket });
+      // this.setState({ socket });
     }
   }
 
@@ -30,3 +35,13 @@ export default class ChatTab extends React.Component {
         </div>
   );
 }
+
+function mapStateToProps(state) {
+  return { socketReducer: state.socketReducer };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setSocket }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatTab);

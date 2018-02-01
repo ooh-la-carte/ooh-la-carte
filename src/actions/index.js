@@ -34,4 +34,18 @@ const changeSelectedEvent = (event) => {
   };
 };
 
-export { changeCurrentPage, changeSelectedChef, changeSelectedEvent };
+const setSocket = socketID => (
+  {
+    type: 'SET_SOCKET',
+    payload: socketID,
+  }
+);
+
+const removeSocket = () => (
+  {
+    type: 'SET_SOCKET',
+    payload: '',
+  }
+);
+
+export { changeCurrentPage, changeSelectedChef, changeSelectedEvent, setSocket, removeSocket };
