@@ -9,21 +9,23 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Vietnamese: false,
-      Chinese: false,
-      French: false,
-      Sushi: false,
-      Vegetarian: false,
-      BBQ: false,
-      Pastry: false,
-      Indian: false,
-      Thai: false,
-      Cajun: false,
-      Mexican: false,
-      Italian: false,
-      Southern: false,
-      Greek: false,
-      Vegan: false,
+      cuisine: {
+        Vietnamese: false,
+        Chinese: false,
+        French: false,
+        Sushi: false,
+        Vegetarian: false,
+        BBQ: false,
+        Pastry: false,
+        Indian: false,
+        Thai: false,
+        Cajun: false,
+        Mexican: false,
+        Italian: false,
+        Southern: false,
+        Greek: false,
+        Vegan: false,
+      },
       submitted: false,
       hostId: window.localStorage.userID,
     };
@@ -38,7 +40,8 @@ class Settings extends Component {
   }
 
   handleChange = (e, { value }) => {
-    this.setState({ [value]: !this.state[value] });
+    this.setState({ cuisine:
+    Object.assign(this.state.cuisine, { [value]: !this.state.cuisine[value] }) });
   }
 
   render() {
