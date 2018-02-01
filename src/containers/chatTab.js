@@ -8,7 +8,6 @@ const socketUrl = 'http://localhost:8888/';
 class ChatTab extends React.Component {
   constructor(props) {
     super(props);
-
     this.initSocket = this.initSocket.bind(this);
   }
 
@@ -20,6 +19,7 @@ class ChatTab extends React.Component {
     if (!this.props.socketReducer.id) {
       const socket = io(socketUrl);
       socket.on('connect', () => {
+        socket.userId = window.localStorage.getItem('userId');
         console.log('Connected');
         console.log('Socket: ', socket);
         this.props.setSocket(socket);

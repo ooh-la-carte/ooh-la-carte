@@ -19,6 +19,7 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import ContactInfo from './components/ContactInfo';
 import ChatTab from './containers/chatTab';
+import Conversation from './containers/conversation';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -38,6 +39,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
                         <Route exact path='/chatTab' component={ChatTab} />
+                        <Route exact path='/conversation' component={Conversation} />
                         <Route exact path='/settings' component={Settings}/>
                         <Route exact path='/contactInfo' component={ContactInfo}/>
                       </div>

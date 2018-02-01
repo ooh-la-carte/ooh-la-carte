@@ -40,4 +40,12 @@ const removeSocket = () => (
   }
 );
 
-export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket };
+const selectConversation = (user) => {
+  console.log('Convo action: ', user);
+  return {
+    type: 'SELECT_CONVERSATION',
+    payload: user.id,
+  };
+};
+
+export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket, selectConversation };

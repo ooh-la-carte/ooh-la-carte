@@ -42,7 +42,8 @@ class CurrentPageNavBar extends Component {
       browseChefs: 'Chefs',
       createEvent: 'Add Event',
       userEvents: 'Events',
-      chatTab: 'Chats',
+      chatTab: 'Inbox',
+      conversation: this.props.selectedConversation,
     };
 
     return (
@@ -75,7 +76,10 @@ class CurrentPageNavBar extends Component {
 }
 
 function mapStateToProps(state) {
-  return { socketReducer: state.socketReducer };
+  return {
+    socketReducer: state.socketReducer,
+    selectedConversation: state.selectedConversation,
+  };
 }
 
 function mapDispatchToProps(dispatch) {

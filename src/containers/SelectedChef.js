@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Card, Icon, Image } from 'semantic-ui-react';
+import { selectConversation } from '../actions';
 import '../style.scss';
 
 const SelectedChef = (props) => {
@@ -32,6 +35,7 @@ const SelectedChef = (props) => {
         <Card.Content extra>
           <div>
             <span><Icon name='food'/>Years experience: {store.experience}</span>
+            <Link to='/conversation' onClick={() => { props.selectConversation(store); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
           </div>
         </Card.Content>
       </Card>
@@ -43,4 +47,8 @@ function mapStateToProps(state) {
   return { selectedChefReducer: state.selectedChefReducer };
 }
 
-export default connect(mapStateToProps)(SelectedChef);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ selectConversation }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedChef);
