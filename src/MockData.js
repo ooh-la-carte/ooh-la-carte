@@ -44,6 +44,21 @@ const events = [
     food: false,
     requests: 'NA',
   },
+  {
+    id: 4,
+    name: 'Birthday',
+    host: 'Jonas',
+    description: 'test for life',
+    budget: '$500',
+    location: 'The diggs, Austin, Texas',
+    cuisine: 'Italian',
+    image: 'https://source.unsplash.com/Fw6nOTesO4c',
+    date: '12/2/18',
+    time: '12:00pm',
+    guests: '7',
+    food: false,
+    requests: 'NA',
+  },
 ];
 
 const chefs = [
@@ -56,7 +71,11 @@ const chefs = [
     menu: ['Pasta', 'Pizza', 'Whatever'],
     rate: '$50-100/hr',
     experience: '20+',
+    email: 'hotchef1@hotmail.com',
     image: 'https://source.unsplash.com/nvsHAsuFC54',
+    street_address: '101 Random Street',
+    city_state_zip: 'Austin, Tx, 78741',
+    phone: '888-867-5309',
   },
   {
     id: 2,
@@ -67,6 +86,7 @@ const chefs = [
     menu: ['Pasta', 'Pizza', 'Whatever'],
     rate: '$50-75/hr',
     experience: '10+',
+    email: 'hotchef1@hotmail.com',
     image: 'https://source.unsplash.com/nvsHAsuFC54',
   },
   {
@@ -77,6 +97,7 @@ const chefs = [
     bio: 'Taught English in China where I learned to cook authenticate chinese food',
     menu: ['Pasta', 'Pizza', 'Whatever'],
     rate: '$24/hr',
+    email: 'hotchef1@hotmail.com',
     experience: '7',
     image: 'https://source.unsplash.com/nvsHAsuFC54',
   },
@@ -88,6 +109,7 @@ const chefs = [
     bio: 'Grew up with classic southern cooking',
     menu: ['Pasta', 'Pizza', 'Whatever'],
     rate: '$20/hr',
+    email: 'hotchef1@hotmail.com',
     experience: '2',
     image: 'https://source.unsplash.com/nvsHAsuFC54',
   },

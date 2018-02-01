@@ -13,11 +13,12 @@ import CurrentPageNavBar from './containers/CurrentPageNavBar';
 import SelectedEvent from './containers/SelectedEvent';
 import UserProfile from './containers/UserProfile';
 import UserEvents from './containers/UserEvents';
+import Settings from './containers/Settings';
 import SelectedChef from './containers/SelectedChef';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
+import ContactInfo from './components/ContactInfo';
 import ChatTab from './containers/chatTab';
-
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -37,6 +38,8 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
                         <Route exact path='/chatTab' component={ChatTab} />
+                        <Route exact path='/settings' component={Settings}/>
+                        <Route exact path='/contactInfo' component={ContactInfo}/>
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));
