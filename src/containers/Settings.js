@@ -9,16 +9,23 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeIndex: -1,
+      Vietnamese: false,
+      Chinese: false,
+      French: false,
+      Sushi: false,
+      Vegetarian: false,
+      BBQ: false,
+      Pastry: false,
+      Indian: false,
+      Thai: false,
+      Cajun: false,
+      Mexican: false,
+      Italian: false,
+      Southern: false,
+      Greek: false,
+      Vegan: false,
       submitted: false,
       hostId: window.localStorage.userID,
-      chefID: '',
-      date: '',
-      location: '',
-      cuisine: '',
-      description: '',
-      partySize: '',
-      value: 'breakfast', // breakfast, brunch, lunch, dinner
     };
   }
 
@@ -28,6 +35,10 @@ class Settings extends Component {
     const newIndex = activeIndex === index ? -1 : index;
 
     this.setState({ activeIndex: newIndex });
+  }
+
+  handleChange = (e, { value }) => {
+    this.setState({ [value]: !this.state[value] });
   }
 
   render() {
@@ -47,33 +58,33 @@ class Settings extends Component {
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='Vietnamese' value='Vietnamese' />
-                        <Form.Checkbox label='Chinese' value='Chinese' />
-                        <Form.Checkbox label='French' value='French' />
-                        <Form.Checkbox label='Sushi' value='Sushi'/>
-                        <Form.Checkbox label='Vegetarian' value='Vegetarian'/>
+                        <Form.Checkbox label='Vietnamese' value='Vietnamese' onChange={this.handleChange} />
+                        <Form.Checkbox label='Chinese' value='Chinese' onChange={this.handleChange} />
+                        <Form.Checkbox label='French' value='French' onChange={this.handleChange} />
+                        <Form.Checkbox label='Sushi' value='Sushi' onChange={this.handleChange} />
+                        <Form.Checkbox label='Vegetarian' value='Vegetarian' onChange={this.handleChange} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='BBQ' value='BBQ' />
-                        <Form.Checkbox label='Pastry' value='Pastry' />
-                        <Form.Checkbox label='Indian' value='Indian' />
-                        <Form.Checkbox label='Thai' value='Thai'/>
-                        <Form.Checkbox label='Cajun' value='Cajun'/>
+                        <Form.Checkbox label='BBQ' value='BBQ' onChange={this.handleChange}/>
+                        <Form.Checkbox label='Pastry' value='Pastry' onChange={this.handleChange}/>
+                        <Form.Checkbox label='Indian' value='Indian' onChange={this.handleChange} />
+                        <Form.Checkbox label='Thai' value='Thai' onChange={this.handleChange} />
+                        <Form.Checkbox label='Cajun' value='Cajun' onChange={this.handleChange} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='Mexican' value='Mexican' />
-                        <Form.Checkbox label='Italian' value='Italian' />
-                        <Form.Checkbox label='Southern' value='French' />
-                        <Form.Checkbox label='Greek' value='Greek'/>
-                        <Form.Checkbox label='Vegan' value='Vegan'/>
+                        <Form.Checkbox label='Mexican' value='Mexican' onChange={this.handleChange} />
+                        <Form.Checkbox label='Italian' value='Italian' onChange={this.handleChange} />
+                        <Form.Checkbox label='Southern' value='Southern' onChange={this.handleChange} />
+                        <Form.Checkbox label='Greek' value='Greek' onChange={this.handleChange} />
+                        <Form.Checkbox label='Vegan' value='Vegan' onChange={this.handleChange} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
@@ -82,7 +93,6 @@ class Settings extends Component {
                     <input
                       placeholder='Description...'
                       value={this.state.custom}
-                      onChange={true}
                     />
                   </Form.Field>
                 </Grid>
@@ -118,21 +128,21 @@ class Settings extends Component {
           <Segment className='lightlyColored'>
             <Grid>
               <Grid.Row>
-                <Grid.Column width={5}>Name:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].name}</Grid.Column>
-                <Grid.Column width={5}>Address:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].street_address}</Grid.Column>
-                <Grid.Column width={5}></Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].city_state_zip}</Grid.Column>
-                <Grid.Column width={5}>Phone:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].phone}</Grid.Column>
-                <Grid.Column width={5}>Email:</Grid.Column>
-                <Grid.Column width={11}>{data.chefs[0].email}</Grid.Column>
+                <Grid.Column width={4}>Name:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].name}</Grid.Column>
+                <Grid.Column width={4}>Address:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].street_address}</Grid.Column>
+                <Grid.Column width={4}></Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].city_state_zip}</Grid.Column>
+                <Grid.Column width={4}>Phone:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].phone}</Grid.Column>
+                <Grid.Column width={4}>Email:</Grid.Column>
+                <Grid.Column width={12}>{data.chefs[0].email}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
         </div>
-        <div className='center'><Link to='/settings'>Update Contact Info</Link></div>
+        <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
       </div>
     );
   }

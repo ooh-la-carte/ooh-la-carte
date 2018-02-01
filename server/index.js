@@ -53,6 +53,7 @@ app.post('/api/login', (req, res) => {
           token,
           userId: userDetails.userId,
           isChef: userDetails.isChef,
+          username: userDetails.username,
         });
         res.send();
       } else {
@@ -78,6 +79,7 @@ app.post('/api/signup', (req, res) => {
           token,
           userId: userObj.userId,
           isChef: userObj.isChef,
+          username: userObj.username,
         });
         res.send();
       } else {
@@ -86,6 +88,7 @@ app.post('/api/signup', (req, res) => {
     })
     .catch((error) => { console.log(error); });
 });
+
 
 // This should be a protected route
 app.get('/api/user/info', (req, res) => {
@@ -100,6 +103,11 @@ app.get('/api/user/info', (req, res) => {
     res.set('Content-Type', 'application/json');
     res.end(JSON.stringify(data[0]));
   });
+});
+
+// post route for creating events
+app.post('/api/createevent', (req, res) => {
+  res.sendStatus(200);
 });
 
 // example route that validates a token before sending a response

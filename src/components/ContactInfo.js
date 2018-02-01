@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Icon, Form } from 'semantic-ui-react';
 import '../style.scss';
 
-class LoginForm extends Component {
+class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
     };
+  }
+  // complete this component!
+  componentDidMount() {
+    if (window.localStorage.userId) {
+      axios.get();
+      this.setState();
+    }
   }
 
   setUsername = (e) => {
@@ -37,8 +44,6 @@ class LoginForm extends Component {
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
             window.localStorage.isChef = response.data.isChef;
-            window.localStorage.username = response.data.username;
-            this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');
           }
         })
@@ -50,11 +55,11 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div className='loginForms'>
+      <div>
         <Form>
           <h3><Icon name='user circle' /> Login!</h3>
           <Form.Field>
-            <label>Username</label>
+            <label>Name</label>
             <input
               placeholder='Username'
               onChange={this.setUsername}
@@ -74,29 +79,31 @@ class LoginForm extends Component {
           </Form.Field>
           <br/>
 
+      <div className='btnDiv'>
           <Link to='/'>
             <Button
-              color='grey'
-              onClick={this.props.handleClose}
-            >
-              <Icon name='x' /> Cancel
+              className='butSec'
+              inverted
+            > Cancel
             </Button>
           </Link>
-
           <Button
-            type='button'
-            color='green'
+            className='butPri'
+            type='submit'
+            inverted
             onClick={() => {
-                this.submitCreds(this.state.username.toLowerCase(), this.state.password);
-              }
-            }
+              this.props.handleClose();
+              this.props.toggleDropDown();
+            }}
           >
-            <Icon name='checkmark' /> Login
+            Submit
           </Button>
+
+        </div>
         </Form>
       </div>
     );
   }
 }
 
-export default withRouter(LoginForm);
+export default ContactInfo;

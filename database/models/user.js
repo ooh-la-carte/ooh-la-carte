@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const User = {};
 
+
 User.findUser = username => (
   knex('users')
     .where({ username })
@@ -36,10 +37,11 @@ User.insertUser = (username, password, email, accType) => {
       console.log('user sucessfully inserted');
       return insertResult;
     })
-    .then(() => User.findUser(username))
+    .then(() => User.findUserById(username))
     .then(data => ({
       userId: data[0].id,
       isChef: data[0].is_chef,
+      username: data[0].username,
     }))
     .catch((err) => { console.log(err); });
 };
@@ -47,7 +49,7 @@ User.insertUser = (username, password, email, accType) => {
 User.getAndVerifyUser = (username, password) => {
   let userId;
   let isChef;
-  return User.findUser(username)
+  return User.findUserById(username)
     .then((results) => {
       userId = results[0].id;
       isChef = results[0].is_chef;
@@ -56,7 +58,9 @@ User.getAndVerifyUser = (username, password) => {
     .then(result => (result ? ({
       userId,
       isChef,
-    }) : null));
+      username,
+    }) : null))
+    .catch((err) => { console.log(err); });
 };
 
 module.exports = User;

@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Button, Icon, Form, Input, Dropdown } from 'semantic-ui-react';
 import axios from 'axios';
-import { changeCurrentPage } from '../actions';
 import '../style.scss';
 import options from '../formOptions';
 
@@ -16,7 +13,7 @@ class SignUpForm extends Component {
       password1: '',
       password2: '',
       email: '',
-      value: 'client',
+      value: false,
     } };
   }
 
@@ -58,9 +55,8 @@ class SignUpForm extends Component {
             console.log('response received from server');
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
-
+            window.localStorage.username = response.data.username;
             window.localStorage.isChef = response.data.isChef;
-            this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');
           }
         })
@@ -113,7 +109,7 @@ class SignUpForm extends Component {
           <div id='chefDrpDwn'>
             <Dropdown
               onChange={this.handleUserSelectionChange}
-              placeholder="Will this a client or chef account?"
+              placeholder="Will this be a client or chef account?"
               fluid
               selection
               options={options.userOptions}
@@ -147,8 +143,4 @@ class SignUpForm extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeCurrentPage }, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(withRouter(SignUpForm));
+export default withRouter(SignUpForm);

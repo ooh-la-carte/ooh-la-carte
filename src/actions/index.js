@@ -1,12 +1,5 @@
 import data from '../MockData';
 
-const changeCurrentPage = page => (
-  {
-    type: 'CHANGE_PAGE',
-    payload: page,
-  }
-);
-
 const changeSelectedChef = (chef) => {
   let selected = {};
   data.chefs.forEach((obj) => {
@@ -27,11 +20,24 @@ const changeSelectedEvent = (event) => {
       selected = obj;
     }
   });
-  console.log('Action: ', selected);
   return {
     type: 'SELECT_EVENT',
     payload: selected,
   };
 };
 
-export { changeCurrentPage, changeSelectedChef, changeSelectedEvent };
+const setSocket = socket => (
+  {
+    type: 'SET_SOCKET',
+    payload: socket,
+  }
+);
+
+const removeSocket = () => (
+  {
+    type: 'SET_SOCKET',
+    payload: {},
+  }
+);
+
+export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket };
