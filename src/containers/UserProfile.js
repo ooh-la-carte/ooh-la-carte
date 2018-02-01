@@ -8,7 +8,7 @@ import '../style.scss';
 import data from '../MockData';
 
 
-const UserProfile = props => (
+const UserProfile = () => (
     <div className='topLevelDiv'>
       <Card key={data.chefs[0].id} className='profile userCard'>
         <Card.Content>
@@ -32,8 +32,7 @@ const UserProfile = props => (
       <Card.Group itemsPerRow={3}>
         {data.events.slice(0, 3).map(event => (
           <Link to='/selectedEvent' key={event.id}>
-            <Card className='profile event'
-            onClick={() => { props.changeCurrentPage('Event Detail'); }}>
+            <Card className='profile event'>
               <Card.Content>
                 <Card.Header>
                   <span className='profile event text'>{event.name}</span>
