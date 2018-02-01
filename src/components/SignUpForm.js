@@ -16,7 +16,7 @@ class SignUpForm extends Component {
       password1: '',
       password2: '',
       email: '',
-      value: 'client',
+      value: false,
     } };
   }
 
@@ -58,7 +58,6 @@ class SignUpForm extends Component {
             console.log('response received from server');
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
-
             window.localStorage.isChef = response.data.isChef;
             this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');
@@ -113,7 +112,7 @@ class SignUpForm extends Component {
           <div id='chefDrpDwn'>
             <Dropdown
               onChange={this.handleUserSelectionChange}
-              placeholder="Will this a client or chef account?"
+              placeholder="Will this be a client or chef account?"
               fluid
               selection
               options={options.userOptions}

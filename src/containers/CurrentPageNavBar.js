@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Icon } from 'semantic-ui-react';
+import { removeSocket } from '../actions';
 import '../style.scss';
 
 class CurrentPageNavBar extends Component {
@@ -18,6 +21,7 @@ class CurrentPageNavBar extends Component {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('userId');
     window.localStorage.removeItem('isChef');
+    this.props.removeSocket();
     this.toggleDropDown();
   }
 
@@ -68,4 +72,9 @@ class CurrentPageNavBar extends Component {
   }
 }
 
-export default CurrentPageNavBar;
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeSocket }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(CurrentPageNavBar);

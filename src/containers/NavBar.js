@@ -7,6 +7,7 @@ class NavBar extends Component {
     super(props);
     this.state = { dropdown: false };
     this.toggleDropDown = this.toggleDropDown.bind(this);
+    console.log(typeof window.localStorage.getItem('isChef'));
   }
 
   toggleDropDown() {
@@ -20,7 +21,7 @@ class NavBar extends Component {
         ?
           <div className='loggedInNavBarContainer'>
               <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
-              {this.props.chef
+              {window.localStorage.getItem('isChef') === 'true'
                 ?
                   <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
                 :
