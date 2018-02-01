@@ -54,7 +54,7 @@ class UserProfile extends Component {
                     <span className='center eventText'>{event.name}</span>
                   </Card.Header>
                   <Card.Meta className='center'>
-                    {`${event.date}\n${event.time}`}
+                    {`${event.date} ${event.time}`}
                   </Card.Meta>
                 </Card.Content>
               </Card>
