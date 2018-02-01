@@ -1,11 +1,28 @@
 require('dotenv').config();
 const express = require('express');
+const http = require('http').Server(express());
+const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
+const SocketManager = require('./SocketManager');
 
+
+/* ################
+    Chat Server
+################## */
+
+io.on('connection', SocketManager);
+
+http.listen(8888, () => {
+  console.log('listening on *:8888');
+});
+
+/* ################
+    Server
+################### */
 
 const PORT = process.env.PORT || 3000;
 const app = express();

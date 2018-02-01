@@ -29,7 +29,7 @@ class NavBar extends Component {
                 :
                   <span onClick={() => { this.props.changeCurrentPage('Chefs'); }} className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
               }
-              <span onClick={() => { this.props.changeCurrentPage('Chat'); }} className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Chat</Link></span>
+              <span onClick={() => { this.props.changeCurrentPage('Chat'); }} className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
               <span onClick={() => { this.props.changeCurrentPage('Notifications'); }} className='navBarLastLink'><Link to='/userProfile' style={{ color: 'white' }}>Alerts</Link></span>
 
           </div>
