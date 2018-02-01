@@ -58,7 +58,7 @@ class SignUpForm extends Component {
             console.log('response received from server');
             window.localStorage.accessToken = response.data.token;
             window.localStorage.userId = response.data.userId;
-
+            window.localStorage.username = response.data.username;
             window.localStorage.isChef = response.data.isChef;
             this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');

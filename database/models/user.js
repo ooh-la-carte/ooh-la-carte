@@ -30,6 +30,7 @@ User.insertUser = (username, password, email, accType) => {
     .then(data => ({
       userId: data[0].id,
       isChef: data[0].is_chef,
+      username: data[0].username,
     }))
     .catch((err) => { console.log(err); });
 };
@@ -46,6 +47,7 @@ User.getAndVerifyUser = (username, password) => {
     .then(result => (result ? ({
       userId,
       isChef,
+      username,
     }) : null))
     .catch((err) => { console.log(err); });
 };

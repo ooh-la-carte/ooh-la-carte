@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Dropdown, Button, Form, Radio, Select, Input, TextArea } from 'semantic-ui-react';
 import '../style.scss';
 
@@ -23,7 +23,6 @@ class CreateEventForm extends Component {
     super(props);
     this.state = {
       eventName: '',
-      submitted: false,
       hostId: window.localStorage.getItem('userId'),
       chefID: '',
       date: '',
@@ -62,10 +61,28 @@ class CreateEventForm extends Component {
     this.setState({ zip: e.target.value });
   }
 
+  setSubmitted = () => { this.setState({ submitted: true }); }
+
+  handleMonthSelectionChange = (e, { value }) => {
+    this.setState({ month: value });
+  }
+
+  handleDateSelectionChange = (e, { value }) => {
+    this.setState({ date: value });
+  }
+
+  handleYearSelectionChange = (e, { value }) => {
+    this.setState({ year: value });
+  }
+
+  handlePartySizeSelectionChange = (e, { value }) => {
+    this.setState({ partySize: value });
+  }
+
   handleSubmit = () => {
     const eventObj = this.state;
-    const url = '/api/events';
-    if (!eventObj.date || !eventObj.partySize || !eventObj.meal) {
+    const url = '/api/createevent';
+    if (!eventObj.date || !eventObj.partySize || !eventObj.value) {
       console.log('Required fields not provided');
     } else {
       console.log('submitting');
@@ -73,6 +90,7 @@ class CreateEventForm extends Component {
         .then((response) => {
           if (response.status === 200) {
             console.log('event submitted sucessfully');
+            this.props.history.push('/userProfile');
           }
         })
         .catch((error) => {
@@ -86,9 +104,7 @@ class CreateEventForm extends Component {
     return (
       console.log(this.state),
       <div>
-        <Form>
-          {this.state.submitted === true ? <Redirect to="/events" /> : ''}
-
+        <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Event Name</label>
             <Input placeholder='My Stellar Soiree'
@@ -129,10 +145,27 @@ class CreateEventForm extends Component {
 
           <br/>
           <Form.Group>
-
-            <Form.Field control={Select} label='Month' options={options.monthOptions} placeholder='Jan' />
-            <Form.Field control={Select} label='Day' options={options.dateOptions} placeholder='1' />
-            <Form.Field control={Select} label='Year' options={options.yearOptions} placeholder='2000' />
+            <Form.Field
+              control={Select}
+              onChange={this.handleMonthSelectionChange}
+              label='Month'
+              options={options.monthOptions}
+              placeholder='Jan'
+            />
+            <Form.Field
+              control={Select}
+              onChange={this.handleDateSelectionChange}
+              label='Day'
+              options={options.dateOptions}
+              placeholder='1'
+            />
+            <Form.Field
+              control={Select}
+              onChange={this.handleYearSelectionChange}
+              label='Year'
+              options={options.yearOptions}
+              placeholder='2000'
+            />
           </Form.Group>
 
           <br/>
@@ -164,7 +197,7 @@ class CreateEventForm extends Component {
           <h3>Group Size</h3>
           <div id='partySizeDrpDwn'>
             <Dropdown
-              onChange={this.setPartySize}
+              onChange={this.handlePartySizeSelectionChange}
               placeholder="How many in your dining party?"
               fluid
               upward
@@ -206,10 +239,6 @@ class CreateEventForm extends Component {
               className='butPri'
               type='submit'
               inverted
-              onClick={() => {
-                this.props.handleClose();
-                this.props.toggleDropDown();
-              }}
             >
               Submit
             </Button>
@@ -227,4 +256,4 @@ class CreateEventForm extends Component {
 }
 
 
-export default CreateEventForm;
+export default withRouter(CreateEventForm);
