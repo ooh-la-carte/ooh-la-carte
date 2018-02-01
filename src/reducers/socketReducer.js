@@ -1,4 +1,4 @@
-const socketReducer = (state = '', action) => {
+const socketReducer = (state = {}, action) => {
   if (action.type === 'SET_SOCKET') {
     return action.payload;
   }

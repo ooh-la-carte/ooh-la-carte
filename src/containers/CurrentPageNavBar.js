@@ -21,6 +21,7 @@ class CurrentPageNavBar extends Component {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('userId');
     window.localStorage.removeItem('isChef');
+    this.props.socketReducer.close();
     this.props.removeSocket();
     this.toggleDropDown();
   }
@@ -72,9 +73,12 @@ class CurrentPageNavBar extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return { socketReducer: state.socketReducer };
+}
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ removeSocket }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(CurrentPageNavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentPageNavBar);

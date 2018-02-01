@@ -20,24 +20,23 @@ const changeSelectedEvent = (event) => {
       selected = obj;
     }
   });
-  console.log('Action: ', selected);
   return {
     type: 'SELECT_EVENT',
     payload: selected,
   };
 };
 
-const setSocket = socketID => (
+const setSocket = socket => (
   {
     type: 'SET_SOCKET',
-    payload: socketID,
+    payload: socket,
   }
 );
 
 const removeSocket = () => (
   {
     type: 'SET_SOCKET',
-    payload: '',
+    payload: {},
   }
 );
 

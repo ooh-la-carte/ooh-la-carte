@@ -9,7 +9,6 @@ class ChatTab extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = { socket: null };
     this.initSocket = this.initSocket.bind(this);
   }
 
@@ -18,14 +17,13 @@ class ChatTab extends React.Component {
   }
 
   initSocket() {
-    if (!this.props.socketReducer) {
+    if (!this.props.socketReducer.id) {
       const socket = io(socketUrl);
       socket.on('connect', () => {
         console.log('Connected');
-        console.log('Socket: ', socket.id);
-        this.props.setSocket(socket.id);
+        console.log('Socket: ', socket);
+        this.props.setSocket(socket);
       });
-      // this.setState({ socket });
     }
   }
 
