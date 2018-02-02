@@ -42,15 +42,34 @@ class ChatTab extends React.Component {
 
   render = () => (
         <div className='container'>
-          {this.state.convos.map(convo =>
-            <div key={convo.id}>
-              <Link to='/conversation' onClick={() => {
-                axios.get('/api/user/info', { params: { id: convo.user_id } })
-                  .then((user) => {
-                    this.props.selectConversation(user.data);
-                  });
-              }} key={convo.id}>{convo.id}</Link>
-            </div>)}
+        {window.localStorage.getItem('isChef') === 'true'
+          ?
+            <div>
+              {this.state.convos.map(convo =>
+                <div key={convo.id}>
+                  <Link to='/conversation' onClick={() => {
+                    axios.get('/api/user/info', { params: { id: convo.user_id } })
+                      .then((user) => {
+                        console.log('Current user: ', window.localStorage.getItem('username'));
+                        this.props.selectConversation(user.data);
+                      });
+                  }} key={convo.id}>{convo.id}</Link>
+                </div>)}
+            </div>
+          :
+            <div>
+              {this.state.convos.map(convo =>
+                <div key={convo.id}>
+                  <Link to='/conversation' onClick={() => {
+                    axios.get('/api/user/info', { params: { id: convo.chef_id } })
+                      .then((user) => {
+                        console.log('Current user: ', window.localStorage.getItem('username'));
+                        this.props.selectConversation(user.data);
+                      });
+                  }} key={convo.id}>{convo.id}</Link>
+                </div>)}
+            </div>
+        }
         </div>
   );
 }
