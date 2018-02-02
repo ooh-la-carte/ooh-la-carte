@@ -116,11 +116,11 @@ app.post('/api/createevent', (req, res) => {
 });
 
 app.post('/api/updateContactInfo', (req, res) => {
-  const id = window.localStorage.getItem('userId');
-  const { name, address, city, state, zipcode, phone, email } = req.body;
-  User.insertContactInfo(id, name, address, city, state, zipcode, phone, email)
-  .then(() => {
-  res.sendStatus(200);
+  const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
+  User.insertContactInfo(id, name, streetAddress, city, state, zipcode, phone, email)
+    .then(() => {
+      res.sendStatus(200);
+    });
 });
 
 // example route that validates a token before sending a response

@@ -8,40 +8,39 @@ class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: window.localStorage.getItem('userId'),
       name: '',
-      password: '',
-      street_address: '',
+      streetAddress: '',
       city: '',
       state: '',
-      zip_code: '',
+      zipcode: '',
       phone: '',
       email: '',
     };
   }
-  // complete this component!
+
   componentDidMount() {
-    if (window.localStorage.userId) {
-      axios.get();
-      this.setState();
-    }
+    axios.get('/api/user/info', { params: { id: this.state.id } })
+      .then((userInfo) => {
+        const streetAddress = userInfo.data.street_name;
+        const zipcode = userInfo.data.zip_code;
+        const { name, city, state, phone, email } = userInfo.data;
+        this.setState({
+          name, streetAddress, city, state, zipcode, phone, email,
+        });
+      });
   }
 
-  setUsername = (e) => {
-    this.setState({ username: e.target.value });
-  }
-
-  setPassword = (e) => {
-    this.setState({ password: e.target.value });
+  handleUpdate = (e, { type, value }) => {
+    this.setState({ [type]: value });
   }
 
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/updateContactInfo';
-    console.log('submitting');
     axios.post(url, eventObj)
       .then((response) => {
         if (response.status === 200) {
-          console.log('Contact Info submitted sucessfully');
           this.props.history.push('/settings');
         }
       })
@@ -57,8 +56,9 @@ class ContactInfo extends Component {
           <Form.Field>
             <label>Name</label>
             <Form.Input
+              type='name'
               placeholder={this.state.username || 'Name'}
-              onChange={this.setName}
+              onChange={this.handleUpdate}
               value={this.state.name}
             />
           </Form.Field>
@@ -66,31 +66,31 @@ class ContactInfo extends Component {
             <label>Address</label>
               <Form.Input
                 placeholder={this.state.street_name || 'Street Address'}
-                type='street_address'
-                onChange={this.setStreetAddress}
-                value={this.state.street_address}
+                type='streetAddress'
+                onChange={this.handleUpdate}
+                value={this.state.streetAddress}
                 width={16}
               />
               <Form.Group>
                 <Form.Input
                   placeholder={this.state.city || 'City'}
                   type='city'
-                  onChange={this.setCity}
+                  onChange={this.handleUpdate}
                   value={this.state.city}
                   width={4}
                 />
                 <Form.Input
                   placeholder={this.state.state || 'State'}
                   type='state'
-                  onChange={this.setstate}
+                  onChange={this.handleUpdate}
                   value={this.state.state}
                   width={4}
                 />
                 <Form.Input
                   placeholder={this.state.zip_code || 'Zipcode'}
-                  type='zip_code'
-                  onChange={this.setZipcode}
-                  value={this.state.zip_code}
+                  type='zipcode'
+                  onChange={this.handleUpdate}
+                  value={this.state.zipcode}
                   width={4}
                 />
               </Form.Group>
@@ -98,22 +98,24 @@ class ContactInfo extends Component {
           <Form.Field>
           <label>Phone</label>
             <Form.Input
+              type='phone'
               placeholder={this.state.phone || 'Phone'}
-              onChange={this.setPhone}
+              onChange={this.handleUpdate}
               value={this.state.phone}
             />
           </Form.Field>
           <Form.Field>
           <label>Email</label>
             <Form.Input
+              type='email'
               placeholder={this.state.email || 'Email'}
-              onChange={this.setEmail}
+              onChange={this.handleUpdate}
               value={this.state.email}
             />
           </Form.Field>
           <br/>
 
-      <div className='btnDiv'>
+          <div className='btnDiv'>
           <Link to='/settings'>
             <Button
               className='butSec'
@@ -125,14 +127,11 @@ class ContactInfo extends Component {
             className='butPri'
             type='submit'
             inverted
-            onClick={() => {
-              this.props.history.push('/settings');
-            }}
           >
             Submit
           </Button>
 
-        </div>
+          </div>
         </Form>
       </div>
     );
