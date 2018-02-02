@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
+const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
 
 
@@ -129,6 +130,12 @@ app.get('/api/user/info', (req, res) => {
   });
 });
 
+app.get('/api/getChefs', (req, res) => {
+  User.findChefs()
+    .then(data => res.send(data))
+    .catch(err => console.log(err));
+});
+
 app.get('/api/events', (req, res) => {
   console.log('hello');
   res.end();
@@ -165,6 +172,40 @@ app.get('/api/protected', auth.ensureToken, (req, res) => {
 // catch all route
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
+});
+
+/*
+  ============
+  Chat database calls
+  ============
+*/
+
+app.post('/api/getConvos', (req, res) => {
+  console.log(req.body);
+  if (req.body.isChef === 'true') {
+    Messaging.getConvosChef(req.body.id)
+      .then((data) => {
+        console.log('chef convos: ', data);
+        res.send(data);
+      })
+      .catch(err => console.log(err));
+  } else {
+    Messaging.getConvosClient(req.body.id)
+      .then((data) => {
+        console.log('Client convos: ', data);
+        res.send(data);
+      })
+      .catch(err => console.log(err));
+  }
+});
+
+app.post('/api/conversations', (req, res) => {
+  console.log(req.body);
+  Messaging.createConvo(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(err => console.log(err));
 });
 
 /* ################
