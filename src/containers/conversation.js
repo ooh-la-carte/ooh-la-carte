@@ -5,9 +5,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket } from '../actions';
 
-const Conversation = () => (
-    <div className='chatInput'>
-      <Input placeholder='Say hi!' style={{ width: '100%' }}/>
+const Conversation = props => (
+    <div>
+      {props.selectedConversation.bio}
+      <div className='chatInput'>
+        <Input placeholder='Say hi!' style={{ width: '100%' }}/>
+      </div>
     </div>
 );
 

@@ -69,7 +69,7 @@ class SignUpForm extends Component {
   render() {
     return (
       <div className='loginForms'>
-        <Form onSubmit={() => { this.submitCreds(this.state.creds); }}>
+        <Form>
           <h3><Icon name='user circle' /> Sign up!</h3>
           <Form.Field>
             <label>Username</label>

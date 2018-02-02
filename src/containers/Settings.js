@@ -39,7 +39,7 @@ class Settings extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  handleChange = (e, { value }) => {
+  handleCuisineSelection = (e, { value }) => {
     this.setState({ cuisine:
     Object.assign(this.state.cuisine, { [value]: !this.state.cuisine[value] }) });
   }
@@ -61,33 +61,33 @@ class Settings extends Component {
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='Vietnamese' value='Vietnamese' onChange={this.handleChange} />
-                        <Form.Checkbox label='Chinese' value='Chinese' onChange={this.handleChange} />
-                        <Form.Checkbox label='French' value='French' onChange={this.handleChange} />
-                        <Form.Checkbox label='Sushi' value='Sushi' onChange={this.handleChange} />
-                        <Form.Checkbox label='Vegetarian' value='Vegetarian' onChange={this.handleChange} />
+                        <Form.Checkbox label='Vietnamese' value='Vietnamese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Chinese' value='Chinese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='French' value='French' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Sushi' value='Sushi' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Vegetarian' value='Vegetarian' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='BBQ' value='BBQ' onChange={this.handleChange}/>
-                        <Form.Checkbox label='Pastry' value='Pastry' onChange={this.handleChange}/>
-                        <Form.Checkbox label='Indian' value='Indian' onChange={this.handleChange} />
-                        <Form.Checkbox label='Thai' value='Thai' onChange={this.handleChange} />
-                        <Form.Checkbox label='Cajun' value='Cajun' onChange={this.handleChange} />
+                        <Form.Checkbox label='BBQ' value='BBQ' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox label='Pastry' value='Pastry' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox label='Indian' value='Indian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Thai' value='Thai' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Cajun' value='Cajun' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox label='Mexican' value='Mexican' onChange={this.handleChange} />
-                        <Form.Checkbox label='Italian' value='Italian' onChange={this.handleChange} />
-                        <Form.Checkbox label='Southern' value='Southern' onChange={this.handleChange} />
-                        <Form.Checkbox label='Greek' value='Greek' onChange={this.handleChange} />
-                        <Form.Checkbox label='Vegan' value='Vegan' onChange={this.handleChange} />
+                        <Form.Checkbox label='Mexican' value='Mexican' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Italian' value='Italian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Southern' value='Southern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Greek' value='Greek' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox label='Vegan' value='Vegan' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>

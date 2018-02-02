@@ -30,6 +30,7 @@ Event.findAllEventsByField = (field, target) => (
     })
 );
 
+
 Event.insertEvent = (eventObj) => {
   const { eventName,
     hostId,
