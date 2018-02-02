@@ -2,8 +2,9 @@ import React from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setSocket } from '../actions';
+import { setSocket, selectConversation } from '../actions';
 
 const socketUrl = 'http://localhost:8888/';
 class ChatTab extends React.Component {
@@ -41,7 +42,15 @@ class ChatTab extends React.Component {
 
   render = () => (
         <div className='container'>
-          {this.state.convos.map(convo => <div key={convo.id}>{convo.id}</div>)}
+          {this.state.convos.map(convo =>
+            <div key={convo.id}>
+              <Link to='/conversation' onClick={() => {
+                axios.get('/api/user/info', { params: { id: convo.user_id } })
+                  .then((user) => {
+                    this.props.selectConversation(user.data);
+                  });
+              }} key={convo.id}>{convo.id}</Link>
+            </div>)}
         </div>
   );
 }
@@ -51,7 +60,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setSocket }, dispatch);
+  return bindActionCreators({
+    setSocket,
+    selectConversation,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatTab);

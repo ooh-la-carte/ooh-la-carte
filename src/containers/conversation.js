@@ -7,7 +7,7 @@ import { setSocket } from '../actions';
 
 const Conversation = props => (
     <div>
-      {props.selectedConversation.bio}
+      {props.selectedConversation.username}
       <div className='chatInput'>
         <Input placeholder='Say hi!' style={{ width: '100%' }}/>
       </div>
