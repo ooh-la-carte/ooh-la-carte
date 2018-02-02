@@ -11,7 +11,6 @@ const Event = require('../database/models/event.js');
 const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
 
-
 /* ################
     Chat Server
 ################## */
@@ -115,6 +114,8 @@ app.post('/api/signup', (req, res) => {
     Get Routes
 ################### */
 
+/* * *  User get routes  * * */
+
 // This should be a protected route
 app.get('/api/user/info', (req, res) => {
   // console.log(req.headers);
@@ -136,9 +137,25 @@ app.get('/api/getChefs', (req, res) => {
     .catch(err => console.log(err));
 });
 
+/* * *  Event get routes  * * */
+
+// get route for returning events
+// returns all events if no url query supplied
 app.get('/api/events', (req, res) => {
-  console.log('hello');
-  res.end();
+  if (req.query.field) {
+    const { field, target } = req.query;
+    Event.findAllEventsByField(field, target)
+      .then((results) => {
+        res.type('json').json(results);
+      })
+      .catch((err) => { console.log(err); });
+  } else {
+    Event.findAllEvents()
+      .then((data) => {
+        res.type('json').json(data);
+      })
+      .catch((err) => { console.log(err); });
+  }
 });
 
 // post route for creating events
@@ -168,6 +185,7 @@ app.get('/api/protected', auth.ensureToken, (req, res) => {
     }
   });
 });
+
 
 // catch all route
 app.get('*', (req, res) => {
