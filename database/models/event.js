@@ -16,7 +16,7 @@ Event.findAllEvents = () => (
     'requests')).then()
 );
 
-Event.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
+Event.insertEvent = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
   knex('events').insert({
     creator_id: hostId,
     party_size: partySize,

@@ -48,7 +48,7 @@ exports.up = (knex, Promise) => (
     }),
     knex.schema.createTable('menu', (table) => {
       table.increments('id').unsigned().primary();
-      table.integer('chef_id').unsigned();
+      table.integer('chef_id').unsigned().references('users.id');
       table.string('pic');
       table.text('description');
       table.string('cuisine_type');
