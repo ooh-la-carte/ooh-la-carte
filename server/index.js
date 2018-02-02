@@ -7,6 +7,7 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
+const Event = require('../database/models/event.js');
 const SocketManager = require('./SocketManager');
 
 
@@ -28,9 +29,14 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 
+/* ################
+    Middleware
+################### */
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../public')));
+
 
 app.use((req, res, next) => {
   // log each request to the console
@@ -38,6 +44,11 @@ app.use((req, res, next) => {
   // continue doing what we were doing and go to the route
   next();
 });
+
+
+/* ################
+    Post Routes
+################### */
 
 // post route for login requests
 app.post('/api/login', (req, res) => {
@@ -60,6 +71,16 @@ app.post('/api/login', (req, res) => {
         res.sendStatus(403);
       }
     });
+});
+
+// post route for creating events
+app.post('/api/createevent', (req, res) => {
+  // req.body is the state object from the create event form
+  Event.insertEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
 });
 
 // post route for signup requests
@@ -89,6 +110,9 @@ app.post('/api/signup', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
+/* ################
+    Get Routes
+################### */
 
 // This should be a protected route
 app.get('/api/user/info', (req, res) => {
@@ -110,11 +134,6 @@ app.get('/api/events', (req, res) => {
   res.end();
 });
 
-// post route for creating events
-app.post('/api/createevent', (req, res) => {
-  res.sendStatus(200);
-});
-
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {
   // check the token against the secret to validate
@@ -130,9 +149,14 @@ app.get('/api/protected', auth.ensureToken, (req, res) => {
   });
 });
 
+// catch all route
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
+
+/* ################
+    Start Server
+################### */
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}!`);

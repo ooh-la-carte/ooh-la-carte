@@ -1,20 +1,42 @@
-const knex = '../index.js';
+const knex = require('../index');
+
 const Event = {};
 
 Event.findAllEvents = userId => (
   knex('events').where({ creator_id: userId }).then()
 );
 
-Event.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
-  knex('events').insert({
-    creator_id: hostId,
-    party_size: partySize,
-    address: location,
-    cuisine_type: cuisine,
-    date_type: date,
-    meal_type: meal,
+Event.insertEvent = (eventObj) => {
+  const { eventName,
+    hostId,
+    city,
+    stat,
+    zip,
+    month,
+    date,
+    year,
+    cuisine,
     description,
-  }).then().catch(err => console.log('error inserting event into database: ', err))
-);
+    partySize,
+    value } = eventObj;
+
+  return knex('events').insert({
+    name: eventName,
+    creator_id: hostId,
+    city,
+    state: stat,
+    zip_code: zip,
+    date_time: (`${year}-${month}-${date} 00:00:00`),
+    cuisine_type: cuisine,
+    description,
+    party_size: partySize,
+    meal_type: value,
+  })
+    .then((insertResult) => {
+      console.log('event sucessfully inserted');
+      return insertResult;
+    })
+    .catch(err => console.log('error inserting event into database: ', err));
+};
 
 module.exports = Event;
