@@ -1,86 +1,122 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Icon, Form } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import '../style.scss';
 
 class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      id: window.localStorage.getItem('userId'),
+      name: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      phone: '',
+      email: '',
     };
   }
-  // complete this component!
+
   componentDidMount() {
-    if (window.localStorage.userId) {
-      axios.get();
-      this.setState();
-    }
-  }
-
-  setUsername = (e) => {
-    this.setState({ username: e.target.value });
-  }
-
-  setPassword = (e) => {
-    this.setState({ password: e.target.value });
-  }
-
-  submitCreds = (username, password) => {
-    const credObj = {
-      username,
-      password,
-    };
-    const url = '/api/login';
-    if (!username || !password) {
-      console.log('invalid credentials');
-    } else {
-      console.log('submitting');
-      axios.post(url, credObj)
-        .then((response) => {
-          if (response.status === 200) {
-            window.localStorage.accessToken = response.data.token;
-            window.localStorage.userId = response.data.userId;
-            window.localStorage.isChef = response.data.isChef;
-            this.props.history.push('/userProfile');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
+    axios.get('/api/user/info', { params: { id: this.state.id } })
+      .then((userInfo) => {
+        const streetAddress = userInfo.data.street_name;
+        const zipcode = userInfo.data.zip_code;
+        const { name, city, state, phone, email } = userInfo.data;
+        this.setState({
+          name, streetAddress, city, state, zipcode, phone, email,
         });
-    }
+      });
+  }
+
+  handleUpdate = (e, { type, value }) => {
+    this.setState({ [type]: value });
+  }
+
+  handleSubmit = () => {
+    const eventObj = this.state;
+    const url = '/api/updateContactInfo';
+    axios.post(url, eventObj)
+      .then((response) => {
+        if (response.status === 200) {
+          this.props.history.push('/settings');
+        }
+      })
+      .catch((error) => {
+        console.log('submission error: ', error);
+      });
   }
 
   render() {
     return (
       <div>
-        <Form>
-          <h3><Icon name='user circle' /> Login!</h3>
+        <Form onSubmit={this.handleSubmit} className='boxed center'>
           <Form.Field>
             <label>Name</label>
-            <input
-              placeholder='Username'
-              onChange={this.setUsername}
-              value={this.state.username}
+            <Form.Input
+              type='name'
+              placeholder={this.state.username || 'Name'}
+              onChange={this.handleUpdate}
+              value={this.state.name}
             />
           </Form.Field>
           <Form.Field>
-            <label>Password</label>
-            <input
-              placeholder='Password'
-              type='password'
-              onChange={this.setPassword}
-              value={this.state.password}
+            <label>Address</label>
+              <Form.Input
+                placeholder={this.state.street_name || 'Street Address'}
+                type='streetAddress'
+                onChange={this.handleUpdate}
+                value={this.state.streetAddress}
+                width={16}
+              />
+              <Form.Group>
+                <Form.Input
+                  placeholder={this.state.city || 'City'}
+                  type='city'
+                  onChange={this.handleUpdate}
+                  value={this.state.city}
+                  width={4}
+                />
+                <Form.Input
+                  placeholder={this.state.state || 'State'}
+                  type='state'
+                  onChange={this.handleUpdate}
+                  value={this.state.state}
+                  width={4}
+                />
+                <Form.Input
+                  placeholder={this.state.zip_code || 'Zipcode'}
+                  type='zipcode'
+                  onChange={this.handleUpdate}
+                  value={this.state.zipcode}
+                  width={4}
+                />
+              </Form.Group>
+          </Form.Field>
+          <Form.Field>
+          <label>Phone</label>
+            <Form.Input
+              type='phone'
+              placeholder={this.state.phone || 'Phone'}
+              onChange={this.handleUpdate}
+              value={this.state.phone}
             />
           </Form.Field>
           <Form.Field>
+          <label>Email</label>
+            <Form.Input
+              type='email'
+              placeholder={this.state.email || 'Email'}
+              onChange={this.handleUpdate}
+              value={this.state.email}
+            />
           </Form.Field>
           <br/>
 
-      <div className='btnDiv'>
-          <Link to='/'>
+          <div className='btnDiv'>
+          <Link to='/settings'>
             <Button
               className='butSec'
               inverted
@@ -91,19 +127,15 @@ class ContactInfo extends Component {
             className='butPri'
             type='submit'
             inverted
-            onClick={() => {
-              this.props.handleClose();
-              this.props.toggleDropDown();
-            }}
           >
             Submit
           </Button>
 
-        </div>
+          </div>
         </Form>
       </div>
     );
   }
 }
 
-export default ContactInfo;
+export default withRouter(ContactInfo);
