@@ -41,7 +41,6 @@ const removeSocket = () => (
 );
 
 const selectConversation = (user) => {
-  console.log('Convo action: ', user);
   return {
     type: 'SELECT_CONVERSATION',
     payload: user.id,
