@@ -18,10 +18,8 @@ exports.up = (knex, Promise) => (
     }),
     knex.schema.createTable('conversations', (table) => {
       table.increments('id').unsigned().primary();
-    }),
-    knex.schema.createTable('chat_subscriber', (table) => {
       table.integer('user_id').unsigned().references('users.id');
-      table.integer('conversation_id').unsigned().references('conversations.id');
+      table.integer('chef_id').unsigned().references('users.id');
     }),
     knex.schema.createTable('messages', (table) => {
       table.increments('id').unsigned().primary();
@@ -48,7 +46,7 @@ exports.up = (knex, Promise) => (
     }),
     knex.schema.createTable('menu', (table) => {
       table.increments('id').unsigned().primary();
-      table.integer('chef_id').unsigned();
+      table.integer('chef_id').unsigned().references('users.id');
       table.string('pic');
       table.text('description');
       table.string('cuisine_type');
