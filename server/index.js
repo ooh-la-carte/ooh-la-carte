@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
+const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
 
 
@@ -129,6 +130,12 @@ app.get('/api/user/info', (req, res) => {
   });
 });
 
+app.get('/api/getChefs', (req, res) => {
+  User.findChefs()
+    .then(data => res.send(data))
+    .catch(err => console.log(err));
+});
+
 app.get('/api/events', (req, res) => {
   console.log('hello');
   res.end();
@@ -160,8 +167,13 @@ app.get('*', (req, res) => {
   ============
 */
 
-app.get('api/conversations', (req, res) => {
-  
+app.post('/api/conversations', (req, res) => {
+  console.log(req.body);
+  Messaging.createConvo(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(err => console.log(err));
 });
 
 /* ################

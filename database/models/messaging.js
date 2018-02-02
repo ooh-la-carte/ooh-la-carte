@@ -1,8 +1,13 @@
-const knex = '../index.js';
+const knex = require('../index');
+
 const Messaging = {};
 
-Messaging.createConvo = () => (
-  knex('conversations').insert().then()
+Messaging.createConvo = convoObj => (
+  knex('conversations').insert({
+    user_id: convoObj.user,
+    chef_id: convoObj.chef,
+  })
+    .then(() => (console.log('inserted'))).catch(err => console.log(err))
 );
 
 Messaging.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (

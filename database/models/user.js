@@ -17,6 +17,10 @@ User.findUserByName = username => (
 //   this.on('users.id', id);
 // }).toSQL().sql;
 
+User.findChefs = () => (
+  knex('users').where('is_chef', true)
+);
+
 User.findUserById = id => (
   knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email').then()
 );
