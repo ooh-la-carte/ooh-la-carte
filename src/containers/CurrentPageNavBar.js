@@ -44,7 +44,7 @@ class CurrentPageNavBar extends Component {
       chatTab: 'Inbox',
       conversation: this.props.selectedConversation.host
         ? this.props.selectedConversation.host
-        : this.props.selectedConversation.name,
+        : this.props.selectedConversation.username,
     };
 
     return (
