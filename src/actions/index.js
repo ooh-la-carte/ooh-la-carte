@@ -40,11 +40,11 @@ const removeSocket = () => (
   }
 );
 
-const selectConversation = (user) => {
-  return {
+const selectConversation = userId => (
+  {
     type: 'SELECT_CONVERSATION',
-    payload: user.id,
-  };
-};
+    payload: userId,
+  }
+);
 
 export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket, selectConversation };

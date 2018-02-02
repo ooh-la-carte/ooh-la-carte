@@ -7,7 +7,6 @@ import { changeSelectedChef } from '../actions';
 import '../style.scss';
 import data from '../MockData';
 
-
 const BrowseChefs = props => (
     <div className='topLevelDiv'>
       {data.chefs.map(chef => (

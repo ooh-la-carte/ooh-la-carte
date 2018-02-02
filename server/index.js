@@ -134,6 +134,16 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
+/*
+  ============
+  Chat database calls
+  ============
+*/
+
+app.get('api/conversations', (req, res) => {
+  
+});
+
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}!`);
 });
