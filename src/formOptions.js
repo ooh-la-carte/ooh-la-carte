@@ -6,51 +6,51 @@
 module.exports.monthOptions = [
   {
     text: 'Jan',
-    value: 'January',
+    value: '1',
   },
   {
     text: 'Feb',
-    value: 'Feburary',
+    value: '2',
   },
   {
     text: 'Mar',
-    value: 'March',
+    value: '3',
   },
   {
     text: 'Apr',
-    value: 'April',
+    value: '4',
   },
   {
     text: 'May',
-    value: 'May',
+    value: '5',
   },
   {
     text: 'Jun',
-    value: 'June',
+    value: '6',
   },
   {
     text: 'Jul',
-    value: 'July',
+    value: '7',
   },
   {
     text: 'Aug',
-    value: 'August',
+    value: '8',
   },
   {
     text: 'Sept',
-    value: 'September',
+    value: '9',
   },
   {
     text: 'Oct',
-    value: 'October',
+    value: '10',
   },
   {
     text: 'Nov',
-    value: 'November',
+    value: '11',
   },
   {
     text: 'Dec',
-    value: 'December',
+    value: '12',
   },
 ];
 

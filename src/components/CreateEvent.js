@@ -25,7 +25,12 @@ class CreateEventForm extends Component {
       eventName: '',
       hostId: window.localStorage.getItem('userId'),
       chefID: '',
+      city: '',
+      stat: '',
+      zip: '',
+      month: '',
       date: '',
+      year: '',
       cuisine: '',
       description: '',
       partySize: '',
@@ -50,7 +55,7 @@ class CreateEventForm extends Component {
   }
 
   setStat = (e) => {
-    this.setState({ state: e.target.value });
+    this.setState({ stat: e.target.value });
   }
 
   setCity = (e) => {
@@ -85,7 +90,7 @@ class CreateEventForm extends Component {
     if (!eventObj.date || !eventObj.partySize || !eventObj.value) {
       console.log('Required fields not provided');
     } else {
-      console.log('submitting');
+      console.log('submitting event');
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
@@ -127,7 +132,7 @@ class CreateEventForm extends Component {
               <label>State</label>
               <Input
                 placeholder='TX'
-                value={this.state.state}
+                value={this.state.stat}
                 onChange={this.setStat}
               />
             </Form.Field>
