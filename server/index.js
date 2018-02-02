@@ -110,6 +110,14 @@ app.post('/api/createevent', (req, res) => {
   res.sendStatus(200);
 });
 
+app.post('/api/updateContactInfo', (req, res) => {
+  const id = window.localStorage.getItem('userId');
+  const { name, address, city, state, zipcode, phone, email } = req.body;
+  User.insertContactInfo(id, name, address, city, state, zipcode, phone, email)
+  .then(() => {
+  res.sendStatus(200);
+});
+
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {
   // check the token against the secret to validate

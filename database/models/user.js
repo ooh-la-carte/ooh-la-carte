@@ -46,6 +46,12 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
+User.insertContactInfo = (id, name, address, city, state, zipcode, phone, email) => knex('users')
+  .where('id', id)
+  .insert({
+    name, address, city, state, zipcode, phone, email,
+  });
+
 User.getAndVerifyUser = (username, password) => {
   let userId;
   let isChef;
