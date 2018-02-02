@@ -53,6 +53,9 @@ User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, 
     name, street_name: streetAddress, city, state, zip_code: zipcode, phone, email,
   });
 
+User.updateCuisineSelection = (id, cuisine) => knex('users')
+  .where('id', id)
+  .update({ cuisine });
 
 User.getAndVerifyUser = (username, password) => {
   let userId;

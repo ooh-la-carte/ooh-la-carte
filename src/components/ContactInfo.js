@@ -16,6 +16,7 @@ class ContactInfo extends Component {
       zipcode: '',
       phone: '',
       email: '',
+      bio: '',
     };
   }
 
@@ -60,6 +61,15 @@ class ContactInfo extends Component {
               placeholder={this.state.username || 'Name'}
               onChange={this.handleUpdate}
               value={this.state.name || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Bio</label>
+            <Form.Input
+              type='bio'
+              placeholder={this.state.username || 'Tell us about yourself...'}
+              onChange={this.handleUpdate}
+              value={this.state.bio || ''}
             />
           </Form.Field>
           <Form.Field>
