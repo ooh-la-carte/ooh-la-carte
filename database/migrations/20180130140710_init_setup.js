@@ -32,7 +32,7 @@ exports.up = (knex, Promise) => (
       table.integer('creator_id').unsigned().notNullable().references('users.id');
       table.integer('chef_id').unsigned().references('users.id');
       table.string('name');
-      table.integer('party_size').unsigned().notNullable();
+      table.string('party_size').notNullable();
       table.string('street_name');
       table.string('city');
       table.string('state');
