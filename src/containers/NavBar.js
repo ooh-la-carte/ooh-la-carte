@@ -7,7 +7,6 @@ class NavBar extends Component {
     super(props);
     this.state = { dropdown: false };
     this.toggleDropDown = this.toggleDropDown.bind(this);
-    console.log(typeof window.localStorage.getItem('isChef'));
   }
 
   toggleDropDown() {
