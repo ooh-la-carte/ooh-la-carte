@@ -59,7 +59,7 @@ class ContactInfo extends Component {
               type='name'
               placeholder={this.state.username || 'Name'}
               onChange={this.handleUpdate}
-              value={this.state.name}
+              value={this.state.name || ''}
             />
           </Form.Field>
           <Form.Field>
@@ -68,29 +68,28 @@ class ContactInfo extends Component {
                 placeholder={this.state.street_name || 'Street Address'}
                 type='streetAddress'
                 onChange={this.handleUpdate}
-                value={this.state.streetAddress}
-                width={16}
+                value={this.state.streetAddress || ''}
               />
               <Form.Group>
                 <Form.Input
                   placeholder={this.state.city || 'City'}
                   type='city'
                   onChange={this.handleUpdate}
-                  value={this.state.city}
+                  value={this.state.city || ''}
                   width={4}
                 />
                 <Form.Input
                   placeholder={this.state.state || 'State'}
                   type='state'
                   onChange={this.handleUpdate}
-                  value={this.state.state}
+                  value={this.state.state || ''}
                   width={4}
                 />
                 <Form.Input
                   placeholder={this.state.zip_code || 'Zipcode'}
                   type='zipcode'
                   onChange={this.handleUpdate}
-                  value={this.state.zipcode}
+                  value={this.state.zipcode || ''}
                   width={4}
                 />
               </Form.Group>
@@ -101,7 +100,7 @@ class ContactInfo extends Component {
               type='phone'
               placeholder={this.state.phone || 'Phone'}
               onChange={this.handleUpdate}
-              value={this.state.phone}
+              value={this.state.phone || ''}
             />
           </Form.Field>
           <Form.Field>
@@ -110,7 +109,7 @@ class ContactInfo extends Component {
               type='email'
               placeholder={this.state.email || 'Email'}
               onChange={this.handleUpdate}
-              value={this.state.email}
+              value={this.state.email || ''}
             />
           </Form.Field>
           <br/>
