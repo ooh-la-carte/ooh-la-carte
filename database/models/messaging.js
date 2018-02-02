@@ -10,6 +10,14 @@ Messaging.createConvo = convoObj => (
     .then(() => (console.log('inserted'))).catch(err => console.log(err))
 );
 
+Messaging.getConvosChef = userId => (
+  knex('conversations').where('chef_id', userId)
+);
+
+Messaging.getConvosClient = userId => (
+  knex('conversations').where('user_id', userId)
+);
+
 Messaging.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
   knex('events').insert({
     creator_id: hostId,

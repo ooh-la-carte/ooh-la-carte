@@ -180,6 +180,25 @@ app.get('*', (req, res) => {
   ============
 */
 
+app.post('/api/getConvos', (req, res) => {
+  console.log(req.body);
+  if (req.body.isChef === 'true') {
+    Messaging.getConvosChef(req.body.id)
+      .then((data) => {
+        console.log('chef convos: ', data);
+        res.send(data);
+      })
+      .catch(err => console.log(err));
+  } else {
+    Messaging.getConvosClient(req.body.id)
+      .then((data) => {
+        console.log('Client convos: ', data);
+        res.send(data);
+      })
+      .catch(err => console.log(err));
+  }
+});
+
 app.post('/api/conversations', (req, res) => {
   console.log(req.body);
   Messaging.createConvo(req.body)
