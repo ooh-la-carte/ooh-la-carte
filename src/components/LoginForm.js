@@ -38,7 +38,6 @@ class LoginForm extends Component {
             window.localStorage.userId = response.data.userId;
             window.localStorage.isChef = response.data.isChef;
             window.localStorage.username = response.data.username;
-            this.props.changeCurrentPage('Home');
             this.props.history.push('/userProfile');
           }
         })
