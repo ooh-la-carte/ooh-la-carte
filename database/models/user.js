@@ -23,6 +23,7 @@ User.findUserById = id => (
 
 User.insertUser = (username, password, email, accType) => {
   let isAChef = false;
+
   if (accType === 'chef') isAChef = true;
   return bcrypt.hash(password, 10)
     .then(hash => (
@@ -37,7 +38,7 @@ User.insertUser = (username, password, email, accType) => {
       console.log('user sucessfully inserted');
       return insertResult;
     })
-    .then(() => User.findUserById(username))
+    .then(() => User.findUserByName(username))
     .then(data => ({
       userId: data[0].id,
       isChef: data[0].is_chef,
@@ -46,14 +47,12 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
+
 User.getAndVerifyUser = (username, password) => {
-  console.log(username);
-  console.log(password);
   let userId;
   let isChef;
   return User.findUserByName(username)
     .then((results) => {
-      console.log(results[0].id);
       userId = results[0].id;
       isChef = results[0].is_chef;
       return bcrypt.compare(password, results[0].password);
