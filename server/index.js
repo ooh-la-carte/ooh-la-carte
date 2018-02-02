@@ -105,6 +105,11 @@ app.get('/api/user/info', (req, res) => {
   });
 });
 
+app.get('/api/events', (req, res) => {
+  console.log('hello');
+  res.end();
+});
+
 // post route for creating events
 app.post('/api/createevent', (req, res) => {
   res.sendStatus(200);

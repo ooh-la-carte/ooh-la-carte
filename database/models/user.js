@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const User = {};
 
 
-User.findUser = username => (
+User.findUserByName = username => (
   knex('users')
     .where({ username })
     .then(data => data)
@@ -23,6 +23,7 @@ User.findUserById = id => (
 
 User.insertUser = (username, password, email, accType) => {
   let isAChef = false;
+
   if (accType === 'chef') isAChef = true;
   return bcrypt.hash(password, 10)
     .then(hash => (
@@ -37,7 +38,7 @@ User.insertUser = (username, password, email, accType) => {
       console.log('user sucessfully inserted');
       return insertResult;
     })
-    .then(() => User.findUserById(username))
+    .then(() => User.findUserByName(username))
     .then(data => ({
       userId: data[0].id,
       isChef: data[0].is_chef,
@@ -46,10 +47,11 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
+
 User.getAndVerifyUser = (username, password) => {
   let userId;
   let isChef;
-  return User.findUserById(username)
+  return User.findUserByName(username)
     .then((results) => {
       userId = results[0].id;
       isChef = results[0].is_chef;
