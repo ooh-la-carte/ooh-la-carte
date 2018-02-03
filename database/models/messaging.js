@@ -10,11 +10,6 @@ Messaging.createConvo = convoObj => (
     .then(() => (console.log('inserted'))).catch(err => console.log(err))
 );
 
-// knex.select('*').from('users').innerJoin('addresses', function() {
-//   this.on('users.address_id', 'addresses.id');
-//   this.on('users.id', id);
-// }).toSQL().sql;
-
 Messaging.getConvosChef = chefId => (
   knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.user_id');
