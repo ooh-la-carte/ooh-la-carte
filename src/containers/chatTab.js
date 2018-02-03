@@ -1,18 +1,17 @@
 import React from 'react';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import axios from 'axios';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket, selectConversation } from '../actions';
 
-const socketUrl = 'http://localhost:8888/';
+// const socketUrl = 'http://localhost:8888/';
 class ChatTab extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { convos: [] };
-    this.initSocket = this.initSocket.bind(this);
   }
 
   componentDidMount = () => {
@@ -24,21 +23,20 @@ class ChatTab extends React.Component {
       .catch(err => console.log(err));
   }
 
-  componentWillMount() {
-    this.initSocket();
-  }
+  // componentWillMount() {
+  //   this.initSocket();
+  // }
 
-  initSocket() {
-    if (!this.props.socketReducer.id) {
-      const socket = io(socketUrl);
-      socket.on('connect', () => {
-        socket.userId = window.localStorage.getItem('userId');
-        console.log('Connected');
-        console.log('Socket: ', socket);
-        this.props.setSocket(socket);
-      });
-    }
-  }
+  // initSocket = () => {
+  //   if (!this.props.socketReducer.id) {
+  //     const socket = io(socketUrl);
+  //     socket.on('connect', () => {
+  //       socket.userId = window.localStorage.getItem('userId');
+  //       console.log('Connected');
+  //       this.props.setSocket(socket);
+  //     });
+  //   }
+  // }
 
   render = () => (
         <div className='container'>
@@ -50,10 +48,11 @@ class ChatTab extends React.Component {
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.user_id } })
                       .then((user) => {
-                        console.log('Current user: ', window.localStorage.getItem('username'));
-                        this.props.selectConversation(user.data);
+                        const obj = user.data;
+                        obj.convo_id = convo.id;
+                        this.props.selectConversation(obj);
                       });
-                  }} key={convo.id}>{convo.id}</Link>
+                  }}>{convo.id}</Link>
                 </div>)}
             </div>
           :
@@ -63,10 +62,11 @@ class ChatTab extends React.Component {
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.chef_id } })
                       .then((user) => {
-                        console.log('Current user: ', window.localStorage.getItem('username'));
-                        this.props.selectConversation(user.data);
+                        const obj = user.data;
+                        obj.convo_id = convo.id;
+                        this.props.selectConversation(obj);
                       });
-                  }} key={convo.id}>{convo.id}</Link>
+                  }}>{convo.id}</Link>
                 </div>)}
             </div>
         }

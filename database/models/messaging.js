@@ -13,12 +13,15 @@ Messaging.createConvo = convoObj => (
 Messaging.getConvosChef = chefId => (
   knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.user_id');
-    this.on('conversations.id', chefId);
+    this.on('conversations.chef_id', chefId);
   })
 );
 
 Messaging.getConvosClient = userId => (
-  knex('conversations').where('user_id', userId)
+  knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
+    this.on('users.id', 'conversations.user_id');
+    this.on('conversations.user_id', userId);
+  })
 );
 
 // Messaging.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
