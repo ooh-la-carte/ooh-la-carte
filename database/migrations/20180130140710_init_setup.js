@@ -11,6 +11,7 @@ exports.up = (knex, Promise) => (
       table.string('name');
       table.string('username').unique().notNullable();
       table.string('phone');
+      table.string('cuisine');
       table.string('password').notNullable();
       table.string('email').unique().notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
