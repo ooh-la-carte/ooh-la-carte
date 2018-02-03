@@ -6,6 +6,7 @@ const config = {
     tableName: 'knex_migrations',
     directory: path.join(__dirname, './migrations'),
   },
+  seeds: { directory: path.join(__dirname, 'seeds') },
 };
 
 if (process.env.DATABASE_ENGINE === 'sqlite3') {
