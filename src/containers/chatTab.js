@@ -44,7 +44,7 @@ class ChatTab extends React.Component {
           ?
             <div>
               {this.state.convos.map(convo =>
-                <div key={convo.id} className='chatMessages'>
+                <div key={convo.chatId} className='chatMessages'>
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.user_id } })
                       .then((user) => {
@@ -52,13 +52,13 @@ class ChatTab extends React.Component {
                         obj.convo_id = convo.id;
                         this.props.selectConversation(obj);
                       });
-                  }}>{convo.id}</Link>
+                  }}>{convo.chatId}</Link>
                 </div>)}
             </div>
           :
             <div>
               {this.state.convos.map(convo =>
-                <div key={convo.id}>
+                <div key={convo.chatId}>
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.chef_id } })
                       .then((user) => {
@@ -66,7 +66,7 @@ class ChatTab extends React.Component {
                         obj.convo_id = convo.id;
                         this.props.selectConversation(obj);
                       });
-                  }}>{convo.id}</Link>
+                  }}>{convo.chatId}</Link>
                 </div>)}
             </div>
         }
