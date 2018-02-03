@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Accordion, Icon, Dropdown, Button, Form, Checkbox, Radio, Select, Input, TextArea } from 'semantic-ui-react';
+import { Dropdown, Button, Form, Radio, Select, Input, TextArea } from 'semantic-ui-react';
 import '../style.scss';
 
 import options from '../formOptions';
