@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import '../style.scss';
 import { changeSelectedEvent } from '../actions';
-import data from '../MockData';
+// import data from '../MockData';
 
 
 class BrowseEvents extends Component {
