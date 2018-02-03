@@ -17,11 +17,12 @@ class CurrentPageNavBar extends Component {
     this.setState({ dropdown: !this.state.dropdown });
   }
 
-  logout = () => {
+  logout = (username) => {
     window.localStorage.removeItem('accessToken');
     window.localStorage.removeItem('userId');
     window.localStorage.removeItem('isChef');
     window.localStorage.removeItem('username');
+    this.props.socketReducer.emit('remove user', username);
     this.props.socketReducer.close();
     this.props.removeSocket();
     this.toggleDropDown();
@@ -58,7 +59,7 @@ class CurrentPageNavBar extends Component {
                 {this.state.dropdown
                   ?
                     <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer' onClick={this.logout}>
+                      <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
                         <Link to='/' className='loginLink'>Log out</Link>
                       </div>
                       <div className='dropdownLinkContainer'>

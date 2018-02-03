@@ -42,7 +42,7 @@ class Conversation extends Component {
 
   render = () => (
     <div>
-      {this.state.chat.map((message, i) => (<div key={i}>{message.message}</div>))}
+      {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.message}</div>))}
       <div className='chatInput'>
         <Input
         value={ this.state.input }

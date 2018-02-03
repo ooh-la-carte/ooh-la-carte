@@ -17,6 +17,10 @@ class UserProfile extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.socketReducer.emit('add user', window.localStorage.getItem('username'));
+  }
+
   handleChange = (e, { value }) => {
     this.setState({ value });
   }
@@ -67,8 +71,12 @@ class UserProfile extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return { socketReducer: state.socketReducer };
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ changeSelectedEvent }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(UserProfile));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfile));
