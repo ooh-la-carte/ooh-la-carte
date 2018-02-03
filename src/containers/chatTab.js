@@ -1,5 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
+import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket } from '../actions';
@@ -8,7 +9,18 @@ const socketUrl = 'http://localhost:8888/';
 class ChatTab extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = { convos: [] };
     this.initSocket = this.initSocket.bind(this);
+  }
+
+  componentDidMount = () => {
+    axios.post('/api/getConvos', {
+      id: window.localStorage.getItem('userId'),
+      isChef: window.localStorage.getItem('isChef'),
+    })
+      .then(convos => this.setState({ convos: convos.data }))
+      .catch(err => console.log(err));
   }
 
   componentWillMount() {
@@ -29,7 +41,7 @@ class ChatTab extends React.Component {
 
   render = () => (
         <div className='container'>
-          Chat room!
+          {this.state.convos.map(convo => <div key={convo.id}>{convo.id}</div>)}
         </div>
   );
 }
