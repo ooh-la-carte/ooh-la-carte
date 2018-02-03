@@ -10,6 +10,7 @@ class Settings extends Component {
     this.state = {
       user: {
         name: '',
+        rate: '',
         streetAddress: '',
         city: '',
         state: '',
@@ -44,11 +45,21 @@ class Settings extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
-        const { name, city, state, phone, email, cuisine } = userInfo.data;
-        this.setState({ user:
-          {
-            name, streetAddress, city, state, zipcode, phone, email, cuisine: JSON.parse(cuisine),
-          } });
+        const { name, city, state, phone, email, rate, cuisine } = userInfo.data;
+        if (cuisine) {
+          this.setState({ user:
+            {
+              name,
+              streetAddress,
+              city,
+              state,
+              zipcode,
+              phone,
+              email,
+              rate,
+              cuisine: JSON.parse(cuisine),
+            } });
+        }
       });
   }
 
@@ -60,9 +71,21 @@ class Settings extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
+  handleRateChange = (e, { value }) => {
+    this.setState(Object.assign(this.state, { user:
+      Object.assign(this.state.user, { rate: value }) }));
+    const eventObj = {
+      id: this.state.id,
+      rate: this.state.user.rate,
+    };
+    const url = '/api/updateChefRate';
+    axios.post(url, eventObj);
+  }
+
   handleCuisineSelection = (e, { value }) => {
-    this.setState({ user: { cuisine:
-    Object.assign(this.state.user.cuisine, { [value]: !this.state.user.cuisine[value] }) } });
+    this.setState(Object.assign(this.state, { user:
+      Object.assign(this.state.user, { cuisine:
+        Object.assign(this.state.user.cuisine, { [value]: !this.state.user.cuisine[value] }) }) }));
     const eventObj = {
       id: this.state.id,
       cuisine: JSON.stringify(this.state.user.cuisine),
@@ -139,11 +162,11 @@ class Settings extends Component {
               <Accordion.Content active={this.state.activeIndex === 1}>
                 <Form>
                   <Form.Group grouped>
-                    <Form.Checkbox label='Budget' value='1' />
-                    <Form.Checkbox label='Moderate' value='2' />
-                    <Form.Checkbox label='High' value='3' />
-                    <Form.Checkbox label='Luxury' value='4'/>
-                    <Form.Checkbox label='Custom' value='5'/>
+                    <Form.Checkbox checked={this.state.user.rate === '1'} label='Budget' value='1' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.user.rate === '2'} label='Moderate' value='2' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.user.rate === '3'} label='High' value='3' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.user.rate === '4'} label='Luxury' value='4'onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.user.rate === '5'} label='Custom' value='5'onChange={this.handleRateChange} />
                   </Form.Group>
                 </Form>
               </Accordion.Content>
