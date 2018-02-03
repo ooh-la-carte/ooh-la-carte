@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import '../style.scss';
@@ -14,7 +15,7 @@ const SelectedChef = (props) => {
         <Image size='large' src={store.image} />
         <Card.Content>
           <Card.Header>
-            <div className='selectedCardTitle'>{store.name}</div>
+            <div className='selectedCardTitle'>{store.username}</div>
           </Card.Header>
           <Card.Meta>
             <span className='date'>
@@ -35,7 +36,17 @@ const SelectedChef = (props) => {
         <Card.Content extra>
           <div>
             <span><Icon name='food'/>Years experience: {store.experience}</span>
-            <Link to='/conversation' onClick={() => { props.selectConversation(store); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
+            <div onClick={() => {
+              props.selectConversation(store);
+              const convo = {
+                user: window.localStorage.getItem('userId'),
+                chef: store.id,
+              };
+              axios.post('/api/conversations', convo)
+                .then(() => {
+                  props.history.push('/conversation');
+                });
+            }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
           </div>
         </Card.Content>
       </Card>
@@ -51,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ selectConversation }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedChef);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SelectedChef));

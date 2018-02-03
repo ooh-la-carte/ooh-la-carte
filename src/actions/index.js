@@ -1,17 +1,11 @@
 import data from '../MockData';
 
-const changeSelectedChef = (chef) => {
-  let selected = {};
-  data.chefs.forEach((obj) => {
-    if (obj.id === chef) {
-      selected = obj;
-    }
-  });
-  return {
+const changeSelectedChef = chef => (
+  {
     type: 'SELECT_CHEF',
-    payload: selected,
-  };
-};
+    payload: chef,
+  }
+);
 
 const changeSelectedEvent = (event) => {
   let selected = {};
@@ -40,12 +34,11 @@ const removeSocket = () => (
   }
 );
 
-const selectConversation = (user) => {
-  console.log('Convo action: ', user);
-  return {
+const selectConversation = userId => (
+  {
     type: 'SELECT_CONVERSATION',
-    payload: user.id,
-  };
-};
+    payload: userId,
+  }
+);
 
 export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket, selectConversation };

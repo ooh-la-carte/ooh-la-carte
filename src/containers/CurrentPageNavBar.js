@@ -29,7 +29,6 @@ class CurrentPageNavBar extends Component {
 
   render() {
     const currentPage = window.location.pathname.split('/')[1];
-
     const pages = {
       selectedEvent: 'Event Detail',
       userProfile: 'Home',
@@ -43,7 +42,9 @@ class CurrentPageNavBar extends Component {
       createEvent: 'Add Event',
       userEvents: 'Events',
       chatTab: 'Inbox',
-      conversation: this.props.selectedConversation,
+      conversation: this.props.selectedConversation.host
+        ? this.props.selectedConversation.host
+        : this.props.selectedConversation.username,
     };
 
     return (
