@@ -17,10 +17,19 @@ class Conversation extends Component {
   componentDidMount() {
     console.log('reciever up');
     console.log(this.props.socketReducer);
-    this.props.socketReducer.on('new message', (data) => {
-      console.log(data);
-      const newChat = [...this.state.chat, data];
-      this.setState({ chat: newChat });
+    this.props.socketReducer.on('private message', (data) => {
+      if (window.localStorage.getItem('username') === data.reciever) {
+        console.log(data);
+        const newChat = [...this.state.chat, data];
+        this.setState({ chat: newChat });
+      }
+    });
+    this.props.socketReducer.on('self message', (data) => {
+      if (Number(window.localStorage.getItem('userId')) === data.sender) {
+        console.log(data);
+        const newChat = [...this.state.chat, data];
+        this.setState({ chat: newChat });
+      }
     });
   }
 
@@ -33,7 +42,7 @@ class Conversation extends Component {
       this.props.socketReducer.emit('send', {
         message: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
-        reciever: this.props.selectedConversation.id,
+        reciever: this.props.selectedConversation.username,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
       this.setState({ input: '' });

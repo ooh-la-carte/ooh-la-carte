@@ -19,8 +19,15 @@ module.exports = (socket) => {
   });
 
   socket.on('send', (obj) => {
-    console.log('Message recieved!', obj);
-    socket.emit('new message', obj);
+    if (connectedUsers[obj.reciever]) {
+      console.log('Message recieved!', obj);
+      socket.emit('private message', obj);
+      socket.emit('new message', obj);
+    } else {
+      console.log('PM: ', obj);
+      socket.emit('self message', obj);
+      // database insert call here
+    }
   });
 
   socket.on('disconnect', () => {
