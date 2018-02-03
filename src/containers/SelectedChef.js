@@ -8,39 +8,39 @@ import { selectConversation } from '../actions';
 import '../style.scss';
 
 const SelectedChef = (props) => {
-  const store = props.selectedChefReducer;
+  const chef = props.selectedChefReducer;
   return (
     <div className='selectedEventCardDiv'>
       <Card id='selectedEventCard'>
-        <Image size='large' src={store.image} />
+        <Image size='large' src={chef.image} />
         <Card.Content>
           <Card.Header>
-            <div className='selectedCardTitle'>{store.username}</div>
+            <div className='selectedCardTitle'>{chef.username}</div>
           </Card.Header>
           <Card.Meta>
             <span className='date'>
-              Speciality: {store.specialty}
+              Speciality: {chef.specialty}
             </span>
             <div className='date'>
-              Rate: {store.rate}
+              Rate: {chef.rate}
             </div>
           </Card.Meta>
           <Card.Description>
-            <div className='detailSegment'>{store.bio}</div>
-            <div className='detailSegment'>Restuarant: {store.restuarant}</div>
-            <div className='detailSegment'><Icon name='empty star'/>Rating: {store.rating}</div>
+            <div className='detailSegment'>{chef.bio}</div>
+            <div className='detailSegment'>Restuarant: {chef.restuarant}</div>
+            <div className='detailSegment'><Icon name='empty star'/>Rating: {chef.rating}</div>
             <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
             <div className='detailSegment'><Icon name='map outline'/> Menu: menu rendered here</div>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div>
-            <span><Icon name='food'/>Years experience: {store.experience}</span>
+            <span><Icon name='food'/>Years experience: {chef.experience}</span>
             <div onClick={() => {
-              props.selectConversation(store);
+              props.selectConversation(chef);
               const convo = {
                 user: window.localStorage.getItem('userId'),
-                chef: store.id,
+                chef: chef.id,
               };
               axios.post('/api/conversations', convo)
                 .then(() => {
