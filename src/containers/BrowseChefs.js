@@ -17,7 +17,6 @@ class BrowseChefs extends Component {
   componentDidMount = () => {
     axios.get('/api/getChefs')
       .then((chefs) => {
-        console.log(chefs.data);
         this.setState({ chefs: chefs.data });
       })
       .catch(err => console.log(err));

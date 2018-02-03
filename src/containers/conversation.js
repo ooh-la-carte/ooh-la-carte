@@ -1,21 +1,66 @@
-import React from 'react';
+import React, { Component } from 'react';
 // import io from 'socket.io-client';
 import { Input } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket } from '../actions';
 
-const Conversation = props => (
+class Conversation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      input: '',
+      chat: [],
+    };
+  }
+
+  componentDidMount() {
+    console.log('reciever up');
+    console.log(this.props.socketReducer);
+    this.props.socketReducer.on('new message', (data) => {
+      console.log(data);
+      const newChat = [...this.state.chat, data];
+      this.setState({ chat: newChat });
+    });
+  }
+
+  changeInput = (e) => {
+    this.setState({ input: e.target.value });
+  }
+
+  submit = (e) => {
+    if (e.key === 'Enter') {
+      this.props.socketReducer.emit('send', {
+        message: this.state.input,
+        sender: Number(window.localStorage.getItem('userId')),
+        reciever: this.props.selectedConversation.id,
+        convo_id: this.props.selectedConversation.convo_id,
+      }, () => console.log('Emitted'));
+      this.setState({ input: '' });
+    }
+  }
+
+  render = () => (
     <div>
-      {props.selectedConversation.username}
+      {this.state.chat.map((message, i) => (<div key={i}>{message.message}</div>))}
       <div className='chatInput'>
-        <Input placeholder='Say hi!' style={{ width: '100%' }}/>
+        <Input
+        value={ this.state.input }
+        onChange={ this.changeInput }
+        onKeyPress= { this.submit }
+        placeholder='Say hi!'
+        style={{ width: '100%' }}
+        />
       </div>
     </div>
-);
+  )
+}
 
 function mapStateToProps(state) {
-  return { selectedConversation: state.selectedConversation };
+  return {
+    selectedConversation: state.selectedConversation,
+    socketReducer: state.socketReducer,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
