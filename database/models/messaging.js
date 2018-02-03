@@ -18,7 +18,7 @@ Messaging.getConvosChef = chefId => (
 
 Messaging.getConvosClient = userId => (
   knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
-    this.on('users.id', 'conversations.user_id');
+    this.on('users.id', 'conversations.chef_id');
   }).where('conversations.user_id', userId)
 );
 

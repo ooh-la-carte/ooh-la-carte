@@ -14,7 +14,7 @@ class ChatTab extends React.Component {
     this.state = { convos: [] };
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     axios.post('/api/getConvos', {
       id: window.localStorage.getItem('userId'),
       isChef: window.localStorage.getItem('isChef'),
@@ -48,8 +48,9 @@ class ChatTab extends React.Component {
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.user_id } })
                       .then((user) => {
+                        console.log(user);
                         const obj = user.data;
-                        obj.convo_id = convo.id;
+                        obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
                       });
                   }}>{convo.chatId}</Link>
@@ -63,7 +64,7 @@ class ChatTab extends React.Component {
                     axios.get('/api/user/info', { params: { id: convo.chef_id } })
                       .then((user) => {
                         const obj = user.data;
-                        obj.convo_id = convo.id;
+                        obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
                       });
                   }}>{convo.chatId}</Link>
