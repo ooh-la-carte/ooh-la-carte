@@ -18,7 +18,7 @@ User.findUserByName = username => (
 // }).toSQL().sql;
 
 User.findUserById = id => (
-  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id').then()
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'cuisine').then()
 );
 
 User.insertUser = (username, password, email, accType) => {

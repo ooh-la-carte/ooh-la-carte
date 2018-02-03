@@ -33,20 +33,22 @@ class Settings extends Component {
         zipcode: '',
         phone: '',
         email: '',
+        cuisine: '',
       },
       id: window.localStorage.getItem('userId'),
     };
   }
+
 
   componentDidMount() {
     axios.get('/api/user/info', { params: { id: this.state.id } })
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
-        const { name, city, state, phone, email } = userInfo.data;
+        const { name, city, state, phone, email, cuisine } = userInfo.data;
         this.setState({ user:
           {
-            name, streetAddress, city, state, zipcode, phone, email,
+            name, streetAddress, city, state, zipcode, phone, email, cuisine,
           } });
       });
   }
@@ -62,25 +64,12 @@ class Settings extends Component {
   handleCuisineSelection = (e, { value }) => {
     this.setState({ cuisine:
     Object.assign(this.state.cuisine, { [value]: !this.state.cuisine[value] }) });
-    const cuisineString = [];
-    Object.keys(this.state.cuisine).map((keyName) => {
-      if (this.state.cuisine[keyName]) {
-        cuisineString.push(1);
-      } else {
-        cuisineString.push(0);
-      }
-      return 1;
-    });
-    console.log(cuisineString);
     const eventObj = {
       id: this.state.id,
-      cuisine: JSON.stringify(cuisineString),
+      cuisine: JSON.stringify(this.state.cuisine),
     };
     const url = '/api/updateCuisineSelection';
-    axios.post(url, eventObj)
-      .then(() => {
-        console.log('Cuisine added');
-      });
+    axios.post(url, eventObj);
   }
 
   render() {
