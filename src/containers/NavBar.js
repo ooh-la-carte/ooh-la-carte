@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setSocket } from '../actions';
 import '../style.scss';
 
+const socketUrl = 'http://localhost:8888/';
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = { dropdown: false };
     this.toggleDropDown = this.toggleDropDown.bind(this);
+    this.initSocket = this.initSocket.bind(this);
   }
 
   toggleDropDown() {
     this.setState({ dropdown: !this.state.dropdown });
+  }
+
+  componentWillMount() {
+    this.initSocket();
+  }
+
+  initSocket() {
+    if (!this.props.socketReducer.id) {
+      const socket = io(socketUrl);
+      socket.on('connect', () => {
+        socket.userId = window.localStorage.getItem('userId');
+        console.log('Connected');
+        this.props.setSocket(socket);
+      });
+    }
   }
 
   render() {
@@ -55,5 +76,13 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+function mapStateToProps(state) {
+  return { socketReducer: state.socketReducer };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setSocket }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
