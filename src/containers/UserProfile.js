@@ -150,7 +150,10 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { user: state.loggedInUserInfo };
+  return {
+    user: state.loggedInUserInfo,
+    socketReducer: state.socketReducer,
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfile));
