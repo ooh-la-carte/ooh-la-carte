@@ -24,6 +24,7 @@ class CreateEventForm extends Component {
     this.state = {
       eventName: '',
       hostId: window.localStorage.getItem('userId'),
+      hostUsername: window.localStorage.getItem('username'),
       chefID: '',
       city: '',
       stat: '',

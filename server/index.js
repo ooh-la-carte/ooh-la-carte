@@ -160,12 +160,29 @@ app.get('/api/events', (req, res) => {
 
 // post route for creating events
 app.post('/api/createevent', (req, res) => {
-  res.sendStatus(200);
+  // req.body is the state object from the create event form
+  Event.insertEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
 });
 
+// post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
   User.insertContactInfo(id, name, streetAddress, city, state, zipcode, phone, email)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
+// post request to update cuisine selections
+app.post('/api/updateCuisineSelection', (req, res) => {
+  const { id, cuisine } = req.body;
+  console.log('cuisine array is: ', cuisine);
+  console.log(typeof (cuisine));
+  User.updateCuisineSelection(id, cuisine)
     .then(() => {
       res.sendStatus(200);
     });
