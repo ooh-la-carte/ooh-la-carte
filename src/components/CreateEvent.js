@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Dropdown, Button, Form, Radio, Select, Input, TextArea } from 'semantic-ui-react';
+import { Accordion, Icon, Dropdown, Button, Form, Checkbox, Radio, Select, Input, TextArea } from 'semantic-ui-react';
 import '../style.scss';
 
 import options from '../formOptions';
@@ -34,6 +34,7 @@ class CreateEventForm extends Component {
       year: '',
       cuisine: '',
       description: '',
+      budget: '',
       partySize: '',
       value: 'breakfast', // breakfast, brunch, lunch, dinner
     };
@@ -83,6 +84,10 @@ class CreateEventForm extends Component {
 
   handlePartySizeSelectionChange = (e, { value }) => {
     this.setState({ partySize: value });
+  }
+
+  handleBudgetChange = (e, { value }) => {
+    this.setState({ budget: value });
   }
 
   handleSubmit = () => {
@@ -148,8 +153,8 @@ class CreateEventForm extends Component {
             </Form.Field>
           </Form.Group>
 
-
           <br/>
+
           <Form.Group>
             <Form.Field
               control={Select}
@@ -221,6 +226,17 @@ class CreateEventForm extends Component {
               value={this.state.cusine}
             />
           </Form.Field>
+
+          <br/>
+
+          <Form.Field>
+            <label>Budget</label>
+            <Input placeholder='300.00'
+              onChange={this.handleBudgetChange}
+              value={this.state.budget}
+            />
+          </Form.Field>
+
 
           <Form.Field>
           <label>Description</label>
