@@ -8,23 +8,6 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cuisine: {
-        Vietnamese: false,
-        Chinese: false,
-        French: false,
-        Sushi: false,
-        Vegetarian: false,
-        BBQ: false,
-        Pastry: false,
-        Indian: false,
-        Thai: false,
-        Cajun: false,
-        Mexican: false,
-        Italian: false,
-        Southern: false,
-        Greek: false,
-        Vegan: false,
-      },
       user: {
         name: '',
         streetAddress: '',
@@ -33,7 +16,23 @@ class Settings extends Component {
         zipcode: '',
         phone: '',
         email: '',
-        cuisine: '',
+        cuisine: {
+          Vietnamese: false,
+          Chinese: false,
+          French: false,
+          Sushi: false,
+          Vegetarian: false,
+          BBQ: false,
+          Pastry: false,
+          Indian: false,
+          Thai: false,
+          Cajun: false,
+          Mexican: false,
+          Italian: false,
+          Southern: false,
+          Greek: false,
+          Vegan: false,
+        },
       },
       id: window.localStorage.getItem('userId'),
     };
@@ -48,7 +47,7 @@ class Settings extends Component {
         const { name, city, state, phone, email, cuisine } = userInfo.data;
         this.setState({ user:
           {
-            name, streetAddress, city, state, zipcode, phone, email, cuisine,
+            name, streetAddress, city, state, zipcode, phone, email, cuisine: JSON.parse(cuisine),
           } });
       });
   }
@@ -62,11 +61,11 @@ class Settings extends Component {
   }
 
   handleCuisineSelection = (e, { value }) => {
-    this.setState({ cuisine:
-    Object.assign(this.state.cuisine, { [value]: !this.state.cuisine[value] }) });
+    this.setState({ user: { cuisine:
+    Object.assign(this.state.user.cuisine, { [value]: !this.state.user.cuisine[value] }) } });
     const eventObj = {
       id: this.state.id,
-      cuisine: JSON.stringify(this.state.cuisine),
+      cuisine: JSON.stringify(this.state.user.cuisine),
     };
     const url = '/api/updateCuisineSelection';
     axios.post(url, eventObj);
@@ -89,33 +88,33 @@ class Settings extends Component {
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Vietnamese} label='Vietnamese' value='Vietnamese' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Chinese} label='Chinese' value='Chinese' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.French} label='French' value='French' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Sushi} label='Sushi' value='Sushi' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Vegetarian} label='Vegetarian' value='Vegetarian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Vietnamese} label='Vietnamese' value='Vietnamese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Chinese} label='Chinese' value='Chinese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.French} label='French' value='French' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Sushi} label='Sushi' value='Sushi' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Vegetarian} label='Vegetarian' value='Vegetarian' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox defaultChecked={this.state.cuisine.BBQ} label='BBQ' value='BBQ' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Pastry} label='Pastry' value='Pastry' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Indian} label='Indian' value='Indian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Thai} label='Thai' value='Thai' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Cajun} label='Cajun' value='Cajun' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.BBQ} label='BBQ' value='BBQ' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.state.user.cuisine.Pastry} label='Pastry' value='Pastry' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.state.user.cuisine.Indian} label='Indian' value='Indian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Thai} label='Thai' value='Thai' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Cajun} label='Cajun' value='Cajun' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Mexican} label='Mexican' value='Mexican' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Italian} label='Italian' value='Italian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Sothern} label='Southern' value='Southern' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Greek} label='Greek' value='Greek' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox defaultChecked={this.state.cuisine.Vegan} label='Vegan' value='Vegan' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Mexican} label='Mexican' value='Mexican' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Italian} label='Italian' value='Italian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Sothern} label='Southern' value='Southern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Greek} label='Greek' value='Greek' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Vegan} label='Vegan' value='Vegan' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
