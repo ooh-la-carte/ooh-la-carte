@@ -94,7 +94,7 @@ app.post('/api/createevent', (req, res) => {
 app.post('/api/signup', (req, res) => {
   const user = req.body.username;
   const pw = req.body.password1;
-  const email = `${req.body.username}@email.com`;
+  const { email } = req.body;
   const accType = req.body.value;
   User.insertUser(user, pw, email, accType)
     .then((userObj) => {
@@ -232,18 +232,15 @@ app.get('*', (req, res) => {
 */
 
 app.post('/api/getConvos', (req, res) => {
-  console.log(req.body);
   if (req.body.isChef === 'true') {
     Messaging.getConvosChef(req.body.id)
       .then((data) => {
-        console.log('chef convos: ', data);
         res.send(data);
       })
       .catch(err => console.log(err));
   } else {
     Messaging.getConvosClient(req.body.id)
       .then((data) => {
-        console.log('Client convos: ', data);
         res.send(data);
       })
       .catch(err => console.log(err));
@@ -251,7 +248,6 @@ app.post('/api/getConvos', (req, res) => {
 });
 
 app.post('/api/conversations', (req, res) => {
-  console.log(req.body);
   Messaging.createConvo(req.body)
     .then(() => {
       res.sendStatus(200);

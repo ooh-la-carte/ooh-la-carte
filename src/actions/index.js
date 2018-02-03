@@ -27,6 +27,13 @@ const setSocket = socket => (
   }
 );
 
+const setUserInfo = user => (
+  {
+    type: 'GET_USER_DATA',
+    payload: user,
+  }
+);
+
 const removeSocket = () => (
   {
     type: 'SET_SOCKET',
@@ -41,4 +48,11 @@ const selectConversation = userId => (
   }
 );
 
-export { changeSelectedChef, changeSelectedEvent, setSocket, removeSocket, selectConversation };
+export {
+  changeSelectedChef,
+  changeSelectedEvent,
+  setSocket,
+  removeSocket,
+  selectConversation,
+  setUserInfo,
+};

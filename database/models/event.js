@@ -42,6 +42,7 @@ Event.insertEvent = (eventObj) => {
     date,
     year,
     cuisine,
+    budget,
     description,
     partySize,
     value } = eventObj;
@@ -55,6 +56,7 @@ Event.insertEvent = (eventObj) => {
     zip_code: zip,
     date_time: (`${year}-${month}-${date} 00:00:00`),
     cuisine_type: cuisine,
+    budget,
     description,
     party_size: partySize,
     meal_type: value,

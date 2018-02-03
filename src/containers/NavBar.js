@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setSocket } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
@@ -55,5 +58,13 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+function mapStateToProps(state) {
+  return { socketReducer: state.socketReducer };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setSocket }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
