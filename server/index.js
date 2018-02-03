@@ -160,7 +160,12 @@ app.get('/api/events', (req, res) => {
 
 // post route for creating events
 app.post('/api/createevent', (req, res) => {
-  res.sendStatus(200);
+  // req.body is the state object from the create event form
+  Event.insertEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
 });
 
 app.post('/api/updateContactInfo', (req, res) => {

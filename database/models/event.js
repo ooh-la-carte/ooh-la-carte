@@ -3,7 +3,7 @@ const knex = require('../index');
 const Event = {};
 
 Event.findAllEvents = () => (
-  knex.select('*').table('events')
+  knex('events')
     .then((results) => {
       console.log(results);
       console.log('event:findall - all events queried');
@@ -34,6 +34,7 @@ Event.findAllEventsByField = (field, target) => (
 Event.insertEvent = (eventObj) => {
   const { eventName,
     hostId,
+    hostUsername,
     city,
     stat,
     zip,
@@ -48,6 +49,7 @@ Event.insertEvent = (eventObj) => {
   return knex('events').insert({
     name: eventName,
     creator_id: hostId,
+    creator_username: hostUsername,
     city,
     state: stat,
     zip_code: zip,
