@@ -13,15 +13,13 @@ exports.up = (knex, Promise) => (
       table.string('phone');
       table.string('cuisine');
       table.string('password').notNullable();
-      table.string('cuisine');
       table.string('menu');
       table.string('img');
       table.string('availability');
       table.string('experience');
-      table.string('price');
+      table.string('rate');
       table.string('bio');
       table.string('rating');
-      table.string('budget');
       table.string('email').unique().notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));

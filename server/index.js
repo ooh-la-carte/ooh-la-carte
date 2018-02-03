@@ -11,9 +11,12 @@ const Event = require('../database/models/event.js');
 const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
 
-/* ################
+
+/*
+  ==============================
     Chat Server
-################## */
+  ==============================
+*/
 
 io.on('connection', SocketManager);
 
@@ -21,17 +24,20 @@ http.listen(8888, () => {
   console.log('listening on *:8888');
 });
 
-/* ################
+/*
+  ==============================
     Server
-################### */
+  ==============================
+*/
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-
-/* ################
+/*
+  ==============================
     Middleware
-################### */
+  ==============================
+*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,10 +51,11 @@ app.use((req, res, next) => {
   next();
 });
 
-
-/* ################
+/*
+  ==============================
     Post Routes
-################### */
+  ==============================
+*/
 
 // post route for login requests
 app.post('/api/login', (req, res) => {
@@ -110,9 +117,38 @@ app.post('/api/signup', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
-/* ################
+// post route for updating contact info
+app.post('/api/updateContactInfo', (req, res) => {
+  const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
+  User.insertContactInfo(id, name, streetAddress, city, state, zipcode, phone, email)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
+// post request to update cuisine selections
+app.post('/api/updateCuisineSelection', (req, res) => {
+  const { id, cuisine } = req.body;
+  User.updateCuisineSelection(id, cuisine)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
+// post request to update chef rate
+app.post('/api/updateChefRate', (req, res) => {
+  const { id, rate } = req.body;
+  User.updateChefRate(id, rate)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
+/*
+  ==============================
     Get Routes
-################### */
+  ==============================
+*/
 
 /* * *  User get routes  * * */
 
@@ -168,25 +204,6 @@ app.post('/api/createevent', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
-// post route for updating contact info
-app.post('/api/updateContactInfo', (req, res) => {
-  const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
-  User.insertContactInfo(id, name, streetAddress, city, state, zipcode, phone, email)
-    .then(() => {
-      res.sendStatus(200);
-    });
-});
-
-// post request to update cuisine selections
-app.post('/api/updateCuisineSelection', (req, res) => {
-  const { id, cuisine } = req.body;
-  console.log('cuisine array is: ', cuisine);
-  console.log(typeof (cuisine));
-  User.updateCuisineSelection(id, cuisine)
-    .then(() => {
-      res.sendStatus(200);
-    });
-});
 
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {
@@ -203,16 +220,15 @@ app.get('/api/protected', auth.ensureToken, (req, res) => {
   });
 });
 
-
 // catch all route
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(path.join(__dirname, '../public/index.html')));
 });
 
 /*
-  ============
-  Chat database calls
-  ============
+  ==============================
+    Chat database calls
+  ==============================
 */
 
 app.post('/api/getConvos', (req, res) => {
@@ -243,9 +259,11 @@ app.post('/api/conversations', (req, res) => {
     .catch(err => console.log(err));
 });
 
-/* ################
+/*
+  ==============================
     Start Server
-################### */
+  ==============================
+*/
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}!`);
