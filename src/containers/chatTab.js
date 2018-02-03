@@ -44,7 +44,7 @@ class ChatTab extends React.Component {
           ?
             <div>
               {this.state.convos.map(convo =>
-                <div key={convo.id}>
+                <div key={convo.id} className='chatMessages'>
                   <Link to='/conversation' onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.user_id } })
                       .then((user) => {

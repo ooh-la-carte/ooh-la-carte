@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Card, Image, Button } from 'semantic-ui-react';
+import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
+import { Card, Image, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { changeSelectedEvent, setUserInfo } from '../actions';
+import { changeSelectedEvent, setUserInfo, setSocket } from '../actions';
 import '../style.scss';
 import data from '../MockData';
 
-
+const socketUrl = 'http://localhost:8888/';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -57,6 +58,22 @@ class UserProfile extends Component {
         };
         this.props.setUserInfo(user);
       });
+  }
+
+  componentWillMount() {
+    this.initSocket();
+  }
+
+  initSocket() {
+    if (!this.props.socketReducer.id) {
+      const socket = io(socketUrl);
+      socket.on('connect', () => {
+        this.props.setSocket(socket);
+        console.log('Connected');
+        socket.userId = window.localStorage.getItem('userId');
+        socket.emit('add user', window.localStorage.getItem('username'));
+      });
+    }
   }
 
   handleChange = (e, { value }) => {
@@ -128,11 +145,15 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     changeSelectedEvent,
     setUserInfo,
+    setSocket,
   }, dispatch);
 }
 
 function mapStateToProps(state) {
-  return { user: state.loggedInUserInfo };
+  return {
+    user: state.loggedInUserInfo,
+    socketReducer: state.socketReducer,
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfile));
