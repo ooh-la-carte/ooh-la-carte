@@ -94,7 +94,7 @@ app.post('/api/createevent', (req, res) => {
 app.post('/api/signup', (req, res) => {
   const user = req.body.username;
   const pw = req.body.password1;
-  const email = `${req.body.username}@email.com`;
+  const { email } = req.body;
   const accType = req.body.value;
   User.insertUser(user, pw, email, accType)
     .then((userObj) => {
