@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Card, Image } from 'semantic-ui-react';
+import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { changeSelectedEvent } from '../actions';
+import { changeSelectedEvent, setSocket } from '../actions';
 import '../style.scss';
 import data from '../MockData';
 
-
+const socketUrl = 'http://localhost:8888/';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +18,20 @@ class UserProfile extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.socketReducer.emit('add user', window.localStorage.getItem('username'));
+  componentWillMount() {
+    this.initSocket();
+  }
+
+  initSocket() {
+    if (!this.props.socketReducer.id) {
+      const socket = io(socketUrl);
+      socket.on('connect', () => {
+        this.props.setSocket(socket);
+        console.log('Connected');
+        socket.userId = window.localStorage.getItem('userId');
+        socket.emit('add user', window.localStorage.getItem('username'));
+      });
+    }
   }
 
   handleChange = (e, { value }) => {
@@ -76,7 +89,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeSelectedEvent }, dispatch);
+  return bindActionCreators({
+    changeSelectedEvent,
+    setSocket,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(UserProfile));
