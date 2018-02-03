@@ -1,43 +1,61 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 import '../style.scss';
 import { changeSelectedEvent } from '../actions';
 import data from '../MockData';
 
 
-const BrowseEvents = props => (
+class BrowseEvents extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { events: [] };
+  }
+
+  componentDidMount = () => {
+    axios.get('/api/events')
+      .then((events) => {
+        console.log(events.data);
+        this.setState({ events: events.data });
+      })
+      .catch(err => console.log(err));
+  }
+
+  render = () => (
     <div className='topLevelDiv'>
-      {data.events.map(event => (
+      {this.state.events.map(event => (
         <Card
           key={event.id}
           className='browseEventCards'
           onClick={() => {
-            props.changeSelectedEvent(event.id);
-            props.history.push('/selectedEvent');
+            this.props.changeSelectedEvent(event.id);
+            this.props.history.push('/selectedEvent');
              }}>
           <Card.Content>
-            <Image floated='right' size='mini' src={event.image} />
+            <Image floated='right' size='mini' src={event.img} />
             <Card.Header>
-              {event.name} ({event.cuisine})
+              {event.name} ({event.cuisine_type})
             </Card.Header>
             <Card.Meta>
-              <div>{event.host}</div>
+              <div>{event.creator_username}</div>
             </Card.Meta>
             <Card.Description>
               <div>{event.description}</div>
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
-            <span className='partySize'>Size: {event.guests}</span>
+            <span className='partySize'>Size: {event.party_size}</span>
             <span className='eventBudget'>Budget: {event.budget}</span>
           </Card.Content>
         </Card>
       ))}
     </div>
-);
+  )
+}
 
 
 function mapDispatchToProps(dispatch) {

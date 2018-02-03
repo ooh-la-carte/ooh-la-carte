@@ -20,6 +20,7 @@ exports.up = (knex, Promise) => (
       table.string('price');
       table.string('bio');
       table.string('rating');
+      table.string('budget');
       table.string('email').unique().notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
@@ -38,6 +39,7 @@ exports.up = (knex, Promise) => (
     knex.schema.createTable('events', (table) => {
       table.increments('id').unsigned().primary();
       table.integer('creator_id').unsigned().notNullable().references('users.id');
+      table.string('creator_username');
       table.integer('chef_id').unsigned().references('users.id');
       table.string('name');
       table.string('party_size').notNullable();
@@ -50,6 +52,7 @@ exports.up = (knex, Promise) => (
       table.timestamp('date_time');
       table.string('meal_type');
       table.text('description');
+      table.text('img');
       table.text('requests');
     }),
     knex.schema.createTable('menu', (table) => {
