@@ -11,13 +11,13 @@ Messaging.createConvo = convoObj => (
 );
 
 Messaging.getConvosChef = chefId => (
-  knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.user_id');
   }).where('conversations.chef_id', chefId)
 );
 
 Messaging.getConvosClient = userId => (
-  knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.chef_id');
   }).where('conversations.user_id', userId)
 );

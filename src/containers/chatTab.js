@@ -46,14 +46,13 @@ class ChatTab extends React.Component {
               {this.state.convos.map(convo =>
                 <div key={convo.chatId} className='chatMessages'>
                   <Link to='/conversation' onClick={() => {
-                    axios.get('/api/user/info', { params: { id: convo.user_id } })
+                    axios.get('/api/user/info', { params: { id: convo.recipientId } })
                       .then((user) => {
-                        console.log(user);
                         const obj = user.data;
                         obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
                       });
-                  }}>{convo.chatId}</Link>
+                  }}>{convo.recipientUsername}</Link>
                 </div>)}
             </div>
           :
@@ -61,13 +60,13 @@ class ChatTab extends React.Component {
               {this.state.convos.map(convo =>
                 <div key={convo.chatId}>
                   <Link to='/conversation' onClick={() => {
-                    axios.get('/api/user/info', { params: { id: convo.chef_id } })
+                    axios.get('/api/user/info', { params: { id: convo.recipientId } })
                       .then((user) => {
                         const obj = user.data;
                         obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
                       });
-                  }}>{convo.chatId}</Link>
+                  }}>{convo.recipientUsername}</Link>
                 </div>)}
             </div>
         }
