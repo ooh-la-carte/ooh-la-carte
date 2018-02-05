@@ -33,7 +33,7 @@ class BrowseEvents extends Component {
           key={event.id}
           className='browseEventCards'
           onClick={() => {
-            this.props.changeSelectedEvent(event.id);
+            this.props.changeSelectedEvent(event);
             this.props.history.push('/selectedEvent');
         }}>
           <Card.Content>
