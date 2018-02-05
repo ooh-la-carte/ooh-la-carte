@@ -13,15 +13,16 @@ const socketUrl = '/';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { events: [] };
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     axios.get('/api/user/info', { params: { id: window.localStorage.getItem('userId') } })
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
-        const { id, name, city, state, phone, email, rate } = userInfo.data;
+        const { id, username, name, city, state, phone, email, rate } = userInfo.data;
         let { cuisine } = userInfo.data;
         if (!cuisine) {
           cuisine = {
@@ -47,6 +48,7 @@ class UserProfile extends Component {
         const user = {
           id,
           name,
+          username,
           streetAddress,
           city,
           state,
@@ -57,6 +59,12 @@ class UserProfile extends Component {
           cuisine,
         };
         this.props.setUserInfo(user);
+      });
+    axios.get('/api/events', { params: {
+      field: 'creator_id', target: window.localStorage.getItem('userId'),
+    } })
+      .then((events) => {
+        this.setState({ events: events.data });
       });
   }
 
@@ -83,14 +91,15 @@ class UserProfile extends Component {
   render() {
     return (
       <div className='topLevelDiv'>
-        <Card key={data.chefs[0].id} className='profile userCard'>
+        <Card className='profile userCard'>
           <Card.Content>
             <Image floated='right' size='tiny' src={data.chefs[0].image} />
             <Card.Header>
-              {this.props.user.name}
+              {this.props.user.username}
             </Card.Header>
             <Card.Meta>
-              <div>{data.chefs[0].specialty}</div>
+            {this.props.user.name}
+              <div>{this.props.user.city}, {this.props.user.state}</div>
             </Card.Meta>
             <Card.Description>
               <div>{data.chefs[0].description}</div>
@@ -102,7 +111,7 @@ class UserProfile extends Component {
         </Card>
         <h2 className='center'>Upcoming Events</h2>
         <div className='center miniPadding profile event'>
-          {data.events.slice(0, 3).map(event => (
+          {this.state.events.slice(0, 3).map(event => (
             <Card className='eventCard' key={event.id}
               onClick={() => {
                 this.props.changeSelectedEvent(event.id);
@@ -113,7 +122,7 @@ class UserProfile extends Component {
                     <span className='center eventText'>{event.name}</span>
                   </Card.Header>
                   <Card.Meta className='center'>
-                    {`${event.date} ${event.time}`}
+                    {`${event.city}, ${event.state}`}
                   </Card.Meta>
                 </Card.Content>
               </Card>

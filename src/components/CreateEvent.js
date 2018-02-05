@@ -93,7 +93,7 @@ class CreateEventForm extends Component {
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/createevent';
-    if (!eventObj.date || !eventObj.partySize || !eventObj.value) {
+    if (!eventObj.date || !eventObj.partySize || !eventObj.meal) {
       console.log('Required fields not provided');
     } else {
       console.log('submitting event');
@@ -112,7 +112,6 @@ class CreateEventForm extends Component {
 
   render() {
     return (
-      console.log(this.state),
       <div className='topLevelDiv'>
         <h1 className='center softText'>Create Event</h1>
         <div className='boxed center'>
@@ -129,7 +128,7 @@ class CreateEventForm extends Component {
 
               <Grid columns={3}>
                 <Grid.Row>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingRight: '0px' }} width={8}>
                     <Form.Field>
                       <label>City</label>
                       <Input
@@ -139,7 +138,7 @@ class CreateEventForm extends Component {
                       />
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
+                  <Grid.Column style={{ padding: '0px' }} width={3}>
                     <Form.Field>
                       <label>State</label>
                       <Input
@@ -149,7 +148,7 @@ class CreateEventForm extends Component {
                       />
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
                     <Form.Field>
                       <label>Zip</label>
                       <Input
@@ -162,11 +161,11 @@ class CreateEventForm extends Component {
                 </Grid.Row>
 
                 <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
+                  <Grid.Column style={{ paddingRight: '0px' }}>
+                    <Form.Field required>
                       <label>Month</label>
                       <Dropdown
-                        placeholder='Jan'
+                        placeholder='Month'
                         fluid
                         compact
                         selection
@@ -178,27 +177,27 @@ class CreateEventForm extends Component {
                     </Form.Field>
                   </Grid.Column>
 
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Date</label>
+                  <Grid.Column style={{ padding: '0px' }}>
+                    <Form.Field required>
+                      <label>Day</label>
                       <Dropdown
-                        placeholder='1'
+                        placeholder='Day'
                         fluid
                         compact
                         selection
                         labeled
-                        label='Date'
+                        label='Day'
                         onChange={this.handleDateSelectionChange}
                         options={options.dateOptions}
                       />
                     </Form.Field>
                   </Grid.Column>
 
-                  <Grid.Column>
-                    <Form.Field>
+                  <Grid.Column style={{ paddingLeft: '0px' }}>
+                    <Form.Field required>
                       <label>Year</label>
                       <Dropdown
-                        placeholder='2018'
+                        placeholder='Year'
                         fluid
                         compact
                         selection
@@ -242,7 +241,7 @@ class CreateEventForm extends Component {
                 </Grid.Row>
               </Grid>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Meal</label>
                 <Dropdown
                   onChange={this.handlePartySizeSelectionChange}
@@ -264,7 +263,7 @@ class CreateEventForm extends Component {
 
               <br/>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Budget</label>
                 <Input placeholder='300.00'
                   onChange={this.handleBudgetChange}

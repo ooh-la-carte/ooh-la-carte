@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Grid, Input } from 'semantic-ui-react';
 import '../style.scss';
 
 class ContactInfo extends Component {
@@ -21,6 +21,7 @@ class ContactInfo extends Component {
   }
 
   componentDidMount() {
+    window.scroll(0, 0);
     axios.get('/api/user/info', { params: { id: this.state.id } })
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
@@ -54,11 +55,11 @@ class ContactInfo extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
-          <Form.Field>
+          <Form.Field required>
             <label>Name</label>
             <Form.Input
               type='name'
-              placeholder={this.state.username || 'Name'}
+              placeholder={this.state.name || 'Name'}
               onChange={this.handleUpdate}
               value={this.state.name || ''}
             />
@@ -67,44 +68,59 @@ class ContactInfo extends Component {
             <label>Bio</label>
             <Form.Input
               type='bio'
-              placeholder={this.state.username || 'Tell us about yourself...'}
+              placeholder={this.state.bio || 'Tell us about yourself...'}
               onChange={this.handleUpdate}
               value={this.state.bio || ''}
             />
           </Form.Field>
           <Form.Field>
             <label>Address</label>
-              <Form.Input
-                placeholder={this.state.street_name || 'Street Address'}
-                type='streetAddress'
-                onChange={this.handleUpdate}
-                value={this.state.streetAddress || ''}
-              />
               <Form.Group>
                 <Form.Input
-                  placeholder={this.state.city || 'City'}
-                  type='city'
+                  placeholder={this.state.streetAddress || 'Street Address'}
+                  type='streetAddress'
                   onChange={this.handleUpdate}
-                  value={this.state.city || ''}
-                  width={4}
-                />
-                <Form.Input
-                  placeholder={this.state.state || 'State'}
-                  type='state'
-                  onChange={this.handleUpdate}
-                  value={this.state.state || ''}
-                  width={4}
-                />
-                <Form.Input
-                  placeholder={this.state.zip_code || 'Zipcode'}
-                  type='zipcode'
-                  onChange={this.handleUpdate}
-                  value={this.state.zipcode || ''}
+                  value={this.state.streetAddress || ''}
                   width={4}
                 />
               </Form.Group>
+              <Grid columns={3}>
+                <Grid.Row>
+                  <Grid.Column style={{ paddingRight: '0px' }} width={8}>
+                    <Form.Field>
+                      <Input
+                        placeholder='City'
+                        type='city'
+                        value={this.state.city}
+                        onChange={this.handleUpdate}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column style={{ padding: '0px' }} width={3}>
+                    <Form.Field>
+                      <Input
+                        placeholder='State'
+                        type='state'
+                        value={this.state.state}
+                        onChange={this.handleUpdate}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
+                    <Form.Field>
+                      <Input
+                        placeholder='Zip'
+                        type='zipcode'
+                        value={this.state.zipcode}
+                        onChange={this.handleUpdate}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+                </Grid>
+
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
           <label>Phone</label>
             <Form.Input
               type='phone'
@@ -113,7 +129,7 @@ class ContactInfo extends Component {
               value={this.state.phone || ''}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
           <label>Email</label>
             <Form.Input
               type='email'
