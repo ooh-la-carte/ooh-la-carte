@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Dropdown, Button, Form, Radio, Select, Input, TextArea } from 'semantic-ui-react';
+import { Dropdown, Button, Form, Radio, Select, Input, TextArea, Grid } from 'semantic-ui-react';
 import '../style.scss';
 
 import options from '../formOptions';
@@ -114,164 +114,203 @@ class CreateEventForm extends Component {
     const { value } = this.state;
     return (
       console.log(this.state),
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>Event Name</label>
-            <Input placeholder='My Stellar Soiree'
-              onChange={this.setEventName}
-              value={this.state.eventName}
-            />
-          </Form.Field>
+      <div className='topLevelDiv'>
+        <h1 className='center softText'>Create Event</h1>
+        <div className='boxed center'>
+          <div>
+            <Form onSubmit={this.handleSubmit}>
 
-          <Form.Group>
-            <Form.Field>
-              <label>City</label>
-              <Input
-                placeholder='Austin'
-                value={this.state.city}
-                onChange={this.setCity}
-              />
-            </Form.Field>
+              <Form.Field>
+                <label>Event Name</label>
+                <Input placeholder='My Stellar Soiree'
+                  onChange={this.setEventName}
+                  value={this.state.eventName}
+                />
+              </Form.Field>
 
-            <Form.Field>
-              <label>State</label>
-              <Input
-                placeholder='TX'
-                value={this.state.stat}
-                onChange={this.setStat}
-              />
-            </Form.Field>
+              <Grid columns={3}>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>City</label>
+                      <Input
+                        placeholder='Austin'
+                        value={this.state.city}
+                        onChange={this.setCity}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>State</label>
+                      <Input
+                        placeholder='TX'
+                        value={this.state.stat}
+                        onChange={this.setStat}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Zip</label>
+                      <Input
+                        placeholder='Zip'
+                        value={this.state.zip}
+                        onChange={this.setZip}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
 
-            <Form.Field>
-              <label>Zip</label>
-              <Input
-                placeholder='Zip'
-                value={this.state.zip}
-                onChange={this.setZip}
-              />
-            </Form.Field>
-          </Form.Group>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Month</label>
+                      <Dropdown
+                        placeholder='Jan'
+                        fluid
+                        compact
+                        selection
+                        labeled
+                        label='Month'
+                        onChange={this.handleMonthSelectionChange}
+                        options={options.monthOptions}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
 
-          <br/>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Date</label>
+                      <Dropdown
+                        placeholder='1'
+                        fluid
+                        compact
+                        selection
+                        labeled
+                        label='Date'
+                        onChange={this.handleDateSelectionChange}
+                        options={options.dateOptions}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
 
-          <Form.Group>
-            <Form.Field
-              control={Select}
-              onChange={this.handleMonthSelectionChange}
-              label='Month'
-              options={options.monthOptions}
-              placeholder='Jan'
-            />
-            <Form.Field
-              control={Select}
-              onChange={this.handleDateSelectionChange}
-              label='Day'
-              options={options.dateOptions}
-              placeholder='1'
-            />
-            <Form.Field
-              control={Select}
-              onChange={this.handleYearSelectionChange}
-              label='Year'
-              options={options.yearOptions}
-              placeholder='2000'
-            />
-          </Form.Group>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Year</label>
+                      <Dropdown
+                        placeholder='2018'
+                        fluid
+                        compact
+                        selection
+                        labeled
+                        label='Year'
+                        onChange={this.handleYearSelectionChange}
+                        options={options.yearOptions}
+                      />
+                    </Form.Field>
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
 
-          <br/>
+              <Grid columns='equal'>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Form.Field>
+                      <label>Meal</label>
+                      <Button.Group size='large' basic>
+                        <Button
+                          onClick={() => { this.setState({ value: 'Breakfast' }); } }
+                          inverted
+                          type='button'
+                          >Breakfast
+                        </Button>
+                        <Button
+                          onClick={() => { this.setState({ value: 'Lunch' }); } }
+                          type='button'
+                          inverted
+                          >Lunch
+                        </Button>
+                        <Button
+                          onClick={() => { this.setState({ value: 'Lunch' }); } }
+                          type='button'
+                          inverted
+                          >Dinner
+                        </Button>
+                      </Button.Group>
+                    </Form.Field>
+                   </Grid.Column>
+                </Grid.Row>
+              </Grid>
 
-          <h3>Meal</h3>
-          <div style={styles.rows}>
-            <Radio
-              label='Breakfast'
-              value='breakfast'
-              checked={value === 'breakfast'}
-              onChange={this.handleChange}
-            />
-            <Radio
-              label='Lunch'
-              value='lunch'
-              checked={value === 'lunch'}
-              onChange={this.handleChange}
-            />
-            <Radio
-              label='Dinner'
-              value='dinner'
-              checked={value === 'dinner'}
-              onChange={this.handleChange}
-            />
+              <Form.Field>
+                <label>Meal</label>
+                <Dropdown
+                  onChange={this.handlePartySizeSelectionChange}
+                  placeholder="How many in your dining party?"
+                  fluid
+                  upward
+                  selection
+                  options={options.partySizeOptions}
+                />
+              </Form.Field>
+                 
+
+              <Form.Field>
+                <label>Cuisine</label>
+                <Input placeholder='American Southern'
+                  onChange={this.setCuisine}
+                  value={this.state.cusine}
+                />
+              </Form.Field>
+
+              <br/>
+
+              <Form.Field>
+                <label>Budget</label>
+                <Input placeholder='300.00'
+                  onChange={this.handleBudgetChange}
+                  value={this.state.budget}
+                />
+              </Form.Field>
+
+
+              <Form.Field>
+              <label>Description</label>
+                <TextArea
+                autoHeight
+                placeholder='Add any additional revelent info here...'
+                rows={2}
+                onChange={this.setDescription}
+                />
+              </Form.Field>
+
+              <div style={styles.btnDiv}>
+                <Link to='/userProfile'>
+                  <Button
+                    className='butSec'
+                    inverted
+                  > Cancel
+                  </Button>
+                </Link>
+
+                <Button
+                  className='butPri'
+                  type='submit'
+                  inverted
+                >
+                  Submit
+                </Button>
+              </div>
+
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+            </Form>
           </div>
-
-          <br/>
-
-          <h3>Group Size</h3>
-          <div id='partySizeDrpDwn'>
-            <Dropdown
-              onChange={this.handlePartySizeSelectionChange}
-              placeholder="How many in your dining party?"
-              fluid
-              upward
-              selection
-              options={options.partySizeOptions}
-            />
-          </div>
-
-          <br/>
-
-          <Form.Field>
-            <label>Cuisine</label>
-            <Input placeholder='American Southern'
-              onChange={this.setCuisine}
-              value={this.state.cusine}
-            />
-          </Form.Field>
-
-          <br/>
-
-          <Form.Field>
-            <label>Budget</label>
-            <Input placeholder='300.00'
-              onChange={this.handleBudgetChange}
-              value={this.state.budget}
-            />
-          </Form.Field>
-
-
-          <Form.Field>
-          <label>Description</label>
-            <TextArea
-            autoHeight
-            placeholder='Add any additional revelent info here...'
-            rows={2}
-            onChange={this.setDescription}
-            />
-          </Form.Field>
-
-          <div style={styles.btnDiv}>
-            <Link to='/'>
-              <Button
-                className='butSec'
-                inverted
-              > Cancel
-              </Button>
-            </Link>
-
-            <Button
-              className='butPri'
-              type='submit'
-              inverted
-            >
-              Submit
-            </Button>
-          </div>
-
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-        </Form>
+        </div>
       </div>
     );
   }

@@ -5,7 +5,6 @@ const Event = {};
 Event.findAllEvents = () => (
   knex('events')
     .then((results) => {
-      console.log(results);
       console.log('event:findall - all events queried');
       return results;
     })
