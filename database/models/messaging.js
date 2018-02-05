@@ -26,13 +26,13 @@ Messaging.insertMessage = messageObj => (
   knex('messages').insert({
     user_id: messageObj.sender,
     conversation_id: messageObj.convo_id,
-    text: messageObj.message,
+    text: messageObj.text,
   })
     .then(() => (
       knex('messages').insert({
         user_id: messageObj.reciever_id,
         conversation_id: messageObj.convo_id,
-        text: messageObj.message,
+        text: messageObj.text,
       })
         .catch(err => console.log(err))
     ))
