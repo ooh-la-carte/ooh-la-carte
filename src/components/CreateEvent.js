@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Dropdown, Button, Form, Radio, Select, Input, TextArea, Grid } from 'semantic-ui-react';
+import { Dropdown, Button, Form, Input, TextArea, Grid } from 'semantic-ui-react';
 import '../style.scss';
 
 import options from '../formOptions';
@@ -36,7 +36,7 @@ class CreateEventForm extends Component {
       description: '',
       budget: '',
       partySize: '',
-      value: 'breakfast', // breakfast, brunch, lunch, dinner
+      meal: 'breakfast', // breakfast, brunch, lunch, dinner
     };
   }
 
@@ -111,7 +111,6 @@ class CreateEventForm extends Component {
   }
 
   render() {
-    const { value } = this.state;
     return (
       console.log(this.state),
       <div className='topLevelDiv'>
@@ -220,19 +219,19 @@ class CreateEventForm extends Component {
                       <label>Meal</label>
                       <Button.Group size='large' basic>
                         <Button
-                          onClick={() => { this.setState({ value: 'Breakfast' }); } }
+                          onClick={() => { this.setState({ meal: 'Breakfast' }); } }
                           inverted
                           type='button'
                           >Breakfast
                         </Button>
                         <Button
-                          onClick={() => { this.setState({ value: 'Lunch' }); } }
+                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
                           type='button'
                           inverted
                           >Lunch
                         </Button>
                         <Button
-                          onClick={() => { this.setState({ value: 'Lunch' }); } }
+                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
                           type='button'
                           inverted
                           >Dinner
@@ -254,7 +253,6 @@ class CreateEventForm extends Component {
                   options={options.partySizeOptions}
                 />
               </Form.Field>
-                 
 
               <Form.Field>
                 <label>Cuisine</label>
