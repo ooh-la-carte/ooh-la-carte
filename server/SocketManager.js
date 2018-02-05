@@ -17,6 +17,7 @@ module.exports = (socket) => {
   });
 
   socket.on('send', (obj) => {
+    console.log('Send object: ', obj);
     if (connectedUsers[obj.reciever]) {
       socket.broadcast.to(connectedUsers[obj.reciever].id).emit('private message', obj);
       socket.emit('self message', obj);
