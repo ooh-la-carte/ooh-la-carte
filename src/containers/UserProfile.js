@@ -114,7 +114,7 @@ class UserProfile extends Component {
           {this.state.events.slice(0, 3).map(event => (
             <Card className='eventCard' key={event.id}
               onClick={() => {
-                this.props.changeSelectedEvent(event.id);
+                this.props.changeSelectedEvent(event);
                 this.props.history.push('/selectedEvent');
               }}>
                 <Card.Content>

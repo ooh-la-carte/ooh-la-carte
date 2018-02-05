@@ -1,4 +1,3 @@
-import data from '../MockData';
 
 const changeSelectedChef = chef => (
   {
@@ -7,18 +6,12 @@ const changeSelectedChef = chef => (
   }
 );
 
-const changeSelectedEvent = (event) => {
-  let selected = {};
-  data.events.forEach((obj) => {
-    if (obj.id === event) {
-      selected = obj;
-    }
-  });
-  return {
+const changeSelectedEvent = event => (
+  {
     type: 'SELECT_EVENT',
-    payload: selected,
-  };
-};
+    payload: event,
+  }
+);
 
 const setSocket = socket => (
   {
