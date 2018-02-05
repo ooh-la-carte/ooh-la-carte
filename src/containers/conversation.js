@@ -15,7 +15,7 @@ class Conversation extends Component {
     };
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     console.log('reciever up');
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
