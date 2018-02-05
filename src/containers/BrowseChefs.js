@@ -26,6 +26,7 @@ class BrowseChefs extends Component {
     <div className='topLevelDiv'>
       {this.state.chefs.map(chef => (
         <Card
+        key={chef.id}
         className='browseEventCards'
         onClick={() => {
           this.props.changeSelectedChef(chef);
