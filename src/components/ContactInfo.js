@@ -54,7 +54,7 @@ class ContactInfo extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
-          <Form.Field>
+          <Form.Field required>
             <label>Name</label>
             <Form.Input
               type='name'
@@ -72,39 +72,7 @@ class ContactInfo extends Component {
               value={this.state.bio || ''}
             />
           </Form.Field>
-          <Form.Field>
-            <label>Address</label>
-              <Form.Input
-                placeholder={this.state.street_name || 'Street Address'}
-                type='streetAddress'
-                onChange={this.handleUpdate}
-                value={this.state.streetAddress || ''}
-              />
-              <Form.Group>
-                <Form.Input
-                  placeholder={this.state.city || 'City'}
-                  type='city'
-                  onChange={this.handleUpdate}
-                  value={this.state.city || ''}
-                  width={4}
-                />
-                <Form.Input
-                  placeholder={this.state.state || 'State'}
-                  type='state'
-                  onChange={this.handleUpdate}
-                  value={this.state.state || ''}
-                  width={4}
-                />
-                <Form.Input
-                  placeholder={this.state.zip_code || 'Zipcode'}
-                  type='zipcode'
-                  onChange={this.handleUpdate}
-                  value={this.state.zipcode || ''}
-                  width={4}
-                />
-              </Form.Group>
-          </Form.Field>
-          <Form.Field>
+          <Form.Field required>
           <label>Phone</label>
             <Form.Input
               type='phone'
@@ -113,7 +81,7 @@ class ContactInfo extends Component {
               value={this.state.phone || ''}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
           <label>Email</label>
             <Form.Input
               type='email'
@@ -121,6 +89,16 @@ class ContactInfo extends Component {
               onChange={this.handleUpdate}
               value={this.state.email || ''}
             />
+          </Form.Field>
+          <Form.Field>
+            <label>Zipcode</label>
+                <Form.Input
+                  placeholder={this.state.zip_code || 'Zipcode'}
+                  type='zipcode'
+                  onChange={this.handleUpdate}
+                  value={this.state.zipcode || ''}
+                  width={4}
+                />
           </Form.Field>
           <br/>
 
