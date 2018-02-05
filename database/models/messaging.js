@@ -11,27 +11,15 @@ Messaging.createConvo = convoObj => (
 );
 
 Messaging.getConvosChef = chefId => (
-  knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.user_id');
   }).where('conversations.chef_id', chefId)
 );
 
 Messaging.getConvosClient = userId => (
-  knex.select('conversations.id as chatId', 'users.username as recipient').from('conversations').innerJoin('users', function combiner() {
-    this.on('users.id', 'conversations.user_id');
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
+    this.on('users.id', 'conversations.chef_id');
   }).where('conversations.user_id', userId)
 );
-
-// Messaging.insertUser = ({ hostId, date, location, partySize, meal, cuisine, description }) => (
-//   knex('events').insert({
-//     creator_id: hostId,
-//     party_size: partySize,
-//     address: location,
-//     cuisine_type: cuisine,
-//     date_type: date,
-//     meal_type: meal,
-//     description,
-//   }).then().catch(err => console.log('error inserting event into database: ', err))
-// );
 
 module.exports = Messaging;
