@@ -34,7 +34,7 @@ class BrowseEvents extends Component {
           onClick={() => {
             this.props.changeSelectedEvent(event.id);
             this.props.history.push('/selectedEvent');
-             }}>
+        }}>
           <Card.Content>
             <Image floated='right' size='mini' src={event.img} />
             <Card.Header>

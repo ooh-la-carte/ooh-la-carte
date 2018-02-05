@@ -9,7 +9,7 @@ import { changeSelectedEvent, setUserInfo, setSocket } from '../actions';
 import '../style.scss';
 import data from '../MockData';
 
-const socketUrl = 'http://localhost:8888/';
+const socketUrl = '/';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
