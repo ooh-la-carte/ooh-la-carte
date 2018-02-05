@@ -7,38 +7,38 @@ import { selectConversation } from '../actions';
 import '../style.scss';
 
 const SelectedEvent = (props) => {
-  const store = props.selectedEventReducer;
+  const event = props.selectedEventReducer;
   return (
     <div className='selectedEventCardDiv'>
       <Card id='selectedEventCard'>
-        <Image size='large' src={store.image} />
+        <Image size='large' src={event.img} />
         <Card.Content>
           <Card.Header>
-            <div className='selectedCardTitle'>{store.name}</div>
+            <div className='selectedCardTitle'>{event.name}</div>
           </Card.Header>
           <Card.Meta>
             <span className='date'>
-              Hosted by {store.host}
+              Hosted by {event.creator_username}
             </span>
             <div className='date'>
-              Cuisine: {store.cuisine}
+              Cuisine: {event.cuisine}
             </div>
             <div className='date'>
-              Budget: {store.budget}
+              Budget: {event.budget}
             </div>
           </Card.Meta>
           <Card.Description>
-            <div className='detailSegment'>{store.description}</div>
-            <div className='detailSegment'>Location: {store.location}</div>
-            <div className='detailSegment'><Icon name='calendar'/>Date:  {store.time}, {store.date}</div>
-            <div className='detailSegment'><Icon name='users'/>Guests: {store.guests}</div>
-            <div className='detailSegment'><Icon name='comment outline'/>Special requests: {store.requests}</div>
+            <div className='detailSegment'>{event.description}</div>
+            <div className='detailSegment'>Location: {event.city}, {event.state} {event.zip_code}</div>
+            <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.date}</div>
+            <div className='detailSegment'><Icon name='users'/>Guests: {event.party_size}</div>
+            <div className='detailSegment'><Icon name='comment outline'/>Special requests: {event.requests}</div>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div>
-            <span><Icon name='food'/>Food provided: {store.food ? 'Yes' : 'No'}</span>
-            <Link to='/conversation' onClick={() => { props.selectConversation(store); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
+            <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
+            <Link to='/conversation' onClick={() => { props.selectConversation(event); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
           </div>
         </Card.Content>
       </Card>
