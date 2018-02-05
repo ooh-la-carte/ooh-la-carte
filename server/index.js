@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
-const http = require('http').Server(express());
-const io = require('socket.io')(http);
+const http = require('http');
 const bodyParser = require('body-parser');
 const path = require('path');
+const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
@@ -14,24 +14,27 @@ const SocketManager = require('./SocketManager');
 
 /*
   ==============================
-    Chat Server
-  ==============================
-*/
-
-io.on('connection', SocketManager);
-
-http.listen(8888, () => {
-  console.log('listening on *:8888');
-});
-
-/*
-  ==============================
     Server
   ==============================
 */
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+
+/*
+  ==============================
+    Chat Server
+  ==============================
+*/
+const server = http.createServer(app);
+
+const io = socket(server);
+
+io.on('connection', SocketManager);
+
+// http.listen(8888, () => {
+//   console.log('listening on *:8888');
+// });
 
 /*
   ==============================
@@ -261,6 +264,6 @@ app.post('/api/conversations', (req, res) => {
   ==============================
 */
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`listening on port ${PORT}!`);
 });

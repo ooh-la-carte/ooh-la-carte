@@ -5,7 +5,6 @@ const Event = {};
 Event.findAllEvents = () => (
   knex('events')
     .then((results) => {
-      console.log(results);
       console.log('event:findall - all events queried');
       return results;
     })
@@ -45,7 +44,7 @@ Event.insertEvent = (eventObj) => {
     budget,
     description,
     partySize,
-    value } = eventObj;
+    meal } = eventObj;
 
   return knex('events').insert({
     name: eventName,
@@ -59,7 +58,7 @@ Event.insertEvent = (eventObj) => {
     budget,
     description,
     party_size: partySize,
-    meal_type: value,
+    meal_type: meal,
   })
     .then((insertResult) => {
       console.log('event:insert - event sucessfully inserted');
