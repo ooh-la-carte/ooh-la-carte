@@ -72,6 +72,32 @@ class ContactInfo extends Component {
               value={this.state.bio || ''}
             />
           </Form.Field>
+          <Form.Field>
+            <label>Location</label>
+              <Form.Group>
+                <Form.Input
+                  placeholder={this.state.city || 'City'}
+                  type='city'
+                  onChange={this.handleUpdate}
+                  value={this.state.city || ''}
+                  width={4}
+                />
+                <Form.Input
+                  placeholder={this.state.state || 'State'}
+                  type='state'
+                  onChange={this.handleUpdate}
+                  value={this.state.state || ''}
+                  width={4}
+                />
+                <Form.Input
+                  placeholder={this.state.zip_code || 'Zipcode'}
+                  type='zipcode'
+                  onChange={this.handleUpdate}
+                  value={this.state.zipcode || ''}
+                  width={4}
+                />
+              </Form.Group>
+          </Form.Field>
           <Form.Field required>
           <label>Phone</label>
             <Form.Input
@@ -89,16 +115,6 @@ class ContactInfo extends Component {
               onChange={this.handleUpdate}
               value={this.state.email || ''}
             />
-          </Form.Field>
-          <Form.Field>
-            <label>Zipcode</label>
-                <Form.Input
-                  placeholder={this.state.zip_code || 'Zipcode'}
-                  type='zipcode'
-                  onChange={this.handleUpdate}
-                  value={this.state.zipcode || ''}
-                  width={4}
-                />
           </Form.Field>
           <br/>
 
