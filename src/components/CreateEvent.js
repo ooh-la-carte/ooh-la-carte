@@ -93,7 +93,7 @@ class CreateEventForm extends Component {
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/createevent';
-    if (!eventObj.date || !eventObj.partySize || !eventObj.value) {
+    if (!eventObj.date || !eventObj.partySize || !eventObj.meal) {
       console.log('Required fields not provided');
     } else {
       console.log('submitting event');
@@ -112,7 +112,6 @@ class CreateEventForm extends Component {
 
   render() {
     return (
-      console.log(this.state),
       <div className='topLevelDiv'>
         <h1 className='center softText'>Create Event</h1>
         <div className='boxed center'>
@@ -163,7 +162,7 @@ class CreateEventForm extends Component {
 
                 <Grid.Row>
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>Month</label>
                       <Dropdown
                         placeholder='Jan'
@@ -179,7 +178,7 @@ class CreateEventForm extends Component {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>Date</label>
                       <Dropdown
                         placeholder='1'
@@ -195,7 +194,7 @@ class CreateEventForm extends Component {
                   </Grid.Column>
 
                   <Grid.Column>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>Year</label>
                       <Dropdown
                         placeholder='2018'
@@ -242,7 +241,7 @@ class CreateEventForm extends Component {
                 </Grid.Row>
               </Grid>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Meal</label>
                 <Dropdown
                   onChange={this.handlePartySizeSelectionChange}
@@ -264,7 +263,7 @@ class CreateEventForm extends Component {
 
               <br/>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Budget</label>
                 <Input placeholder='300.00'
                   onChange={this.handleBudgetChange}

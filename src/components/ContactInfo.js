@@ -73,7 +73,13 @@ class ContactInfo extends Component {
             />
           </Form.Field>
           <Form.Field>
-            <label>Location</label>
+            <label>Address</label>
+              <Form.Input
+                placeholder={this.state.street_name || 'Street Address'}
+                type='streetAddress'
+                onChange={this.handleUpdate}
+                value={this.state.streetAddress || ''}
+              />
               <Form.Group>
                 <Form.Input
                   placeholder={this.state.city || 'City'}
