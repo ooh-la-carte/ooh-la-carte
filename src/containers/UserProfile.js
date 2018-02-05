@@ -17,6 +17,7 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     axios.get('/api/user/info', { params: { id: window.localStorage.getItem('userId') } })
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;

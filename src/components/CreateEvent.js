@@ -128,7 +128,7 @@ class CreateEventForm extends Component {
 
               <Grid columns={3}>
                 <Grid.Row>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingRight: '0px' }} width={8}>
                     <Form.Field>
                       <label>City</label>
                       <Input
@@ -138,7 +138,7 @@ class CreateEventForm extends Component {
                       />
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
+                  <Grid.Column style={{ padding: '0px' }} width={3}>
                     <Form.Field>
                       <label>State</label>
                       <Input
@@ -148,7 +148,7 @@ class CreateEventForm extends Component {
                       />
                     </Form.Field>
                   </Grid.Column>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
                     <Form.Field>
                       <label>Zip</label>
                       <Input
@@ -161,11 +161,11 @@ class CreateEventForm extends Component {
                 </Grid.Row>
 
                 <Grid.Row>
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingRight: '0px' }}>
                     <Form.Field required>
                       <label>Month</label>
                       <Dropdown
-                        placeholder='Jan'
+                        placeholder='Month'
                         fluid
                         compact
                         selection
@@ -177,27 +177,27 @@ class CreateEventForm extends Component {
                     </Form.Field>
                   </Grid.Column>
 
-                  <Grid.Column>
+                  <Grid.Column style={{ padding: '0px' }}>
                     <Form.Field required>
-                      <label>Date</label>
+                      <label>Day</label>
                       <Dropdown
-                        placeholder='1'
+                        placeholder='Day'
                         fluid
                         compact
                         selection
                         labeled
-                        label='Date'
+                        label='Day'
                         onChange={this.handleDateSelectionChange}
                         options={options.dateOptions}
                       />
                     </Form.Field>
                   </Grid.Column>
 
-                  <Grid.Column>
+                  <Grid.Column style={{ paddingLeft: '0px' }}>
                     <Form.Field required>
                       <label>Year</label>
                       <Dropdown
-                        placeholder='2018'
+                        placeholder='Year'
                         fluid
                         compact
                         selection

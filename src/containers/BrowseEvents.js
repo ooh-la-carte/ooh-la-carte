@@ -17,6 +17,7 @@ class BrowseEvents extends Component {
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     axios.get('/api/events')
       .then((events) => {
         console.log(events.data);
