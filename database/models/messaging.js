@@ -10,16 +10,16 @@ Messaging.createConvo = convoObj => (
     .then(() => (console.log('inserted'))).catch(err => console.log(err))
 );
 
-Messaging.getMessages = (messageObj) => {
-  return knex('messages').where({
+Messaging.getMessages = messageObj => (
+  knex('messages').where({
     conversation_id: messageObj.id,
     user_id: messageObj.user,
   })
-    .then((data) => {
-      return data;
-    })
-    .catch(err => console.log(err));
-};
+    .then(data => (
+      data
+    ))
+    .catch(err => console.log(err))
+);
 
 
 Messaging.insertMessage = messageObj => (
@@ -28,14 +28,14 @@ Messaging.insertMessage = messageObj => (
     conversation_id: messageObj.convo_id,
     text: messageObj.message,
   })
-    .then(() => {
-      return knex('messages').insert({
+    .then(() => (
+      knex('messages').insert({
         user_id: messageObj.reciever_id,
         conversation_id: messageObj.convo_id,
         text: messageObj.message,
       })
-        .catch(err => console.log(err));
-    })
+        .catch(err => console.log(err))
+    ))
     .catch(err => console.log(err))
 );
 
