@@ -15,13 +15,14 @@ class Conversation extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     console.log('reciever up');
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
       user: window.localStorage.getItem('userId'),
     })
       .then((chat) => {
+        console.log('message array: ', chat.data);
         this.setState({ chat: chat.data });
         this.listen();
       });
@@ -38,6 +39,7 @@ class Conversation extends Component {
       if (Number(window.localStorage.getItem('userId')) === data.sender) {
         const newChat = [...this.state.chat, data];
         this.setState({ chat: newChat });
+        console.log('Before db insert: ', data);
         axios.post('/api/insertMessage', data);
       }
     });
