@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import io from 'socket.io-client';
 import { Input } from 'semantic-ui-react';
+import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket } from '../actions';
@@ -16,19 +17,28 @@ class Conversation extends Component {
 
   componentDidMount() {
     console.log('reciever up');
-    console.log(this.props.socketReducer);
+    axios.post('/api/convoMessages', {
+      id: this.props.selectedConversation.convo_id,
+      user: window.localStorage.getItem('userId'),
+    })
+      .then((chat) => {
+        this.setState({ chat: chat.data });
+        this.listen();
+      });
+  }
+
+  listen = () => {
     this.props.socketReducer.on('private message', (data) => {
       if (window.localStorage.getItem('username') === data.reciever) {
-        console.log(data);
         const newChat = [...this.state.chat, data];
         this.setState({ chat: newChat });
       }
     });
     this.props.socketReducer.on('self message', (data) => {
       if (Number(window.localStorage.getItem('userId')) === data.sender) {
-        console.log(data);
         const newChat = [...this.state.chat, data];
         this.setState({ chat: newChat });
+        axios.post('/api/insertMessage', data);
       }
     });
   }
@@ -40,9 +50,10 @@ class Conversation extends Component {
   submit = (e) => {
     if (e.key === 'Enter') {
       this.props.socketReducer.emit('send', {
-        message: this.state.input,
+        text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
         reciever: this.props.selectedConversation.username,
+        reciever_id: this.props.selectedConversation.id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
       this.setState({ input: '' });
@@ -50,8 +61,8 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div>
-      {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.message}</div>))}
+    <div style={{ height: '100%' }}>
+      {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.text}</div>))}
       <div className='chatInput'>
         <Input
         value={ this.state.input }

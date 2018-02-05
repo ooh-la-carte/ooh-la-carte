@@ -293,7 +293,10 @@ body {
 }
 
 .chatMessages {
-  margin-left: 5%;
+  width: 80%;
+  margin: 1% auto;
+  border-radius: 5px;
+  padding: 2%;
   background-color: $light-color;
   
 }
