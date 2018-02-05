@@ -6,7 +6,6 @@ module.exports = (socket) => {
   let user = '';
   // on login emit add user to add to connected users
   socket.on('add user', (string) => {
-    console.log('Add: ', string);
     user = string;
     connectedUsers[string] = socket;
     console.log(Object.keys(connectedUsers));
@@ -14,17 +13,14 @@ module.exports = (socket) => {
 
   // on logout emit remove user to remove from connected users
   socket.on('remove user', (string) => {
-    console.log('Remove: ', string);
     delete connectedUsers[string];
   });
 
   socket.on('send', (obj) => {
     if (connectedUsers[obj.reciever]) {
-      console.log('Message recieved!', obj);
-      socket.emit('private message', obj);
-      socket.emit('new message', obj);
+      socket.broadcast.to(connectedUsers[obj.reciever].id).emit('private message', obj);
+      socket.emit('self message', obj);
     } else {
-      console.log('PM: ', obj);
       socket.emit('self message', obj);
       // database insert call here
     }
