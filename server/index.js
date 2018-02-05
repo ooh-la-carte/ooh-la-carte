@@ -250,6 +250,21 @@ app.post('/api/getConvos', (req, res) => {
   }
 });
 
+app.post('/api/convoMessages', (req, res) => {
+  Messaging.getMessages(req.body)
+    .then((data) => {
+      res.send(data);
+    });
+});
+
+app.post('/api/insertMessage', (req, res) => {
+  Messaging.insertMessage(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch(err => console.log(err));
+});
+
 app.post('/api/conversations', (req, res) => {
   Messaging.createConvo(req.body)
     .then(() => {

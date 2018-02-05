@@ -1,7 +1,7 @@
 import React from 'react';
 // import io from 'socket.io-client';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket, selectConversation } from '../actions';
@@ -23,21 +23,6 @@ class ChatTab extends React.Component {
       .catch(err => console.log(err));
   }
 
-  // componentWillMount() {
-  //   this.initSocket();
-  // }
-
-  // initSocket = () => {
-  //   if (!this.props.socketReducer.id) {
-  //     const socket = io(socketUrl);
-  //     socket.on('connect', () => {
-  //       socket.userId = window.localStorage.getItem('userId');
-  //       console.log('Connected');
-  //       this.props.setSocket(socket);
-  //     });
-  //   }
-  // }
-
   render = () => (
         <div className='container'>
         {window.localStorage.getItem('isChef') === 'true'
@@ -45,28 +30,34 @@ class ChatTab extends React.Component {
             <div>
               {this.state.convos.map(convo =>
                 <div key={convo.chatId} className='chatMessages'>
-                  <Link to='/conversation' onClick={() => {
+                  <div onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.recipientId } })
                       .then((user) => {
                         const obj = user.data;
                         obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
+                      })
+                      .then(() => {
+                        this.props.history.push('/conversation');
                       });
-                  }}>{convo.recipientUsername}</Link>
+                  }}>{convo.recipientUsername}</div>
                 </div>)}
             </div>
           :
             <div>
               {this.state.convos.map(convo =>
-                <div key={convo.chatId}>
-                  <Link to='/conversation' onClick={() => {
+                <div key={convo.chatId} className='chatMessages'>
+                  <div onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.recipientId } })
                       .then((user) => {
                         const obj = user.data;
                         obj.convo_id = convo.chatId;
                         this.props.selectConversation(obj);
+                      })
+                      .then(() => {
+                        this.props.history.push('/conversation');
                       });
-                  }}>{convo.recipientUsername}</Link>
+                  }}>{convo.recipientUsername}</div>
                 </div>)}
             </div>
         }
@@ -85,4 +76,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatTab);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ChatTab));
