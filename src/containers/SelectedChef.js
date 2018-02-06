@@ -37,12 +37,19 @@ const SelectedChef = (props) => {
           <div>
             <span><Icon name='food'/>Years experience: {chef.experience}</span>
             <div onClick={() => {
-              props.selectConversation(chef);
               const convo = {
                 user: window.localStorage.getItem('userId'),
                 chef: chef.id,
               };
               axios.post('/api/conversations', convo)
+                .then((results) => {
+                  // need convo id here
+                  const obj = results.data[0];
+                  obj.convo_id = obj.id;
+                  obj.username = chef.username;
+                  console.log('RESULTS AFTER CREATION OR RETRIEVAL: ', results.data[0]);
+                  props.selectConversation(obj);
+                })
                 .then(() => {
                   props.history.push('/conversation');
                 });

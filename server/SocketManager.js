@@ -19,9 +19,12 @@ module.exports = (socket) => {
   socket.on('send', (obj) => {
     console.log('Send object: ', obj);
     if (connectedUsers[obj.reciever]) {
+      console.log('BROADCAST');
       socket.broadcast.to(connectedUsers[obj.reciever].id).emit('private message', obj);
+      console.log('Between broadcast and emit');
       socket.emit('self message', obj);
     } else {
+      console.log('SELF MESSAGE');
       socket.emit('self message', obj);
       // database insert call here
     }

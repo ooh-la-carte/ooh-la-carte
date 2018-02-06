@@ -15,8 +15,9 @@ class Conversation extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount() {
     console.log('reciever up');
+    console.log(this.props.selectedConversation);
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
       user: window.localStorage.getItem('userId'),
@@ -26,6 +27,7 @@ class Conversation extends Component {
         this.setState({ chat: chat.data });
         this.listen();
       });
+    // this.listen();
   }
 
   listen = () => {
