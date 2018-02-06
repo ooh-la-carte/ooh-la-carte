@@ -4,7 +4,7 @@ import { Input } from 'semantic-ui-react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { setSocket } from '../actions';
+import { setSocket, listenerOn } from '../actions';
 
 class Conversation extends Component {
   constructor(props) {
@@ -31,20 +31,24 @@ class Conversation extends Component {
   }
 
   listen = () => {
-    this.props.socketReducer.on('private message', (data) => {
-      if (window.localStorage.getItem('username') === data.reciever) {
-        const newChat = [...this.state.chat, data];
-        this.setState({ chat: newChat });
-      }
-    });
-    this.props.socketReducer.on('self message', (data) => {
-      if (Number(window.localStorage.getItem('userId')) === data.sender) {
-        const newChat = [...this.state.chat, data];
-        this.setState({ chat: newChat });
-        console.log('Before db insert: ', data);
-        axios.post('/api/insertMessage', data);
-      }
-    });
+    if (!this.props.listenerReducer) {
+      this.props.listenerOn(true);
+      this.props.socketReducer.on('private message', (data) => {
+        if (window.localStorage.getItem('username') === data.reciever) {
+          const newChat = [...this.state.chat, data];
+          this.setState({ chat: newChat });
+        }
+      });
+      this.props.socketReducer.on('self message', (data) => {
+        if (Number(window.localStorage.getItem('userId')) === data.sender) {
+          console.log('Before db insert: ', data);
+          axios.post('/api/insertMessage', data);
+          const newChat = [...this.state.chat, data];
+          this.setState({ chat: newChat });
+        }
+      });
+    }
+    // put a redux store property here that checks if listeners are already on
   }
 
   changeInput = (e) => {
@@ -52,7 +56,7 @@ class Conversation extends Component {
   }
 
   submit = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && this.state.input !== '') {
       this.props.socketReducer.emit('send', {
         text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
@@ -84,11 +88,15 @@ function mapStateToProps(state) {
   return {
     selectedConversation: state.selectedConversation,
     socketReducer: state.socketReducer,
+    listenerReducer: state.listenerReducer,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setSocket }, dispatch);
+  return bindActionCreators({
+    setSocket,
+    listenerOn,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Conversation);
