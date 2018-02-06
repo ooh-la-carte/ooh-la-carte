@@ -198,19 +198,27 @@ module.exports.yearOptions = [
 
 module.exports.partySizeOptions = [
   {
-    text: 'less than 5',
-    value: '1-5',
+    text: 'Individual',
+    value: '1',
   },
   {
-    text: 'between 5 and 10',
+    text: 'Couple',
+    value: '2',
+  },
+  {
+    text: 'Small Gathering (up to 5)',
+    value: '2-5',
+  },
+  {
+    text: 'Moderate Gathering (5 - 10)',
     value: '5-10',
   },
   {
-    text: 'between 10 and 20',
+    text: 'Large Gathering (10 - 20)',
     value: '10-20',
   },
   {
-    text: 'over 20',
+    text: 'Party (20+)',
     value: '20+',
   },
 ];
