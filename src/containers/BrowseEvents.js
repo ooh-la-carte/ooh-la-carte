@@ -12,7 +12,6 @@ import { changeSelectedEvent } from '../actions';
 class BrowseEvents extends Component {
   constructor(props) {
     super(props);
-
     this.state = { events: [] };
   }
 

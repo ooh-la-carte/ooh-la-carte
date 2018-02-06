@@ -120,6 +120,16 @@ app.post('/api/signup', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
+// post route for creating events
+app.post('/api/createevent', (req, res) => {
+  // req.body is the state object from the create event form
+  Event.insertEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
+});
+
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
@@ -136,6 +146,23 @@ app.post('/api/updateCuisineSelection', (req, res) => {
     .then(() => {
       res.sendStatus(200);
     });
+});
+
+// add cuisine selection to chef
+app.post('/api/user/cuisines', (req, res) => {
+  User.insertCuisineById(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
+});
+
+app.post('/api/user/deleteCuisines', (req, res) => {
+  User.deleteCuisineById(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
 });
 
 // post request to update chef rate
@@ -197,16 +224,14 @@ app.get('/api/events', (req, res) => {
   }
 });
 
-// post route for creating events
-app.post('/api/createevent', (req, res) => {
-  // req.body is the state object from the create event form
-  Event.insertEvent(req.body)
-    .then(() => {
-      res.sendStatus(200);
+app.get('/api/user/cuisines', (req, res) => {
+  console.log('in the query', req.query.id);
+  User.findCuisinesById(req.query.id)
+    .then((results) => {
+      res.type('json').json(results);
     })
-    .catch((error) => { console.log(error); });
+    .catch((err) => { console.log(err); });
 });
-
 
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {

@@ -62,9 +62,14 @@ exports.up = (knex, Promise) => (
       table.string('cuisine_type');
       table.decimal('price');
     }),
+    knex.schema.createTable('users_cuisines', (table) => {
+      table.increments('id').unsigned().primary();
+      table.string('cuisine');
+      table.integer('chef_id').unsigned().references('users.id');
+      table.string('custom_description');
+    }),
   ])
 );
-
 
 exports.down = (knex, Promise) => (
   Promise.all([
