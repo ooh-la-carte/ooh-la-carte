@@ -16,6 +16,7 @@ class Conversation extends Component {
   }
 
   componentDidMount() {
+    this.scrollToBottom();
     console.log('reciever up');
     console.log(this.props.selectedConversation);
     axios.post('/api/convoMessages', {
@@ -28,6 +29,14 @@ class Conversation extends Component {
         this.listen();
       });
     // this.listen();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.el.scrollIntoView({ behaviour: 'smooth' });
   }
 
   listen = () => {
@@ -69,8 +78,9 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div style={{ height: '100%' }}>
+    <div className='chatDiv'>
       {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.text}</div>))}
+      <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input
         value={ this.state.input }
