@@ -7,7 +7,10 @@ Messaging.createConvo = convoObj => (
     user_id: convoObj.user,
     chef_id: convoObj.chef,
   })
-    .then(() => (console.log('inserted'))).catch(err => console.log(err))
+    .then(() => knex('conversations').where({
+      user_id: convoObj.user,
+      chef_id: convoObj.chef,
+    })).catch(err => console.log(err))
 );
 
 Messaging.getMessages = messageObj => (
@@ -21,6 +24,21 @@ Messaging.getMessages = messageObj => (
     .catch(err => console.log(err))
 );
 
+Messaging.checkExisitingConvos = obj => (
+  knex('conversations').where({
+    user_id: obj.user_id,
+    chef_id: obj.chef_id,
+  })
+    .then((results) => {
+      if (results.length === 0) {
+        const convo = obj;
+        convo.dn = true;
+        return convo;
+      }
+      return results;
+    })
+);
+
 
 Messaging.insertMessage = messageObj => (
   knex('messages').insert({
@@ -28,14 +46,15 @@ Messaging.insertMessage = messageObj => (
     conversation_id: messageObj.convo_id,
     text: messageObj.text,
   })
-    .then(() => (
-      knex('messages').insert({
+    .then(() => {
+      console.log('insert');
+      return knex('messages').insert({
         user_id: messageObj.reciever_id,
         conversation_id: messageObj.convo_id,
         text: messageObj.text,
       })
-        .catch(err => console.log(err))
-    ))
+        .catch(err => console.log(err));
+    })
     .catch(err => console.log(err))
 );
 
