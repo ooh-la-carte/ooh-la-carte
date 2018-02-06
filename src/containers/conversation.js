@@ -86,7 +86,9 @@ class Conversation extends Component {
         text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
         reciever: this.props.selectedConversation.username,
-        reciever_id: this.props.selectedConversation.id,
+        reciever_id: this.props.selectedConversation.chef_id
+          ? this.props.selectedConversation.chef_id
+          : this.props.selectedConversation.id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
     }
