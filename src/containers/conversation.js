@@ -13,9 +13,11 @@ class Conversation extends Component {
       input: '',
       chat: [],
     };
+    this.listen();
   }
 
   componentDidMount() {
+    this.scrollToBottom();
     console.log('reciever up');
     console.log(this.props.selectedConversation);
     axios.post('/api/convoMessages', {
@@ -25,9 +27,16 @@ class Conversation extends Component {
       .then((chat) => {
         console.log('message array: ', chat.data);
         this.setState({ chat: chat.data });
-        this.listen();
       });
     // this.listen();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.el.scrollIntoView({ behaviour: 'smooth' });
   }
 
   listen = () => {
@@ -42,13 +51,29 @@ class Conversation extends Component {
       this.props.socketReducer.on('self message', (data) => {
         if (Number(window.localStorage.getItem('userId')) === data.sender) {
           console.log('Before db insert: ', data);
-          axios.post('/api/insertMessage', data);
-          const newChat = [...this.state.chat, data];
-          this.setState({ chat: newChat });
+          axios.post('/api/insertMessage', data)
+            .then(() => {
+              const newChat = [...this.state.chat, data];
+              this.addToChat(newChat);
+            });
         }
       });
     }
     // put a redux store property here that checks if listeners are already on
+  }
+
+  componentWillUnmount = () => {
+    this.props.socketReducer.off('private message');
+    this.props.socketReducer.off('self message');
+    this.props.listenerOn(false);
+  }
+
+  addToChat = (chat) => {
+    console.log('Chat here: ', chat);
+    this.setState({
+      chat,
+      input: '',
+    });
   }
 
   changeInput = (e) => {
@@ -64,13 +89,13 @@ class Conversation extends Component {
         reciever_id: this.props.selectedConversation.id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
-      this.setState({ input: '' });
     }
   }
 
   render = () => (
-    <div style={{ height: '100%' }}>
+    <div className='chatDiv'>
       {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.text}</div>))}
+      <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input
         value={ this.state.input }
