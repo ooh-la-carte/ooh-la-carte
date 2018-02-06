@@ -53,6 +53,7 @@ class Conversation extends Component {
           console.log('Before db insert: ', data);
           axios.post('/api/insertMessage', data)
             .then(() => {
+              data.self = true;
               const newChat = [...this.state.chat, data];
               this.addToChat(newChat);
             });
@@ -96,7 +97,9 @@ class Conversation extends Component {
 
   render = () => (
     <div className='chatDiv'>
-      {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.text}</div>))}
+      {this.state.chat.map((message, i) => (message.self === true
+        ? <div key={i} className='senderMessages'>{message.text}</div>
+        : <div key={i} className='recieverMessages'>{message.text}</div>))}
       <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input

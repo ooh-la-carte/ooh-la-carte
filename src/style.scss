@@ -299,7 +299,26 @@ body {
   border-radius: 5px;
   padding: 2%;
   background-color: $light-color;
-  
+}
+
+.senderMessages {
+  min-height: 35px;
+  float: right;
+  width: 60%;
+  margin: 1% 5%;
+  border-radius: 5px;
+  padding: 2%;
+  background-color: $light-color;
+}
+
+.recieverMessages {
+  min-height: 35px;
+  float: left;
+  width: 60%;
+  margin: 1% 5%;
+  border-radius: 5px;
+  padding: 2%;
+  background-color: $light-color;
 }
 
 .chatDiv {
