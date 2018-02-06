@@ -40,7 +40,7 @@ class ContactInfo extends Component {
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/updateContactInfo';
-    if (!eventObj.name || !eventObj.phone || !eventObj.email) {
+    if (eventObj.name && eventObj.phone && eventObj.email) {
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
