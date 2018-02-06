@@ -18,22 +18,22 @@ class Settings extends Component {
         phone: '',
         email: '',
         cuisine: {
-          asian: false,
-          african: false,
-          cajun: false,
-          chinese: false,
-          french: false,
-          indian: false,
-          italian: false,
-          pastry: false,
-          texmex: false,
-          middleEastern: false,
-          bbq: false,
-          thai: false,
-          southern: false,
-          vegetarian: false,
-          vegan: false,
-          custom: false,
+          Asian: false,
+          African: false,
+          Cajun: false,
+          Chinese: false,
+          French: false,
+          Indian: false,
+          Italian: false,
+          Pastry: false,
+          Mexican: false,
+          Seafood: false,
+          BBQ: false,
+          Thai: false,
+          Southern: false,
+          Vegetarian: false,
+          Vegan: false,
+          Custom: false,
         },
       },
       id: window.localStorage.getItem('userId'),
@@ -44,22 +44,22 @@ class Settings extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     const cuisine = {
-      asian: false,
-      african: false,
-      cajun: false,
-      chinese: false,
-      french: false,
-      indian: false,
-      italian: false,
-      pastry: false,
-      texmex: false,
-      middleEastern: false,
-      bbq: false,
-      thai: false,
-      southern: false,
-      vegetarian: false,
-      vegan: false,
-      custom: false,
+      Asian: false,
+      African: false,
+      Cajun: false,
+      Chinese: false,
+      French: false,
+      Indian: false,
+      Italian: false,
+      Pastry: false,
+      Mexican: false,
+      Seafood: false,
+      BBQ: false,
+      Thai: false,
+      Southern: false,
+      Vegetarian: false,
+      Vegan: false,
+      Custom: false,
     };
     axios.get('/api/user/info', { params: { id: this.state.id } })
       .then((userInfo) => {
@@ -116,6 +116,7 @@ class Settings extends Component {
       id: this.state.id,
       cuisine: value,
       description: '',
+      cuisineObj: JSON.stringify(this.state.user.cuisine),
     };
     if (this.state.user.cuisine[value]) {
       const url = '/api/user/cuisines';
@@ -143,33 +144,33 @@ class Settings extends Component {
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.asian} label='Asian' value='asian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.african} label='African' value='african' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.chinese} label='Chinese' value='chinese' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.french} label='French' value='french' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.cajun} label='Cajun/ Creole' value='cajun' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Asian} label='Asian' value='Asian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.African} label='African' value='African' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Chinese} label='Chinese' value='Chinese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.French} label='French' value='French' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Cajun} label='Cajun' value='Cajun' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.indian} label='Indian' value='indian' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox checked={this.state.user.cuisine.italian} label='Italian' value='italian' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox checked={this.state.user.cuisine.southern} label='Southern' value='southern' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.pastry} label='Pastry' value='pastry' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.middleEastern} label='Middle Eastern' value='middleEastern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Indian} label='Indian' value='Indian' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.state.user.cuisine.Italian} label='Italian' value='Italian' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.state.user.cuisine.Southern} label='Southern' value='Southern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Pastry} label='Pastry' value='Pastry' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Mexican} label='Mexican' value='Mexican' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.bbq} label='BBQ' value='bbq' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.thai} label='Thai' value='thai' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.vegan} label='Vegan' value='vegan' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.vegetarian} label='Vegetarian' value='vegetarian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.texmex} label='Tex-Mex' value='texmex' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.BBQ} label='BBQ' value='BBQ' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Thai} label='Thai' value='Thai' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Vegan} label='Vegan' value='Vegan' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Vegetarian} label='Vegetarian' value='Vegetarian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.state.user.cuisine.Seafood} label='Seafood' value='Seafood' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>

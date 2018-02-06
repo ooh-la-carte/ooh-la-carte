@@ -23,7 +23,20 @@ class BrowseChefs extends Component {
       .catch(err => console.log(err));
   }
 
+  getCuisines = (cuisines) => {
+    const cuisineList = [];
+    if (cuisines) {
+      Object.keys(cuisines).forEach((key) => {
+        if (cuisines[key]) {
+          cuisineList.push(key);
+        }
+      });
+    }
+    return cuisineList.join(', ');
+  }
+
   render = () => (
+
     <div className='topLevelDiv'>
       {this.state.chefs.map(chef => (
         <Card
@@ -40,7 +53,7 @@ class BrowseChefs extends Component {
           </Card.Header>
           <Card.Meta>
             <div>Name: {chef.name}</div>
-            <div>Cuisine: {chef.specialty}</div>
+            <div>Cuisine: {this.getCuisines(JSON.parse(chef.cuisine))}</div>
           </Card.Meta>
           <Card.Description>
             <div>{chef.bio}</div>
