@@ -41,6 +41,7 @@ class Settings extends Component {
 
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     axios.get('/api/user/info', { params: { id: this.state.id } })
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
@@ -59,6 +60,8 @@ class Settings extends Component {
               rate,
               cuisine: JSON.parse(cuisine),
             } });
+        } else {
+          console.log('no cuisine');
         }
       });
   }

@@ -15,6 +15,7 @@ class BrowseChefs extends Component {
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     axios.get('/api/getChefs')
       .then((chefs) => {
         this.setState({ chefs: chefs.data });

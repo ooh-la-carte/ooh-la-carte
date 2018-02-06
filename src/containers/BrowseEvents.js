@@ -17,6 +17,7 @@ class BrowseEvents extends Component {
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     axios.get('/api/events')
       .then((events) => {
         console.log(events.data);
@@ -32,7 +33,7 @@ class BrowseEvents extends Component {
           key={event.id}
           className='browseEventCards'
           onClick={() => {
-            this.props.changeSelectedEvent(event.id);
+            this.props.changeSelectedEvent(event);
             this.props.history.push('/selectedEvent');
         }}>
           <Card.Content>
