@@ -40,15 +40,17 @@ class ContactInfo extends Component {
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/updateContactInfo';
-    axios.post(url, eventObj)
-      .then((response) => {
-        if (response.status === 200) {
-          this.props.history.push('/settings');
-        }
-      })
-      .catch((error) => {
-        console.log('submission error: ', error);
-      });
+    if (!eventObj.name || !eventObj.phone || !eventObj.email) {
+      axios.post(url, eventObj)
+        .then((response) => {
+          if (response.status === 200) {
+            this.props.history.push('/settings');
+          }
+        })
+        .catch((error) => {
+          console.log('submission error: ', error);
+        });
+    }
   }
 
   render() {
@@ -138,8 +140,6 @@ class ContactInfo extends Component {
               value={this.state.email || ''}
             />
           </Form.Field>
-          <br/>
-
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button
