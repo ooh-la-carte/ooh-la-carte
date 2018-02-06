@@ -57,7 +57,7 @@ class SignUpForm extends Component {
             window.localStorage.userId = response.data.userId;
             window.localStorage.username = response.data.username;
             window.localStorage.isChef = response.data.isChef;
-            this.props.history.push('/userProfile');
+            this.props.history.push('/contactInfo');
           }
         })
         .catch((error) => {
