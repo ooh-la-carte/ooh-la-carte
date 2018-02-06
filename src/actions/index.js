@@ -41,6 +41,13 @@ const selectConversation = userId => (
   }
 );
 
+const listenerOn = boolean => (
+  {
+    type: 'LISTENER_ON',
+    payload: boolean,
+  }
+);
+
 export {
   changeSelectedChef,
   changeSelectedEvent,
@@ -48,4 +55,5 @@ export {
   removeSocket,
   selectConversation,
   setUserInfo,
+  listenerOn,
 };
