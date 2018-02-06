@@ -240,17 +240,24 @@ app.post('/api/getConvos', (req, res) => {
       .then((data) => {
         res.send(data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        res.send([]);
+      });
   } else {
     Messaging.getConvosClient(req.body.id)
       .then((data) => {
         res.send(data);
       })
-      .catch(err => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        res.send([]);
+      });
   }
 });
 
 app.post('/api/convoMessages', (req, res) => {
+  console.log('Get convo api call: ', req.body);
   Messaging.getMessages(req.body)
     .then((data) => {
       res.send(data);
@@ -266,11 +273,23 @@ app.post('/api/insertMessage', (req, res) => {
 });
 
 app.post('/api/conversations', (req, res) => {
-  Messaging.createConvo(req.body)
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch(err => console.log(err));
+  Messaging.checkExisitingConvos({
+    user_id: req.body.user,
+    chef_id: req.body.chef,
+  })
+    .then((data) => {
+      if (data.dn) {
+        console.log('creating convo insert');
+        Messaging.createConvo(req.body)
+          .then((data2) => {
+            res.send(data2);
+          })
+          .catch(err => console.log(err));
+      } else {
+        console.log('Already exisits: ', data);
+        res.send(data);
+      }
+    });
 });
 
 /*
