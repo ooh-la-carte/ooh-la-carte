@@ -19,13 +19,11 @@ class Conversation extends Component {
   componentDidMount() {
     this.scrollToBottom();
     console.log('reciever up');
-    console.log(this.props.selectedConversation);
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
       user: window.localStorage.getItem('userId'),
     })
       .then((chat) => {
-        console.log('message array: ', chat.data);
         this.setState({ chat: chat.data });
       });
     // this.listen();
@@ -50,10 +48,11 @@ class Conversation extends Component {
       });
       this.props.socketReducer.on('self message', (data) => {
         if (Number(window.localStorage.getItem('userId')) === data.sender) {
-          console.log('Before db insert: ', data);
           axios.post('/api/insertMessage', data)
             .then(() => {
-              const newChat = [...this.state.chat, data];
+              const chatData = data;
+              chatData.self = true;
+              const newChat = [...this.state.chat, chatData];
               this.addToChat(newChat);
             });
         }
@@ -69,11 +68,11 @@ class Conversation extends Component {
   }
 
   addToChat = (chat) => {
-    console.log('Chat here: ', chat);
     this.setState({
       chat,
       input: '',
     });
+    this.scrollToBottom();
   }
 
   changeInput = (e) => {
@@ -86,9 +85,9 @@ class Conversation extends Component {
         text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
         reciever: this.props.selectedConversation.username,
-        reciever_id: this.props.selectedConversation.chef_id
-          ? this.props.selectedConversation.chef_id
-          : this.props.selectedConversation.id,
+        reciever_id: this.props.selectedConversation.chef_id === Number(window.localStorage.getItem('userId'))
+          ? this.props.selectedConversation.user_id
+          : this.props.selectedConversation.chef_id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
     }
@@ -96,7 +95,9 @@ class Conversation extends Component {
 
   render = () => (
     <div className='chatDiv'>
-      {this.state.chat.map((message, i) => (<div key={i} className='chatMessages'>{message.text}</div>))}
+      {this.state.chat.map((message, i) => (message.self === true
+        ? <div key={i} className='chatMessages'>{message.text}</div>
+        : <div key={i} className='chatMessages'>{message.text}</div>))}
       <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input

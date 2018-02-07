@@ -30,6 +30,7 @@ class BrowseChefs extends Component {
         key={chef.id}
         className='browseEventCards'
         onClick={() => {
+          console.log('Selected Chef store: ', chef);
           this.props.changeSelectedChef(chef);
           this.props.history.push('/selectedChef');
         }}>
