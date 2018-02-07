@@ -301,6 +301,10 @@ body {
   background-color: $light-color;
 }
 
+// WHEN YOU USE THESE IT MAKES SCROLL TO BOTTOM NOT WORK AND
+// AND SOMETIMES WONT LOAD NEW MESSAGES
+// MAYBE TRY CLEAR FLOAT FROM THE DIVS AND IN THE HOLDER DIV
+
 .senderMessages {
   min-height: 35px;
   float: right;

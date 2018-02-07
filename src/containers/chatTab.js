@@ -20,7 +20,6 @@ class ChatTab extends React.Component {
       isChef: window.localStorage.getItem('isChef'),
     })
       .then((convos) => {
-        console.log('CONVO DATA: ', convos.data);
         this.setState({ convos: convos.data });
       })
       .catch(err => console.log(err));
