@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,61 +7,114 @@ import { Card, Icon, Image } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import '../style.scss';
 
-const SelectedChef = (props) => {
-  const chef = props.selectedChefReducer;
-  return (
-    <div className='selectedEventCardDiv'>
-      <Card id='selectedEventCard'>
-        <Image size='large' src={chef.image} />
-        <Card.Content>
-          <Card.Header>
-            <div className='selectedCardTitle'>{chef.username}</div>
-          </Card.Header>
-          <Card.Meta>
-            <span className='date'>
-              Speciality: {chef.specialty}
-            </span>
-            <div className='date'>
-              Rate: {chef.rate}
-            </div>
-          </Card.Meta>
-          <Card.Description>
-            <div className='detailSegment'>{chef.bio}</div>
-            <div className='detailSegment'>Restuarant: {chef.restuarant}</div>
-            <div className='detailSegment'><Icon name='empty star'/>Rating: {chef.rating}</div>
-            <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
-            <div className='detailSegment'><Icon name='map outline'/> Menu: menu rendered here</div>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <div>
-            <span><Icon name='food'/>Years experience: {chef.experience}</span>
-            <div onClick={() => {
-              const convo = {
-                user: window.localStorage.getItem('userId'),
-                chef: chef.id,
-              };
-              axios.post('/api/conversations', convo)
-                .then((results) => {
-                  // need convo id here
-                  const obj = results.data[0];
-                  console.log('Before manipulation: ', obj);
-                  obj.convo_id = obj.id;
-                  obj.username = chef.username;
-                  obj.user_id = obj.chef_id;
-                  console.log('Select chef conversation store: ', obj);
-                  props.selectConversation(obj);
-                })
-                .then(() => {
-                  props.history.push('/conversation');
-                });
-            }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
-          </div>
-        </Card.Content>
-      </Card>
-    </div>
-  );
-};
+class SelectedChef extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      myEvents: [],
+      eventsDropdown: false,
+    };
+  }
+
+  componentDidMount = () => {
+    axios.get('/api/events', { params: {
+      field: 'creator_id',
+      target: Number(window.localStorage.getItem('userId')),
+    } })
+      .then((events) => {
+        console.log('Events from db: ', events.data);
+        this.setState({ myEvents: events.data });
+      });
+  }
+
+  openMyEvents = () => {
+    console.log(this.state.eventsDropdown);
+    this.setState({ eventsDropdown: !this.state.eventsDropdown });
+  }
+
+  sendInvite = (inviteObj) => {
+    axios.post('/api/user/sendInvite', inviteObj);
+  }
+
+  render = () => {
+    const chef = this.props.selectedChefReducer;
+    return (
+        <div className='selectedEventCardDiv'>
+          <Card id='selectedEventCard'>
+            <Image size='large' src={chef.image} />
+            <Card.Content>
+              <Card.Header>
+                <div className='selectedCardTitle'>{chef.username}</div>
+              </Card.Header>
+              <Card.Meta>
+                <span className='date'>
+                  Speciality: {chef.specialty}
+                </span>
+                <div className='date'>
+                  Rate: {chef.rate}
+                </div>
+              </Card.Meta>
+              <Card.Description>
+                <div className='detailSegment'>{chef.bio}</div>
+                <div className='detailSegment'>Restuarant: {chef.restuarant}</div>
+                <div className='detailSegment'><Icon name='empty star'/>Rating: {chef.rating}</div>
+                <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
+                <div className='detailSegment'><Icon name='map outline'/> Menu: menu rendered here</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <div>
+                <span><Icon name='food'/>Years experience: {chef.experience}</span>
+                <div onClick={() => {
+                  const convo = {
+                    user: window.localStorage.getItem('userId'),
+                    chef: chef.id,
+                  };
+                  axios.post('/api/conversations', convo)
+                    .then((results) => {
+                      // need convo id here
+                      const obj = results.data[0];
+                      console.log('Before manipulation: ', obj);
+                      obj.convo_id = obj.id;
+                      obj.username = chef.username;
+                      obj.user_id = obj.chef_id;
+                      console.log('Select chef conversation store: ', obj);
+                      this.props.selectConversation(obj);
+                    })
+                    .then(() => {
+                      this.props.history.push('/conversation');
+                    });
+                }}>
+                  <div>Send a message!</div>
+                </div>
+                <br/>
+                <div
+                onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
+              </div>
+              {this.state.eventsDropdown
+                ? this.state.myEvents.map(event =>
+                  <div key={event.id}>
+                    <span>{event.name}</span>
+                    <span style={{ float: 'right' }} onClick={() => {
+                      this.sendInvite({
+                        event_id: event.id,
+                        user_id: Number(window.localStorage.getItem('userId')),
+                        host: window.localStorage.getItem('username'),
+                        chef_id: chef.id,
+                        event_name: event.name,
+                        accepted: null,
+                      });
+                      this.setState({ eventsDropdown: false });
+                    }}>Send Invite</span>
+                  </div>)
+                : null
+              }
+            </Card.Content>
+          </Card>
+        </div>
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return { selectedChefReducer: state.selectedChefReducer };
