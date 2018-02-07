@@ -48,6 +48,7 @@ class Conversation extends Component {
       });
       this.props.socketReducer.on('self message', (data) => {
         if (Number(window.localStorage.getItem('userId')) === data.sender) {
+          console.log('Chat data for chef sender: ', data);
           axios.post('/api/insertMessage', data)
             .then(() => {
               const chatData = data;
@@ -77,6 +78,7 @@ class Conversation extends Component {
 
   changeInput = (e) => {
     this.setState({ input: e.target.value });
+    this.scrollToBottom();
   }
 
   submit = (e) => {
@@ -87,7 +89,7 @@ class Conversation extends Component {
         reciever: this.props.selectedConversation.username,
         reciever_id: this.props.selectedConversation.chef_id === Number(window.localStorage.getItem('userId'))
           ? this.props.selectedConversation.user_id
-          : this.props.selectedConversation.chef_id,
+          : this.props.selectedConversation.id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
     }
