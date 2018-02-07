@@ -29,6 +29,15 @@ User.findCuisinesById = id => (
   knex('users_cuisines').where('chef_id', id).select('cuisine', 'custom_description').then()
 );
 
+User.insertMenuItem = menuObj => (
+  knex('menu').insert(menuObj)
+    .then(() => console.log('Inserted menu item'))
+);
+
+User.getMenuItems = id => (
+  knex('menu').where('chef_id', id)
+);
+
 User.insertCuisineById = (userObj) => {
   const { id, cuisine, description } = userObj;
   return knex('users_cuisines').insert({

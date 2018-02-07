@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Accordion, Icon, Grid, Checkbox, Form, Segment } from 'semantic-ui-react';
+import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
 import '../style.scss';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      menu: [],
+      menuOpen: false,
       user: {
         name: '',
         rate: '',
@@ -37,6 +39,11 @@ class Settings extends Component {
         },
       },
       id: window.localStorage.getItem('userId'),
+      dish: '',
+      type: '',
+      price: '',
+      description: '',
+      pic: '',
     };
   }
 
@@ -87,6 +94,12 @@ class Settings extends Component {
               Object.assign(this.state.user.cuisine, { [el.cuisine]: true }) }) }));
         });
       });
+
+    axios.get('/api/user/menus', { params: { id: this.state.id } })
+      .then((menuItems) => {
+        this.setState({ menu: menuItems.data });
+        console.log(menuItems.data);
+      });
   }
 
   handleClick = (e, titleProps) => {
@@ -95,6 +108,47 @@ class Settings extends Component {
     const newIndex = activeIndex === index ? -1 : index;
 
     this.setState({ activeIndex: newIndex });
+  }
+
+  setDish = e => this.setState({ dish: e.target.value })
+
+  setType = e => this.setState({ type: e.target.value })
+
+  setPrice = e => this.setState({ price: e.target.value })
+
+  setDescription = e => this.setState({ description: e.target.value })
+
+  setPicture = e => this.setState({ pic: e.target.value })
+
+  saveMenuItem = () => {
+    axios.post('/api/user/saveMenuItem', {
+      chef_id: Number(this.state.id),
+      dish: this.state.dish,
+      pic: this.state.pic,
+      description: this.state.description,
+      cuisine_type: this.state.type,
+      price: Number(this.state.price),
+    })
+      .then(() => this.setState({
+        menu: [...this.state.menu, {
+          id: 7777,
+          chef_id: Number(this.state.id),
+          dish: this.state.dish,
+          pic: this.state.pic,
+          description: this.state.description,
+          cuisine_type: this.state.type,
+          price: Number(this.state.price),
+        }],
+        dish: '',
+        pic: '',
+        description: '',
+        type: '',
+        price: '',
+      }));
+  }
+
+  openMenuForm = () => {
+    this.setState({ menuOpen: !this.state.menuOpen });
   }
 
   handleRateChange = (e, { value }) => {
@@ -207,6 +261,51 @@ class Settings extends Component {
         </div>
         {/* ***** Add Menus ***** */}
         <h1 className='center miniPadding softText'>Add Menus</h1>
+        <h5 className='center miniPadding softText'
+        onClick={this.openMenuForm}>Add a menu item!</h5>
+        {this.state.menuOpen
+          ?
+            <Form className='boxed center' onSubmit={() => {
+              this.openMenuForm();
+              this.saveMenuItem();
+            }}>
+                <Form.Field>
+                  <label>dish</label>
+                  <input placeholder='Dish Name' onChange={this.setDish}/>
+                </Form.Field>
+                <Form.Field style={{ width: '50%' }}>
+                  <label>type</label>
+                  <input placeholder='Type of cuisine' onChange={this.setType}/>
+                </Form.Field>
+                <Form.Field style={{ width: '50%' }}>
+                  <label>price</label>
+                  <input placeholder='Price' onChange={this.setPrice}/>
+                </Form.Field>
+                <Form.Field>
+                  <label>description</label>
+                  <input placeholder='Description' onChange={this.setDescription}/>
+                </Form.Field>
+                <Form.Field>
+                  <label>picture</label>
+                  <input placeholder='picture URL' onChange={this.setPicture}/>
+                </Form.Field>
+                <Button type='submit'>Save!</Button>
+              </Form>
+          : null
+        }
+        {this.state.menu.map(item => (
+            <div
+            className='boxed center lightlyColored'
+            key={item.id}
+            style={{ 'margin-bottom': '1%' }}>
+              <div>{item.dish}</div>
+              <div>{item.description}</div>
+              <div>{item.price}</div>
+              <div>{item.cuisine_type}</div>
+              <image src={item.pic}/>
+            </div>
+          ))}
+
         {/* ***** Contact Info ***** */}
         <h1 className='center miniPadding softText'>Contact Info</h1>
         <div className='boxed center'>

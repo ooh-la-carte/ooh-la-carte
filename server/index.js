@@ -233,6 +233,18 @@ app.get('/api/user/cuisines', (req, res) => {
     .catch((err) => { console.log(err); });
 });
 
+app.get('/api/user/menus', (req, res) => {
+  User.getMenuItems(req.query.id)
+    .then((results) => {
+      res.send(results);
+    });
+});
+
+app.post('/api/user/saveMenuItem', (req, res) => {
+  User.insertMenuItem(req.body)
+    .then(() => res.sendStatus(201));
+});
+
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {
   // check the token against the secret to validate
