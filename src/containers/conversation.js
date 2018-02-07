@@ -83,13 +83,13 @@ class Conversation extends Component {
 
   submit = (e) => {
     if (e.key === 'Enter' && this.state.input !== '') {
+      console.log('Convo info: ', this.props.selectedConversation);
+      console.log('User info: ', window.localStorage.getItem('userId)'));
       this.props.socketReducer.emit('send', {
         text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
         reciever: this.props.selectedConversation.username,
-        reciever_id: this.props.selectedConversation.chef_id === Number(window.localStorage.getItem('userId'))
-          ? this.props.selectedConversation.user_id
-          : this.props.selectedConversation.id,
+        reciever_id: this.props.selectedConversation.user_id,
         convo_id: this.props.selectedConversation.convo_id,
       }, () => console.log('Emitted'));
     }
