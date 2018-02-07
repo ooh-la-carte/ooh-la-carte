@@ -1,43 +1,19 @@
+import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
+import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
 
 class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      rate: '',
       menu: [],
       menuOpen: false,
-      user: {
-        name: '',
-        rate: '',
-        streetAddress: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        phone: '',
-        email: '',
-        cuisine: {
-          asian: false,
-          african: false,
-          cajun: false,
-          chinese: false,
-          french: false,
-          indian: false,
-          italian: false,
-          pastry: false,
-          texmex: false,
-          middleEastern: false,
-          bbq: false,
-          thai: false,
-          southern: false,
-          vegetarian: false,
-          vegan: false,
-          custom: false,
-        },
-      },
       id: window.localStorage.getItem('userId'),
       dish: '',
       type: '',
@@ -47,58 +23,11 @@ class Settings extends Component {
     };
   }
 
-
-  componentDidMount() {
+  componentDidMount = () => {
     window.scrollTo(0, 0);
-    const cuisine = {
-      asian: false,
-      african: false,
-      cajun: false,
-      chinese: false,
-      french: false,
-      indian: false,
-      italian: false,
-      pastry: false,
-      texmex: false,
-      middleEastern: false,
-      bbq: false,
-      thai: false,
-      southern: false,
-      vegetarian: false,
-      vegan: false,
-      custom: false,
-    };
-    axios.get('/api/user/info', { params: { id: this.state.id } })
-      .then((userInfo) => {
-        const streetAddress = userInfo.data.street_name;
-        const zipcode = userInfo.data.zip_code;
-        const { name, city, state, phone, email, rate } = userInfo.data;
-        this.setState({ user:
-            {
-              name,
-              streetAddress,
-              city,
-              state,
-              zipcode,
-              phone,
-              email,
-              rate,
-              cuisine,
-            } });
-      });
-    axios.get('/api/user/cuisines', { params: { id: this.state.id } })
-      .then((cuisines) => {
-        cuisines.data.forEach((el) => {
-          this.setState(Object.assign(this.state, { user:
-            Object.assign(this.state.user, { cuisine:
-              Object.assign(this.state.user.cuisine, { [el.cuisine]: true }) }) }));
-        });
-      });
-
     axios.get('/api/user/menus', { params: { id: this.state.id } })
       .then((menuItems) => {
         this.setState({ menu: menuItems.data });
-        console.log(menuItems.data);
       });
   }
 
@@ -152,32 +81,17 @@ class Settings extends Component {
   }
 
   handleRateChange = (e, { value }) => {
-    this.setState(Object.assign(this.state, { user:
-      Object.assign(this.state.user, { rate: value }) }));
+    this.setState({ rate: value });
     const eventObj = {
       id: this.state.id,
-      rate: this.state.user.rate,
+      rate: this.state.rate,
     };
     const url = '/api/updateChefRate';
     axios.post(url, eventObj);
   }
 
   handleCuisineSelection = (e, { value }) => {
-    this.setState(Object.assign(this.state, { user:
-      Object.assign(this.state.user, { cuisine:
-        Object.assign(this.state.user.cuisine, { [value]: !this.state.user.cuisine[value] }) }) }));
-    const eventObj = {
-      id: this.state.id,
-      cuisine: value,
-      description: '',
-    };
-    if (this.state.user.cuisine[value]) {
-      const url = '/api/user/cuisines';
-      axios.post(url, eventObj);
-    } else {
-      const url = '/api/user/deleteCuisines';
-      axios.post(url, eventObj);
-    }
+    this.props.updateCuisineSelection(value);
   }
 
   render() {
@@ -197,37 +111,37 @@ class Settings extends Component {
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.asian} label='Asian' value='asian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.african} label='African' value='african' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.chinese} label='Chinese' value='chinese' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.french} label='French' value='french' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.cajun} label='Cajun/ Creole' value='cajun' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Asian} label='Asian' value='Asian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.African} label='African' value='African' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Chinese} label='Chinese' value='Chinese' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.French} label='French' value='French' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Cajun} label='Cajun' value='Cajun' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.indian} label='Indian' value='indian' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox checked={this.state.user.cuisine.italian} label='Italian' value='italian' onChange={this.handleCuisineSelection}/>
-                        <Form.Checkbox checked={this.state.user.cuisine.southern} label='Southern' value='southern' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.pastry} label='Pastry' value='pastry' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.middleEastern} label='Middle Eastern' value='middleEastern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Indian} label='Indian' value='Indian' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.props.user.cuisine.Italian} label='Italian' value='Italian' onChange={this.handleCuisineSelection}/>
+                        <Form.Checkbox checked={this.props.user.cuisine.Southern} label='Southern' value='Southern' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Pastry} label='Pastry' value='Pastry' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Mexican} label='Mexican' value='Mexican' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
                   <Grid.Column width={5}>
                     <Form>
                       <Form.Group grouped>
-                        <Form.Checkbox checked={this.state.user.cuisine.bbq} label='BBQ' value='bbq' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.thai} label='Thai' value='thai' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.vegan} label='Vegan' value='vegan' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.vegetarian} label='Vegetarian' value='vegetarian' onChange={this.handleCuisineSelection} />
-                        <Form.Checkbox checked={this.state.user.cuisine.texmex} label='Tex-Mex' value='texmex' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.BBQ} label='BBQ' value='BBQ' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Thai} label='Thai' value='Thai' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Vegan} label='Vegan' value='Vegan' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Vegetarian} label='Vegetarian' value='Vegetarian' onChange={this.handleCuisineSelection} />
+                        <Form.Checkbox checked={this.props.user.cuisine.Seafood} label='Seafood' value='Seafood' onChange={this.handleCuisineSelection} />
                       </Form.Group>
                     </Form>
                   </Grid.Column>
-                  <Checkbox checked={this.state.user.cuisine.custom} label='Custom' />
+                  <Checkbox checked={this.props.user.cuisine.custom} label='Custom' />
                   <Form.Field>
                     <input
                       placeholder='Description...'
@@ -248,11 +162,11 @@ class Settings extends Component {
               <Accordion.Content active={this.state.activeIndex === 1}>
                 <Form>
                   <Form.Group grouped>
-                    <Form.Checkbox checked={this.state.user.rate === '1'} label='Budget' value='1' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.user.rate === '2'} label='Moderate' value='2' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.user.rate === '3'} label='High' value='3' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.user.rate === '4'} label='Luxury' value='4'onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.user.rate === '5'} label='Custom' value='5'onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.rate === '1'} label='Budget' value='1' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.rate === '2'} label='Moderate' value='2' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.rate === '3'} label='High' value='3' onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.rate === '4'} label='Luxury' value='4'onChange={this.handleRateChange} />
+                    <Form.Checkbox checked={this.state.rate === '5'} label='Custom' value='5'onChange={this.handleRateChange} />
                   </Form.Group>
                 </Form>
               </Accordion.Content>
@@ -313,17 +227,17 @@ class Settings extends Component {
             <Grid>
               <Grid.Row>
                 <Grid.Column width={4}>Name:</Grid.Column>
-                <Grid.Column width={12}>{this.state.user.name}</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.name}</Grid.Column>
                 <Grid.Column width={4}>Address:</Grid.Column>
-                <Grid.Column width={12}>{this.state.user.streetAddress}</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.streetAddress}</Grid.Column>
                 <Grid.Column width={4}></Grid.Column>
                 <Grid.Column width={12}>
-                  {this.state.user.city}, {this.state.user.state} {this.state.user.zipcode}
+                  {this.props.user.city}, {this.props.user.props} {this.props.user.zipcode}
                   </Grid.Column>
                 <Grid.Column width={4}>Phone:</Grid.Column>
-                <Grid.Column width={12}>{this.state.user.phone}</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
                 <Grid.Column width={4}>Email:</Grid.Column>
-                <Grid.Column width={12}>{this.state.user.email}</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
@@ -339,4 +253,15 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setUserInfo,
+    updateCuisineSelection,
+  }, dispatch);
+}
+
+function mapStateToProps(state) {
+  return { user: state.loggedInUserInfo };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Settings));

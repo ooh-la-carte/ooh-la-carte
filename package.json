@@ -12,7 +12,9 @@
   },
   "author": "Jake Lee",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "babel-core": "^6.23.1",

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
+import Helpers from '../helpers';
 import '../style.scss';
 
 const SelectedChef = (props) => {
@@ -18,12 +19,12 @@ const SelectedChef = (props) => {
             <div className='selectedCardTitle'>{chef.username}</div>
           </Card.Header>
           <Card.Meta>
-            <span className='date'>
-              Speciality: {chef.specialty}
-            </span>
-            <div className='date'>
-              Rate: {chef.rate}
-            </div>
+            <div>Name: {chef.name}</div>
+            <div>Cuisine: {Helpers.getCuisineList(JSON.parse(chef.cuisine))}</div>
+            <div>Rate: {chef.rate}</div>
+             {chef.city ?
+              <div>{chef.city}, {chef.state}</div>
+              : null }
           </Card.Meta>
           <Card.Description>
             <div className='detailSegment'>{chef.bio}</div>
