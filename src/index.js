@@ -18,7 +18,7 @@ import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import ContactInfo from './components/ContactInfo';
 import ChatTab from './containers/ChatList';
-import Conversation from './containers/nonversation';
+import Conversation from './containers/conversation';
 import Notifications from './containers/notifications';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
