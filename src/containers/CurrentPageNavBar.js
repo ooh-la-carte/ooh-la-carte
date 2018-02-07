@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setSocket, removeSocket, listenerOn } from '../actions';
+import { bindActionCreators } from 'redux';
+import { Icon } from 'semantic-ui-react';
+import { removeSocket, listenerOn } from '../actions';
 import '../style.scss';
 
-class NavBar extends Component {
+class CurrentPageNavBar extends Component {
   constructor(props) {
     super(props);
     this.state = { dropdown: false };
@@ -44,6 +44,7 @@ class NavBar extends Component {
       createEvent: 'Add Event',
       userEvents: 'Events',
       chatTab: 'Inbox',
+      notifications: 'Notifications',
       conversation: this.props.selectedConversation.host
         ? this.props.selectedConversation.host
         : this.props.selectedConversation.username,
@@ -51,8 +52,6 @@ class NavBar extends Component {
 
     return (
       <div>
-    {/* top bar */}
-    <div>
       {window.localStorage.getItem('userId')
         ?
           <div className='navBarContainer'>
@@ -73,43 +72,7 @@ class NavBar extends Component {
                 }
               </span>
           </div>
-        : null
-      }
-      </div>
-    {/* bottom bar */}
-      {window.localStorage.getItem('userId')
-        ?
-          <div className='loggedInNavBarContainer'>
-              <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
-              {window.localStorage.getItem('isChef') === 'true'
-                ?
-                  <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
-                :
-                  <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
-              }
-              <span className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
-              <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
-
-          </div>
-        :
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}>Login</a>
-                {this.state.dropdown
-                  ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
-                      </div>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
-                      </div>
-                    </div>
-                  : null
-                }
-              </span>
-          </div>
+        : <Redirect to='/'/>
       }
       </div>
     );
@@ -125,11 +88,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    setSocket,
     removeSocket,
     listenerOn,
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
-
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentPageNavBar);
