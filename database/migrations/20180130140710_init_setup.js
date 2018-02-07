@@ -70,6 +70,15 @@ exports.up = (knex, Promise) => (
       table.integer('chef_id').unsigned().references('users.id');
       table.string('custom_description');
     }),
+    knex.schema.createTable('invitations', (table) => {
+      table.increments('id').unsigned().primary();
+      table.integer('user_id').unsigned().references('users.id');
+      table.string('host');
+      table.string('event_name');
+      table.integer('chef_id').unsigned().references('users.id');
+      table.integer('event_id').unsigned().references('events.id');
+      table.boolean('accepted').defaultTo(false);
+    }),
   ])
 );
 
