@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
 
@@ -11,6 +12,8 @@ class Settings extends Component {
     super(props);
     this.state = {
       rate: '',
+      menu: [],
+      menuOpen: false,
       id: window.localStorage.getItem('userId'),
       dish: '',
       type: '',
