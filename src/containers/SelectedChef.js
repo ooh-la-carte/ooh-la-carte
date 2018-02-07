@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
+import Helpers from '../helpers';
 import '../style.scss';
 
 class SelectedChef extends Component {
@@ -47,12 +48,12 @@ class SelectedChef extends Component {
                 <div className='selectedCardTitle'>{chef.username}</div>
               </Card.Header>
               <Card.Meta>
-                <span className='date'>
-                  Speciality: {chef.specialty}
-                </span>
-                <div className='date'>
-                  Rate: {chef.rate}
-                </div>
+                <div>Name: {chef.name}</div>
+                <div>Cuisine: {Helpers.getCuisineList(JSON.parse(chef.cuisine))}</div>
+                <div>Rate: {chef.rate}</div>
+                 {chef.city ?
+                  <div>{chef.city}, {chef.state}</div>
+                  : null }
               </Card.Meta>
               <Card.Description>
                 <div className='detailSegment'>{chef.bio}</div>
@@ -84,12 +85,9 @@ class SelectedChef extends Component {
                     .then(() => {
                       this.props.history.push('/conversation');
                     });
-                }}>
-                  <div>Send a message!</div>
-                </div>
+                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
                 <br/>
-                <div
-                onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
+                <div onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
               </div>
               {this.state.eventsDropdown
                 ? this.state.myEvents.map(event =>

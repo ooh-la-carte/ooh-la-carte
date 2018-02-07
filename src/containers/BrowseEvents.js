@@ -25,11 +25,11 @@ class BrowseEvents extends Component {
   }
 
   render = () => (
-    <div className='topLevelDiv'>
+    <div className='topLevelDiv center miniPadding profile event'>
       {this.state.events.map(event => (
         <Card
           key={event.id}
-          className='browseEventCards'
+          className='eventCard'
           onClick={() => {
             console.log('Selected Event store: ', event);
             this.props.changeSelectedEvent(event);

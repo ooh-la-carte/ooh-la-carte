@@ -52,12 +52,13 @@ User.getMenuItems = id => (
 );
 
 User.insertCuisineById = (userObj) => {
-  const { id, cuisine, description } = userObj;
+  const { id, cuisine, description, userCuisines } = userObj;
   return knex('users_cuisines').insert({
     chef_id: id,
     cuisine,
     custom_description: description,
   })
+    .then(() => knex('users').where({ id }).update({ cuisine: userCuisines }))
     .then((insertResult) => {
       console.log('cuisine sucessfully inserted');
       return insertResult;

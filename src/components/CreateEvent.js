@@ -219,27 +219,27 @@ class CreateEventForm extends Component {
               </Form.Field>
               </div>
               <div className='miniPadding center'>
-                      <Button.Group size='medium' className='center butPri'>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Breakfast' }); } }
-                          inverted
-                          type='button'
-                          >Breakfast
-                        </Button>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
-                          type='button'
-                          inverted
-                          >Lunch
-                        </Button>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
-                          type='button'
-                          inverted
-                          >Dinner
-                        </Button>
-                      </Button.Group>
-                      </div>
+                <Button.Group size='medium' className='center butPri'>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Breakfast' }); } }
+                    inverted
+                    type='button'
+                    >Breakfast
+                  </Button>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    type='button'
+                    inverted
+                    >Lunch
+                  </Button>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    type='button'
+                    inverted
+                    >Dinner
+                  </Button>
+                </Button.Group>
+              </div>
 
               <Form.Field>
                 <label>Cuisine</label>

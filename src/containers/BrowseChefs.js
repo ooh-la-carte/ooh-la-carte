@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { changeSelectedChef } from '../actions';
+import Helpers from '../helpers';
 import '../style.scss';
 
 class BrowseChefs extends Component {
   constructor(props) {
     super(props);
-
     this.state = { chefs: [] };
   }
 
@@ -24,13 +24,12 @@ class BrowseChefs extends Component {
   }
 
   render = () => (
+
     <div className='topLevelDiv'>
       {this.state.chefs.map(chef => (
         <Card
-        key={chef.id}
-        className='browseEventCards'
-        onClick={() => {
-          console.log('Selected Chef store: ', chef);
+          key={chef.id} style= {{ margin: '5% auto' }}
+          onClick={() => {
           this.props.changeSelectedChef(chef);
           this.props.history.push('/selectedChef');
         }}>
@@ -41,7 +40,10 @@ class BrowseChefs extends Component {
           </Card.Header>
           <Card.Meta>
             <div>Name: {chef.name}</div>
-            <div>Cuisine: {chef.specialty}</div>
+            <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+             {chef.city ?
+              <div>{chef.city}, {chef.state}</div>
+              : null }
           </Card.Meta>
           <Card.Description>
             <div>{chef.bio}</div>
