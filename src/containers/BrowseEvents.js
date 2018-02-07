@@ -19,7 +19,6 @@ class BrowseEvents extends Component {
     window.scrollTo(0, 0);
     axios.get('/api/events')
       .then((events) => {
-        console.log(events.data);
         this.setState({ events: events.data });
       })
       .catch(err => console.log(err));
@@ -32,6 +31,7 @@ class BrowseEvents extends Component {
           key={event.id}
           className='eventCard'
           onClick={() => {
+            console.log('Selected Event store: ', event);
             this.props.changeSelectedEvent(event);
             this.props.history.push('/selectedEvent');
         }}>

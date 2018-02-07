@@ -34,6 +34,7 @@ exports.up = (knex, Promise) => (
       table.integer('user_id').unsigned().references('users.id');
       table.integer('conversation_id').unsigned().references('conversations.id');
       table.text('text');
+      table.boolean('self');
     }),
     knex.schema.createTable('events', (table) => {
       table.increments('id').unsigned().primary();
@@ -58,6 +59,7 @@ exports.up = (knex, Promise) => (
       table.increments('id').unsigned().primary();
       table.integer('chef_id').unsigned().references('users.id');
       table.string('pic');
+      table.string('dish');
       table.text('description');
       table.string('cuisine_type');
       table.decimal('price');

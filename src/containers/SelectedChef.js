@@ -46,9 +46,11 @@ const SelectedChef = (props) => {
                 .then((results) => {
                   // need convo id here
                   const obj = results.data[0];
+                  console.log('Before manipulation: ', obj);
                   obj.convo_id = obj.id;
                   obj.username = chef.username;
-                  console.log('RESULTS AFTER CREATION OR RETRIEVAL: ', results.data[0]);
+                  obj.user_id = obj.chef_id;
+                  console.log('Select chef conversation store: ', obj);
                   props.selectConversation(obj);
                 })
                 .then(() => {

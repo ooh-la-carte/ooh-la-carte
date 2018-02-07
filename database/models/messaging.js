@@ -45,6 +45,7 @@ Messaging.insertMessage = messageObj => (
     user_id: messageObj.sender,
     conversation_id: messageObj.convo_id,
     text: messageObj.text,
+    self: true,
   })
     .then(() => {
       console.log('insert');
@@ -52,6 +53,7 @@ Messaging.insertMessage = messageObj => (
         user_id: messageObj.reciever_id,
         conversation_id: messageObj.convo_id,
         text: messageObj.text,
+        self: false,
       })
         .catch(err => console.log(err));
     })
