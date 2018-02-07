@@ -9,7 +9,6 @@ import LandingPage from './components/LandingPage';
 import CreateEvent from './components/CreateEvent';
 import BrowseEvents from './containers/BrowseEvents';
 import BrowseChefs from './containers/BrowseChefs';
-import CurrentPageNavBar from './containers/CurrentPageNavBar';
 import SelectedEvent from './containers/SelectedEvent';
 import UserProfile from './containers/UserProfile';
 import UserEvents from './containers/UserEvents';
@@ -26,7 +25,6 @@ const createStoreWithMiddleware = applyMiddleware()(createStore);
 ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                   <BrowserRouter>
                       <div id='window'>
-                        <Route path='/' component={CurrentPageNavBar} />
                         <Route path='/' component={NavBar} />
                         <Route exact path='/' component={LandingPage} />
                         <Route exact path='/loginForm' component={LoginForm} />
