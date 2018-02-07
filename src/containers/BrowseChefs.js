@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
 import { changeSelectedChef } from '../actions';
+import Helpers from '../helpers';
 import '../style.scss';
 
 class BrowseChefs extends Component {
   constructor(props) {
     super(props);
-
     this.state = { chefs: [] };
   }
 
@@ -23,26 +23,13 @@ class BrowseChefs extends Component {
       .catch(err => console.log(err));
   }
 
-  getCuisines = (cuisines) => {
-    const cuisineList = [];
-    if (cuisines) {
-      Object.keys(cuisines).forEach((key) => {
-        if (cuisines[key]) {
-          cuisineList.push(key);
-        }
-      });
-    }
-    return cuisineList.join(', ');
-  }
-
   render = () => (
 
     <div className='topLevelDiv'>
       {this.state.chefs.map(chef => (
         <Card
-        key={chef.id}
-        className='browseEventCards'
-        onClick={() => {
+          key={chef.id} style= {{ margin: '5% auto' }}
+          onClick={() => {
           this.props.changeSelectedChef(chef);
           this.props.history.push('/selectedChef');
         }}>
@@ -53,7 +40,10 @@ class BrowseChefs extends Component {
           </Card.Header>
           <Card.Meta>
             <div>Name: {chef.name}</div>
-            <div>Cuisine: {this.getCuisines(JSON.parse(chef.cuisine))}</div>
+            <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+             {chef.city ?
+              <div>{chef.city}, {chef.state}</div>
+              : null }
           </Card.Meta>
           <Card.Description>
             <div>{chef.bio}</div>

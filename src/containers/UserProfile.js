@@ -23,28 +23,28 @@ class UserProfile extends Component {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
         const { id, username, name, city, state, phone, email, rate } = userInfo.data;
-        let { cuisine } = userInfo.data;
-        if (!cuisine) {
-          cuisine = {
-            Vietnamese: false,
-            Chinese: false,
-            French: false,
-            Sushi: false,
-            Vegetarian: false,
-            BBQ: false,
-            Pastry: false,
-            Indian: false,
-            Thai: false,
-            Cajun: false,
-            Mexican: false,
-            Italian: false,
-            Southern: false,
-            Greek: false,
-            Vegan: false,
-          };
-        } else {
-          cuisine = JSON.parse(cuisine);
-        }
+        const cuisine = {
+          Asian: false,
+          African: false,
+          Cajun: false,
+          Chinese: false,
+          French: false,
+          Indian: false,
+          Italian: false,
+          Pastry: false,
+          Mexican: false,
+          Seafood: false,
+          BBQ: false,
+          Thai: false,
+          Southern: false,
+          Vegetarian: false,
+          Vegan: false,
+          Custom: false,
+        };
+        axios.get('/api/user/cuisines', { params: { id: window.localStorage.getItem('userId') } })
+          .then((chefCuisines) => {
+            chefCuisines.data.forEach((elem) => { cuisine[elem.cuisine] = true; });
+          });
         const user = {
           id,
           name,
@@ -99,7 +99,9 @@ class UserProfile extends Component {
             </Card.Header>
             <Card.Meta>
             {this.props.user.name}
+            {this.props.user.city ?
               <div>{this.props.user.city}, {this.props.user.state}</div>
+              : null }
             </Card.Meta>
             <Card.Description>
               <div>{data.chefs[0].description}</div>
@@ -121,9 +123,11 @@ class UserProfile extends Component {
                   <Card.Header>
                     <span className='center eventText'>{event.name}</span>
                   </Card.Header>
-                  <Card.Meta className='center'>
+                  {event.city ?
+                    <Card.Meta className='center'>
                     {`${event.city}, ${event.state}`}
                   </Card.Meta>
+                  : null }
                 </Card.Content>
               </Card>
           ))}
