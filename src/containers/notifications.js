@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Card, Icon, Image } from 'semantic-ui-react';
+// import { Card, Icon, Image } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import '../style.scss';
 
