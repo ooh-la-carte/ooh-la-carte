@@ -52,7 +52,6 @@ class ContactInfo extends Component {
           name, streetAddress, city, state, zipcode, phone, email, cuisine,
         });
       });
-    console.log(this.props);
   }
 
   handleUpdate = (e, { type, value }) => {
@@ -116,7 +115,7 @@ class ContactInfo extends Component {
                       <Input
                         placeholder={this.state.city || 'City'}
                         type='city'
-                        value={this.state.city}
+                        value={this.state.city || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -126,7 +125,7 @@ class ContactInfo extends Component {
                       <Input
                         placeholder={this.state.state || 'State'}
                         type='state'
-                        value={this.state.state}
+                        value={this.state.state || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -136,7 +135,7 @@ class ContactInfo extends Component {
                       <Input
                         placeholder={this.state.zipcode || 'Zipcode'}
                         type='zipcode'
-                        value={this.state.zipcode}
+                        value={this.state.zipcode || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -178,7 +177,6 @@ class ContactInfo extends Component {
           >
             Submit
           </Button>
-
           </div>
         </Form>
       </div>
