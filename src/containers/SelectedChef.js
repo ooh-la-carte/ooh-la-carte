@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import { Card, Icon, Image, Rating } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import Helpers from '../helpers';
 import '../style.scss';
@@ -39,6 +39,7 @@ class SelectedChef extends Component {
 
   render = () => {
     const chef = this.props.selectedChefReducer;
+    console.log('rating', Helpers);//.calculateRating(chef.rating).reduce((a, c) => a / c));
     return (
         <div className='selectedEventCardDiv'>
           <Card id='selectedEventCard'>
@@ -58,7 +59,18 @@ class SelectedChef extends Component {
               <Card.Description>
                 <div className='detailSegment'>{chef.bio}</div>
                 <div className='detailSegment'>Restuarant: {chef.restuarant}</div>
-                <div className='detailSegment'><Icon name='empty star'/>Rating: {chef.rating}</div>
+                <div className='detailSegment'>
+                  <Icon name='empty star'/>
+                  Rating:
+                  { chef.rating ?
+                    <Rating
+                      icon='star'
+                      rating={Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                      maxRating={5}
+                    /> :
+                    ' no reviews yet'
+                  }
+                </div>
                 <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
                 <div className='detailSegment'><Icon name='map outline'/> Menu: menu rendered here</div>
               </Card.Description>

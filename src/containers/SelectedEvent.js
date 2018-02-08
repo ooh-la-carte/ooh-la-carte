@@ -23,14 +23,15 @@ class SelectedEvent extends Component {
     axios.post('/api/updateEventRating', eventRatingObj);
   }
 
-  shouldStarsDisplay = (eventDate) => {
+  shouldStarsDisplay = (eventDate, chefId) => {
     const hasHappened = new Date() > new Date(eventDate);
     return hasHappened && (window.localStorage.isChef !== true);
   };
 
   render() {
     const event = this.props.selectedEventReducer;
-    const showStars = this.shouldStarsDisplay(this.props.selectedEventReducer.date_time);
+    const { date_time: eventDate, chef_id: chefId } = this.props.selectedEventReducer;
+    const showStars = this.shouldStarsDisplay(eventDate, chefId);
     console.log('show stars in render:', showStars);
     let stars;
     if (showStars) {

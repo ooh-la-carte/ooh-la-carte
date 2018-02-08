@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Image } from 'semantic-ui-react';
+import { Card, Image, Rating } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -50,7 +50,15 @@ class BrowseChefs extends Component {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <span className=''>{chef.rating} stars</span>
+          <span className=''>
+            {chef.rating ?
+              <Rating
+                rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                maxRating={5}
+              /> :
+              'no ratings yet'
+            }
+          </span>
           <span className='eventBudget'>{chef.rate}</span>
         </Card.Content>
       </Card>

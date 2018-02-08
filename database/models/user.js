@@ -136,7 +136,7 @@ User.updateChefRating = eventObj => (
       const currentRating = results.rating;
       // if the chef is not previously rated
       if (currentRating === undefined) {
-        knex('users')
+        return knex('users')
           .where('id', eventObj.chefId)
           .update({ rating: `[${eventObj.rating}, 1]` })
           .catch((err) => {
@@ -145,7 +145,7 @@ User.updateChefRating = eventObj => (
       } else {
         const arrRating = JSON.parse(currentRating);
         const { currSum, currCount } = arrRating;
-        knex('users')
+        return knex('users')
           .where('id', eventObj.chefId)
           .update({ rating: `[${currSum + eventObj.rating}, ${currCount + 1}]` })
           .catch((err) => {
