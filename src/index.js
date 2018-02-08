@@ -9,7 +9,6 @@ import LandingPage from './components/LandingPage';
 import CreateEvent from './components/CreateEvent';
 import BrowseEvents from './containers/BrowseEvents';
 import BrowseChefs from './containers/BrowseChefs';
-import CurrentPageNavBar from './containers/CurrentPageNavBar';
 import SelectedEvent from './containers/SelectedEvent';
 import UserProfile from './containers/UserProfile';
 import UserEvents from './containers/UserEvents';
@@ -18,15 +17,15 @@ import SelectedChef from './containers/SelectedChef';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import ContactInfo from './components/ContactInfo';
-import ChatTab from './containers/chatTab';
+import ChatTab from './containers/ChatList';
 import Conversation from './containers/conversation';
+import Notifications from './containers/notifications';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                   <BrowserRouter>
                       <div id='window'>
-                        <Route path='/' component={CurrentPageNavBar} />
                         <Route path='/' component={NavBar} />
                         <Route exact path='/' component={LandingPage} />
                         <Route exact path='/loginForm' component={LoginForm} />
@@ -38,10 +37,11 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/createEvent' component={CreateEvent} />
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
-                        <Route exact path='/chatTab' component={ChatTab} />
+                        <Route exact path='/chatList' component={ChatTab} />
                         <Route exact path='/conversation' component={Conversation} />
                         <Route exact path='/settings' component={Settings}/>
                         <Route exact path='/contactInfo' component={ContactInfo}/>
+                        <Route exact path='/notifications' component={Notifications}/>
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));

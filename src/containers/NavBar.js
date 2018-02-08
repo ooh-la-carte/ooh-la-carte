@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setSocket } from '../actions';
+import { Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { setSocket, removeSocket, listenerOn } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
@@ -16,9 +17,66 @@ class NavBar extends Component {
     this.setState({ dropdown: !this.state.dropdown });
   }
 
+  logout = (username) => {
+    window.localStorage.removeItem('accessToken');
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('isChef');
+    window.localStorage.removeItem('username');
+    this.props.socketReducer.emit('remove user', username);
+    this.props.socketReducer.close();
+    this.props.listenerOn(false);
+    this.props.removeSocket();
+    this.toggleDropDown();
+  }
+
   render() {
+    const currentPage = window.location.pathname.split('/')[1];
+    const pages = {
+      selectedEvent: 'Event Detail',
+      userProfile: 'Home',
+      settings: 'Settings',
+      contactInfo: 'Contact Info',
+      loginForm: 'Login',
+      signUpForm: 'Sign Up',
+      browseEvents: 'Events',
+      selectedChef: 'Chef Detail',
+      browseChefs: 'Chefs',
+      createEvent: 'Add Event',
+      userEvents: 'Events',
+      chatTab: 'Inbox',
+      conversation: this.props.selectedConversation.host
+        ? this.props.selectedConversation.host
+        : this.props.selectedConversation.username,
+    };
+
     return (
       <div>
+    {/* top bar */}
+    <div>
+      {window.localStorage.getItem('userId')
+        ?
+          <div className='navBarContainer'>
+            <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
+              <span className='navBarLogin' >
+                <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
+                {this.state.dropdown
+                  ?
+                    <div className='loginDropdown'>
+                      <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
+                        <Link to='/' className='loginLink'>Log out</Link>
+                      </div>
+                      <div className='dropdownLinkContainer'>
+                        <Link to='/' className='loginLink'>Else</Link>
+                      </div>
+                    </div>
+                  : null
+                }
+              </span>
+          </div>
+        : null
+      }
+      </div>
+    {/* bottom bar */}
       {window.localStorage.getItem('userId')
         ?
           <div className='loggedInNavBarContainer'>
@@ -30,7 +88,7 @@ class NavBar extends Component {
                   <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
               }
               <span className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
-              <span className='navBarLastLink'><Link to='/userProfile' style={{ color: 'white' }}>Alerts</Link></span>
+              <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
 
           </div>
         :
@@ -59,11 +117,18 @@ class NavBar extends Component {
 }
 
 function mapStateToProps(state) {
-  return { socketReducer: state.socketReducer };
+  return {
+    socketReducer: state.socketReducer,
+    selectedConversation: state.selectedConversation,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setSocket }, dispatch);
+  return bindActionCreators({
+    setSocket,
+    removeSocket,
+    listenerOn,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

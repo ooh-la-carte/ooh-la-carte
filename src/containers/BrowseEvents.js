@@ -19,19 +19,19 @@ class BrowseEvents extends Component {
     window.scrollTo(0, 0);
     axios.get('/api/events')
       .then((events) => {
-        console.log(events.data);
         this.setState({ events: events.data });
       })
       .catch(err => console.log(err));
   }
 
   render = () => (
-    <div className='topLevelDiv'>
+    <div className='topLevelDiv center miniPadding profile event'>
       {this.state.events.map(event => (
         <Card
           key={event.id}
-          className='browseEventCards'
+          className='eventCard'
           onClick={() => {
+            console.log('Selected Event store: ', event);
             this.props.changeSelectedEvent(event);
             this.props.history.push('/selectedEvent');
         }}>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
 import { Card, Icon, Image, Rating } from 'semantic-ui-react';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 import { selectConversation } from '../actions';
 import '../style.scss';
 
@@ -82,8 +82,26 @@ class SelectedEvent extends Component {
           <Card.Content extra>
             <div>
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
-              <Link to='/conversation' onClick={() => { this.props.selectConversation(event); }}><div style={{ textAlign: 'center' }}>Send a message!</div></Link>
-            </div>
+                <div onClick={() => {
+                  const convo = {
+                    user: event.creator_id,
+                    chef: window.localStorage.getItem('userId'),
+                  };
+                  axios.post('/api/conversations', convo)
+                    .then((results) => {
+                      // need convo id here
+                      const obj = results.data[0];
+                      obj.chef_id = Number(window.localStorage.getItem('userId'));
+                      obj.convo_id = obj.id;
+                      obj.username = event.creator_username;
+                      console.log('Select chef conversation store: ', obj);
+                      this.props.selectConversation(obj);
+                    })
+                    .then(() => {
+                      this.props.history.push('/conversation');
+                    });
+                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
+              </div>
           </Card.Content>
         </Card>
       </div>
@@ -100,5 +118,5 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ selectConversation }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectedEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SelectedEvent));
 

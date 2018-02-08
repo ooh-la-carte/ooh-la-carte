@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { Button, Form, Grid, Input } from 'semantic-ui-react';
+import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
 
 class ContactInfo extends Component {
@@ -27,8 +30,26 @@ class ContactInfo extends Component {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
         const { name, city, state, phone, email } = userInfo.data;
+        const cuisine = {
+          Asian: false,
+          African: false,
+          Cajun: false,
+          Chinese: false,
+          French: false,
+          Indian: false,
+          Italian: false,
+          Pastry: false,
+          Mexican: false,
+          Seafood: false,
+          BBQ: false,
+          Thai: false,
+          Southern: false,
+          Vegetarian: false,
+          Vegan: false,
+          Custom: false,
+        };
         this.setState({
-          name, streetAddress, city, state, zipcode, phone, email,
+          name, streetAddress, city, state, zipcode, phone, email, cuisine,
         });
       });
   }
@@ -39,6 +60,7 @@ class ContactInfo extends Component {
 
   handleSubmit = () => {
     const eventObj = this.state;
+    this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
     if (eventObj.name && eventObj.phone && eventObj.email) {
       axios.post(url, eventObj)
@@ -91,9 +113,9 @@ class ContactInfo extends Component {
                   <Grid.Column style={{ paddingRight: '0px' }} width={8}>
                     <Form.Field>
                       <Input
-                        placeholder='City'
+                        placeholder={this.state.city || 'City'}
                         type='city'
-                        value={this.state.city}
+                        value={this.state.city || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -101,9 +123,9 @@ class ContactInfo extends Component {
                   <Grid.Column style={{ padding: '0px' }} width={3}>
                     <Form.Field>
                       <Input
-                        placeholder='State'
+                        placeholder={this.state.state || 'State'}
                         type='state'
-                        value={this.state.state}
+                        value={this.state.state || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -111,9 +133,9 @@ class ContactInfo extends Component {
                   <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
                     <Form.Field>
                       <Input
-                        placeholder='Zip'
+                        placeholder={this.state.zipcode || 'Zipcode'}
                         type='zipcode'
-                        value={this.state.zipcode}
+                        value={this.state.zipcode || ''}
                         onChange={this.handleUpdate}
                       />
                     </Form.Field>
@@ -155,7 +177,6 @@ class ContactInfo extends Component {
           >
             Submit
           </Button>
-
           </div>
         </Form>
       </div>
@@ -163,4 +184,15 @@ class ContactInfo extends Component {
   }
 }
 
-export default withRouter(ContactInfo);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    setUserInfo,
+    updateCuisineSelection,
+  }, dispatch);
+}
+
+function mapStateToProps(state) {
+  return { user: state.loggedInUserInfo };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContactInfo));

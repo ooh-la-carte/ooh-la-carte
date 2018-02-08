@@ -211,10 +211,6 @@ body {
   width: 25% !important;
 }
 
-.browseEventCards {
-  margin: 5% auto !important;
-}
-
 .eventBudget {
   float: right;
 }
@@ -299,7 +295,30 @@ body {
   border-radius: 5px;
   padding: 2%;
   background-color: $light-color;
-  
+}
+
+// WHEN YOU USE THESE IT MAKES SCROLL TO BOTTOM NOT WORK AND
+// AND SOMETIMES WONT LOAD NEW MESSAGES
+// MAYBE TRY CLEAR FLOAT FROM THE DIVS AND IN THE HOLDER DIV
+
+.senderMessages {
+  min-height: 35px;
+  float: right;
+  width: 60%;
+  margin: 1% 5%;
+  border-radius: 5px;
+  padding: 2%;
+  background-color: $light-color;
+}
+
+.recieverMessages {
+  min-height: 35px;
+  float: left;
+  width: 60%;
+  margin: 1% 5%;
+  border-radius: 5px;
+  padding: 2%;
+  background-color: $light-color;
 }
 
 .chatDiv {

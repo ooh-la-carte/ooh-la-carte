@@ -222,6 +222,28 @@ app.get('/api/events', (req, res) => {
   }
 });
 
+app.post('/api/user/sendInvite', (req, res) => {
+  console.log(req.body);
+  User.sendInvite(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    });
+});
+
+app.get('/api/user/invitations', (req, res) => {
+  if (req.query.is_chef === 'true') {
+    User.getChefInvites(req.query.id)
+      .then((invites) => {
+        res.send(invites);
+      });
+  } else {
+    User.getClientInvites(req.query.id)
+      .then((invites) => {
+        res.send(invites);
+      });
+  }
+});
+
 app.get('/api/user/cuisines', (req, res) => {
   console.log('in the query', req.query.id);
   User.findCuisinesById(req.query.id)
@@ -229,6 +251,18 @@ app.get('/api/user/cuisines', (req, res) => {
       res.type('json').json(results);
     })
     .catch((err) => { console.log(err); });
+});
+
+app.get('/api/user/menus', (req, res) => {
+  User.getMenuItems(req.query.id)
+    .then((results) => {
+      res.send(results);
+    });
+});
+
+app.post('/api/user/saveMenuItem', (req, res) => {
+  User.insertMenuItem(req.body)
+    .then(() => res.sendStatus(201));
 });
 
 // example route that validates a token before sending a response

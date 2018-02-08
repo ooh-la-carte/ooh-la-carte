@@ -22,6 +22,19 @@ User.findUserByName = username => (
 //   this.on('users.id', id);
 // }).toSQL().sql;
 
+User.sendInvite = inviteObj => (
+  knex('invitations').insert(inviteObj)
+    .then(() => console.log('invitation inserted'))
+);
+
+User.getChefInvites = id => (
+  knex('invitations').where('chef_id', id)
+);
+
+User.getClientInvites = id => (
+  knex('invitations').where('user_id', id)
+);
+
 User.findChefs = () => (
   knex('users').where('is_chef', true)
 );
@@ -40,13 +53,23 @@ User.findCuisinesById = id => (
   ==============================
 */
 
+User.insertMenuItem = menuObj => (
+  knex('menu').insert(menuObj)
+    .then(() => console.log('Inserted menu item'))
+);
+
+User.getMenuItems = id => (
+  knex('menu').where('chef_id', id)
+);
+
 User.insertCuisineById = (userObj) => {
-  const { id, cuisine, description } = userObj;
+  const { id, cuisine, description, userCuisines } = userObj;
   return knex('users_cuisines').insert({
     chef_id: id,
     cuisine,
     custom_description: description,
   })
+    .then(() => knex('users').where({ id }).update({ cuisine: userCuisines }))
     .then((insertResult) => {
       console.log('cuisine sucessfully inserted');
       return insertResult;

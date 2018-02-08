@@ -44,6 +44,7 @@ class CurrentPageNavBar extends Component {
       createEvent: 'Add Event',
       userEvents: 'Events',
       chatTab: 'Inbox',
+      notifications: 'Notifications',
       conversation: this.props.selectedConversation.host
         ? this.props.selectedConversation.host
         : this.props.selectedConversation.username,
