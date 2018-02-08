@@ -52,6 +52,7 @@ exports.up = (knex, Promise) => (
       table.string('meal_type');
       table.text('description');
       table.text('img');
+      table.string('rating');
       table.text('requests');
     }),
     knex.schema.createTable('menu', (table) => {
