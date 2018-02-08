@@ -24,6 +24,7 @@ class Settings extends Component {
   }
 
   componentDidMount = () => {
+    console.log(this.state.id);
     window.scrollTo(0, 0);
     axios.get('/api/user/menus', { params: { id: this.state.id } })
       .then((menuItems) => {
@@ -39,15 +40,7 @@ class Settings extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  setDish = e => this.setState({ dish: e.target.value })
-
-  setType = e => this.setState({ type: e.target.value })
-
-  setPrice = e => this.setState({ price: e.target.value })
-
-  setDescription = e => this.setState({ description: e.target.value })
-
-  setPicture = e => this.setState({ pic: e.target.value })
+  setMenuItem = (e, { type, value }) => this.setState({ [type]: value })
 
   saveMenuItem = () => {
     axios.post('/api/user/saveMenuItem', {
@@ -184,24 +177,24 @@ class Settings extends Component {
               this.saveMenuItem();
             }}>
                 <Form.Field>
-                  <label>dish</label>
-                  <input placeholder='Dish Name' onChange={this.setDish}/>
+                  <label>Dish</label>
+                  <Form.Input placeholder='Dish Name' onChange={this.setMenuItem} type='dish' value={this.state.dish}/>
                 </Form.Field>
                 <Form.Field style={{ width: '50%' }}>
-                  <label>type</label>
-                  <input placeholder='Type of cuisine' onChange={this.setType}/>
+                  <label>Type</label>
+                  <Form.Input placeholder='Type of cuisine' onChange={this.setMenuItem} type='type' value={this.state.type}/>
                 </Form.Field>
                 <Form.Field style={{ width: '50%' }}>
-                  <label>price</label>
-                  <input placeholder='Price' onChange={this.setPrice}/>
+                  <label>Price</label>
+                  <Form.Input placeholder='Price' onChange={this.setMenuItem} type='price' value={this.state.price}/>
                 </Form.Field>
                 <Form.Field>
-                  <label>description</label>
-                  <input placeholder='Description' onChange={this.setDescription}/>
+                  <label>Description</label>
+                  <Form.Input placeholder='Description' onChange={this.setMenuItem} type='description' value={this.state.description}/>
                 </Form.Field>
                 <Form.Field>
-                  <label>picture</label>
-                  <input placeholder='picture URL' onChange={this.setPicture}/>
+                  <label>Picture</label>
+                  <Form.Input placeholder='picture URL' onChange={this.setMenuItem} type='picture' value={this.state.picture}/>
                 </Form.Field>
                 <Button type='submit'>Save!</Button>
               </Form>
@@ -221,7 +214,7 @@ class Settings extends Component {
           ))}
 
         {/* ***** Contact Info ***** */}
-        <h1 className='center miniPadding softText'>Contact Info</h1>
+        <h1 className='center miniPadding softText'>Profile Info</h1>
         <div className='boxed center'>
           <Segment className='lightlyColored'>
             <Grid>
@@ -231,13 +224,27 @@ class Settings extends Component {
                 <Grid.Column width={4}>Address:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.streetAddress}</Grid.Column>
                 <Grid.Column width={4}></Grid.Column>
-                <Grid.Column width={12}>
-                  {this.props.user.city}, {this.props.user.props} {this.props.user.zipcode}
+                  <Grid.Column width={12}>
+                    {
+                      this.props.user.city
+                      ?
+                        `${this.props.user.city}, ${this.props.user.state}`
+                      :
+                        null
+                    } {this.props.user.zipcode}
                   </Grid.Column>
                 <Grid.Column width={4}>Phone:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
                 <Grid.Column width={4}>Email:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
+                <Grid.Column width={4}>Faceboook:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.facebook}</Grid.Column>
+                <Grid.Column width={4}>Instagram:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.instagram}</Grid.Column>
+                <Grid.Column width={4}>Twitter:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.twitter}</Grid.Column>
+                <Grid.Column width={4}>Experience:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.experience}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
