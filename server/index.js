@@ -10,7 +10,7 @@ const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
 const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
-
+const authRoutes = require('./routes/authRoutes.js');
 
 /*
   ==============================
@@ -42,10 +42,9 @@ io.on('connection', SocketManager);
   ==============================
 */
 
+app.use(express.static(path.join(__dirname, '/../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/../public')));
-
 
 app.use((req, res, next) => {
   // log each request to the console
@@ -54,6 +53,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/auth', authRoutes);
 /*
   ==============================
     Post Routes

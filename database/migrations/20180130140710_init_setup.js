@@ -9,10 +9,10 @@ exports.up = (knex, Promise) => (
       table.string('state');
       table.string('zip_code');
       table.string('name');
-      table.string('username').unique().notNullable();
+      table.string('username').unique();
       table.string('phone');
       table.string('cuisine');
-      table.string('password').notNullable();
+      table.string('password');
       table.string('menu');
       table.string('img');
       table.string('availability');
@@ -21,6 +21,8 @@ exports.up = (knex, Promise) => (
       table.string('bio');
       table.string('rating');
       table.string('email').unique().notNullable();
+      table.string('google_id').unique();
+      table.string('facebook_id').unique();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
     }),

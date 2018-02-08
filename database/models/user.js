@@ -11,11 +11,22 @@ User.findUserByName = username => (
     .catch((err) => { console.log(err); })
 );
 
-// OLD MODEL
-// knex.select('*').from('users').innerJoin('addresses', function() {
-//   this.on('users.address_id', 'addresses.id');
-//   this.on('users.id', id);
-// }).toSQL().sql;
+User.findUserByGoogleId = googleId => (
+  knex('users')
+    .where({ google_id: googleId })
+    .then()
+);
+
+// the info object should have
+// { idType: 'facebook_id | google_id', id: 'id', name: 'name', img: 'url | undefined' }
+// returns a promise
+User.insertOAuth = (info) => {
+  const row = { name: info.name };
+  row[info.idType] = info.id;
+  row.img = info.img;
+
+  return knex('users').insert(row).then();
+};
 
 User.findChefs = () => (
   knex('users').where('is_chef', true)
