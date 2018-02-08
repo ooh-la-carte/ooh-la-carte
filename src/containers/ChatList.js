@@ -20,7 +20,6 @@ class ChatTab extends React.Component {
       isChef: window.localStorage.getItem('isChef'),
     })
       .then((convos) => {
-        console.log('CONVO DATA: ', convos.data);
         this.setState({ convos: convos.data });
       })
       .catch(err => console.log(err));
@@ -28,8 +27,6 @@ class ChatTab extends React.Component {
 
   render = () => (
         <div className='container'>
-        {window.localStorage.getItem('isChef') === 'true'
-          ?
             <div>
               {this.state.convos.map(convo =>
                 <div key={convo.chatId} className='chatMessages'>
@@ -38,6 +35,8 @@ class ChatTab extends React.Component {
                       .then((user) => {
                         const obj = user.data;
                         obj.convo_id = convo.chatId;
+                        obj.user_id = convo.recipientId;
+                        console.log(obj);
                         this.props.selectConversation(obj);
                       })
                       .then(() => {
@@ -46,24 +45,6 @@ class ChatTab extends React.Component {
                   }}>{convo.recipientUsername}</div>
                 </div>)}
             </div>
-          :
-            <div>
-              {this.state.convos.map(convo =>
-                <div key={convo.chatId} className='chatMessages'>
-                  <div onClick={() => {
-                    axios.get('/api/user/info', { params: { id: convo.recipientId } })
-                      .then((user) => {
-                        const obj = user.data;
-                        obj.convo_id = convo.chatId;
-                        this.props.selectConversation(obj);
-                      })
-                      .then(() => {
-                        this.props.history.push('/conversation');
-                      });
-                  }}>{convo.recipientUsername}</div>
-                </div>)}
-            </div>
-        }
         </div>
   );
 }

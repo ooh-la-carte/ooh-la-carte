@@ -93,7 +93,8 @@ class CreateEventForm extends Component {
   handleSubmit = () => {
     const eventObj = this.state;
     const url = '/api/createevent';
-    if (!eventObj.date || !eventObj.partySize || !eventObj.meal) {
+    if (!eventObj.date || !eventObj.partySize || !eventObj.meal ||
+        !eventObj.eventName || !eventObj.zip) {
       console.log('Required fields not provided');
     } else {
       console.log('submitting event');
@@ -118,9 +119,9 @@ class CreateEventForm extends Component {
           <div>
             <Form onSubmit={this.handleSubmit}>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Event Name</label>
-                <Input placeholder='My Stellar Soiree'
+                <Input placeholder='Event Title'
                   onChange={this.setEventName}
                   value={this.state.eventName}
                 />
@@ -132,7 +133,7 @@ class CreateEventForm extends Component {
                     <Form.Field>
                       <label>City</label>
                       <Input
-                        placeholder='Austin'
+                        placeholder='City'
                         value={this.state.city}
                         onChange={this.setCity}
                       />
@@ -142,17 +143,17 @@ class CreateEventForm extends Component {
                     <Form.Field>
                       <label>State</label>
                       <Input
-                        placeholder='TX'
+                        placeholder='State'
                         value={this.state.stat}
                         onChange={this.setStat}
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>Zip</label>
                       <Input
-                        placeholder='Zip'
+                        placeholder='Zipcode'
                         value={this.state.zip}
                         onChange={this.setZip}
                       />
@@ -167,9 +168,7 @@ class CreateEventForm extends Component {
                       <Dropdown
                         placeholder='Month'
                         fluid
-                        compact
                         selection
-                        labeled
                         label='Month'
                         onChange={this.handleMonthSelectionChange}
                         options={options.monthOptions}
@@ -183,9 +182,7 @@ class CreateEventForm extends Component {
                       <Dropdown
                         placeholder='Day'
                         fluid
-                        compact
                         selection
-                        labeled
                         label='Day'
                         onChange={this.handleDateSelectionChange}
                         options={options.dateOptions}
@@ -199,9 +196,7 @@ class CreateEventForm extends Component {
                       <Dropdown
                         placeholder='Year'
                         fluid
-                        compact
                         selection
-                        labeled
                         label='Year'
                         onChange={this.handleYearSelectionChange}
                         options={options.yearOptions}
@@ -210,52 +205,45 @@ class CreateEventForm extends Component {
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-
-              <Grid columns='equal'>
-                <Grid.Row>
-                  <Grid.Column>
-                    <Form.Field>
-                      <label>Meal</label>
-                      <Button.Group size='large' basic>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Breakfast' }); } }
-                          inverted
-                          type='button'
-                          >Breakfast
-                        </Button>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
-                          type='button'
-                          inverted
-                          >Lunch
-                        </Button>
-                        <Button
-                          onClick={() => { this.setState({ meal: 'Lunch' }); } }
-                          type='button'
-                          inverted
-                          >Dinner
-                        </Button>
-                      </Button.Group>
-                    </Form.Field>
-                   </Grid.Column>
-                </Grid.Row>
-              </Grid>
-
+              <div className='miniPadding'>
               <Form.Field required>
                 <label>Meal</label>
                 <Dropdown
                   onChange={this.handlePartySizeSelectionChange}
-                  placeholder="How many in your dining party?"
+                  placeholder="Party Size"
                   fluid
                   upward
                   selection
                   options={options.partySizeOptions}
                 />
               </Form.Field>
+              </div>
+              <div className='miniPadding center'>
+                <Button.Group size='medium' className='center butPri'>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Breakfast' }); } }
+                    inverted
+                    type='button'
+                    >Breakfast
+                  </Button>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    type='button'
+                    inverted
+                    >Lunch
+                  </Button>
+                  <Button
+                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    type='button'
+                    inverted
+                    >Dinner
+                  </Button>
+                </Button.Group>
+              </div>
 
               <Form.Field>
                 <label>Cuisine</label>
-                <Input placeholder='American Southern'
+                <Input placeholder='Cuisine Description'
                   onChange={this.setCuisine}
                   value={this.state.cusine}
                 />
@@ -265,9 +253,9 @@ class CreateEventForm extends Component {
 
               <Form.Field required>
                 <label>Budget</label>
-                <Input placeholder='300.00'
+                <Input placeholder='Budget'
                   onChange={this.handleBudgetChange}
-                  value={this.state.budget}
+                  value={`${this.state.budget}`}
                 />
               </Form.Field>
 
@@ -276,7 +264,7 @@ class CreateEventForm extends Component {
               <label>Description</label>
                 <TextArea
                 autoHeight
-                placeholder='Add any additional revelent info here...'
+                placeholder='Add any additional revelent information...'
                 rows={2}
                 onChange={this.setDescription}
                 />

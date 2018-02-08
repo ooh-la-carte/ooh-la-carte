@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Icon } from 'semantic-ui-react';
-import { removeSocket } from '../actions';
+import { removeSocket, listenerOn } from '../actions';
 import '../style.scss';
 
 class CurrentPageNavBar extends Component {
@@ -24,6 +24,7 @@ class CurrentPageNavBar extends Component {
     window.localStorage.removeItem('username');
     this.props.socketReducer.emit('remove user', username);
     this.props.socketReducer.close();
+    this.props.listenerOn(false);
     this.props.removeSocket();
     this.toggleDropDown();
   }
@@ -43,6 +44,7 @@ class CurrentPageNavBar extends Component {
       createEvent: 'Add Event',
       userEvents: 'Events',
       chatTab: 'Inbox',
+      notifications: 'Notifications',
       conversation: this.props.selectedConversation.host
         ? this.props.selectedConversation.host
         : this.props.selectedConversation.username,
@@ -85,7 +87,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeSocket }, dispatch);
+  return bindActionCreators({
+    removeSocket,
+    listenerOn,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentPageNavBar);

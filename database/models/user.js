@@ -28,6 +28,19 @@ User.insertOAuth = (info) => {
   return knex('users').insert(row).then();
 };
 
+User.sendInvite = inviteObj => (
+  knex('invitations').insert(inviteObj)
+    .then(() => console.log('invitation inserted'))
+);
+
+User.getChefInvites = id => (
+  knex('invitations').where('chef_id', id)
+);
+
+User.getClientInvites = id => (
+  knex('invitations').where('user_id', id)
+);
+
 User.findChefs = () => (
   knex('users').where('is_chef', true)
 );
@@ -35,6 +48,42 @@ User.findChefs = () => (
 User.findUserById = id => (
   knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username').then()
 );
+
+User.findCuisinesById = id => (
+  knex('users_cuisines').where('chef_id', id).select('cuisine', 'custom_description').then()
+);
+
+User.insertMenuItem = menuObj => (
+  knex('menu').insert(menuObj)
+    .then(() => console.log('Inserted menu item'))
+);
+
+User.getMenuItems = id => (
+  knex('menu').where('chef_id', id)
+);
+
+User.insertCuisineById = (userObj) => {
+  const { id, cuisine, description, userCuisines } = userObj;
+  return knex('users_cuisines').insert({
+    chef_id: id,
+    cuisine,
+    custom_description: description,
+  })
+    .then(() => knex('users').where({ id }).update({ cuisine: userCuisines }))
+    .then((insertResult) => {
+      console.log('cuisine sucessfully inserted');
+      return insertResult;
+    })
+    .catch((err) => { console.log(err); });
+};
+
+User.deleteCuisineById = (userObj) => {
+  const { id, cuisine } = userObj;
+  return knex('users_cuisines')
+    .where({ cuisine })
+    .andWhere({ chef_id: id })
+    .del();
+};
 
 User.insertUser = (username, password, email, accType) => {
   let isAChef = false;

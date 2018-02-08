@@ -1,4 +1,3 @@
-
 const changeSelectedChef = chef => (
   {
     type: 'SELECT_CHEF',
@@ -41,6 +40,20 @@ const selectConversation = userId => (
   }
 );
 
+const listenerOn = boolean => (
+  {
+    type: 'LISTENER_ON',
+    payload: boolean,
+  }
+);
+
+const updateCuisineSelection = cuisine => (
+  {
+    type: 'UPDATE_CUISINE',
+    payload: cuisine,
+  }
+);
+
 export {
   changeSelectedChef,
   changeSelectedEvent,
@@ -48,4 +61,6 @@ export {
   removeSocket,
   selectConversation,
   setUserInfo,
+  listenerOn,
+  updateCuisineSelection,
 };
