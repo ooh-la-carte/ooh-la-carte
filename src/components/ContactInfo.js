@@ -162,6 +162,42 @@ class ContactInfo extends Component {
               value={this.state.email || ''}
             />
           </Form.Field>
+          <Form.Field>
+          <label>Facebook Link</label>
+            <Form.Input
+              type='email'
+              placeholder={this.state.email || 'Email'}
+              onChange={this.handleUpdate}
+              value={this.state.email || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Twitter Link</label>
+            <Form.Input
+              type='email'
+              placeholder={this.state.email || 'Email'}
+              onChange={this.handleUpdate}
+              value={this.state.email || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Instagram Link</label>
+            <Form.Input
+              type='email'
+              placeholder={this.state.email || 'Email'}
+              onChange={this.handleUpdate}
+              value={this.state.email || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Years of experience</label>
+            <Form.Input
+              type='email'
+              placeholder={this.state.email || 'Email'}
+              onChange={this.handleUpdate}
+              value={this.state.email || ''}
+            />
+          </Form.Field>
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button
@@ -179,6 +215,11 @@ class ContactInfo extends Component {
           </Button>
           </div>
         </Form>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </div>
     );
   }
