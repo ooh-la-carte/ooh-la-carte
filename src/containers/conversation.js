@@ -16,8 +16,7 @@ class Conversation extends Component {
     this.listen();
   }
 
-  componentDidMount() {
-    this.scrollToBottom();
+  componentDidMount = () => {
     console.log('reciever up');
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
@@ -25,6 +24,7 @@ class Conversation extends Component {
     })
       .then((chat) => {
         this.setState({ chat: chat.data });
+        this.scrollToBottom();
       });
     // this.listen();
   }
@@ -96,7 +96,7 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div style={{ marginBottom: '20%' }}>
+    <div className='topLevelDiv'>
       <div className='chatDiv'>
         {this.state.chat.map((message, i) => (message.self === true
           ? <div key={i} className='chatMessages'>{message.text}</div>
