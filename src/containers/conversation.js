@@ -16,16 +16,15 @@ class Conversation extends Component {
     this.listen();
   }
 
-  componentDidMount() {
-    this.scrollToBottom();
+  componentDidMount = () => {
     console.log('reciever up');
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
       user: window.localStorage.getItem('userId'),
     })
       .then((chat) => {
-        this.setState({ chat: chat.data })
-          .then(() => this.scrollToBottom());
+        this.setState({ chat: chat.data });
+        this.scrollToBottom();
       });
     // this.listen();
   }
