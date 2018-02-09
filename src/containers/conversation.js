@@ -100,7 +100,6 @@ class Conversation extends Component {
       {this.state.chat.map((message, i) => (message.self === true
         ? <div key={i} className='chatMessages'>{message.text}</div>
         : <div key={i} className='chatMessages'>{message.text}</div>))}
-      <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input
         value={ this.state.input }
@@ -109,6 +108,7 @@ class Conversation extends Component {
         placeholder='Say hi!'
         style={{ width: '100%' }}
         />
+      <div ref={ (el) => { this.el = el; }} />
       </div>
     </div>
   )
