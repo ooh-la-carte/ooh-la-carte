@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import io from 'socket.io-client';
-import { Input } from 'semantic-ui-react';
+// import { Input } from 'semantic-ui-react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -83,6 +83,7 @@ class Conversation extends Component {
 
   submit = (e) => {
     if (e.key === 'Enter' && this.state.input !== '') {
+      document.getElementById('chatInput').blur();
       console.log('Convo info: ', this.props.selectedConversation);
       console.log('User info: ', window.localStorage.getItem('userId)'));
       this.props.socketReducer.emit('send', {
@@ -96,14 +97,18 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div className='topLevelDiv'>
       <div className='chatDiv'>
         {this.state.chat.map((message, i) => (message.self === true
           ? <div key={i} className='chatMessages'>{message.text}</div>
           : <div key={i} className='chatMessages'>{message.text}</div>))}
         <div ref={ (el) => { this.el = el; }} />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <div className='chatInput'>
-          <Input
+          <input id='chatInput'
           value={ this.state.input }
           onChange={ this.changeInput }
           onKeyPress= { this.submit }
@@ -112,7 +117,6 @@ class Conversation extends Component {
           />
         </div>
       </div>
-    </div>
   )
 }
 
