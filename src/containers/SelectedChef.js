@@ -131,6 +131,7 @@ class SelectedChef extends Component {
                         user_id: Number(window.localStorage.getItem('userId')),
                         host: window.localStorage.getItem('username'),
                         chef_id: chef.id,
+                        chef: chef.username,
                         event_name: event.name,
                         accepted: null,
                       });
