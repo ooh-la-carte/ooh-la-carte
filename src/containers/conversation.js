@@ -29,9 +29,9 @@ class Conversation extends Component {
     // this.listen();
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
+  // componentDidUpdate = () => {
+  //    this.scrollToBottom();
+  // }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
@@ -96,19 +96,21 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div className='chatDiv'>
-      {this.state.chat.map((message, i) => (message.self === true
-        ? <div key={i} className='chatMessages'>{message.text}</div>
-        : <div key={i} className='chatMessages'>{message.text}</div>))}
-      <div ref={ (el) => { this.el = el; }} />
-      <div className='chatInput'>
-        <Input
-        value={ this.state.input }
-        onChange={ this.changeInput }
-        onKeyPress= { this.submit }
-        placeholder='Say hi!'
-        style={{ width: '100%' }}
-        />
+    <div style={{ marginBottom: '20%' }}>
+      <div className='chatDiv'>
+        {this.state.chat.map((message, i) => (message.self === true
+          ? <div key={i} className='chatMessages'>{message.text}</div>
+          : <div key={i} className='chatMessages'>{message.text}</div>))}
+        <div ref={ (el) => { this.el = el; }} />
+        <div className='chatInput'>
+          <Input
+          value={ this.state.input }
+          onChange={ this.changeInput }
+          onKeyPress= { this.submit }
+          placeholder='Say hi!'
+          style={{ width: '100%' }}
+          />
+        </div>
       </div>
     </div>
   )
