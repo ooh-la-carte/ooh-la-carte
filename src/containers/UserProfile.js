@@ -60,6 +60,9 @@ class UserProfile extends Component {
         };
         this.props.setUserInfo(user);
       });
+
+    // need an ter op here assigning the params object to diff between
+    // retrieving a users created events, and a chefs attending events
     axios.get('/api/events', { params: {
       field: 'creator_id', target: window.localStorage.getItem('userId'),
     } })

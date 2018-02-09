@@ -66,7 +66,9 @@ class ContactInfo extends Component {
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
-            this.props.history.push('/settings');
+            // can maybe add a first time property to user
+            // that tracks the first time they fill this out and redirects that time only
+            this.props.history.push('/userProfile');
           }
         })
         .catch((error) => {

@@ -29,6 +29,19 @@ Event.findAllEventsByField = (field, target) => (
     })
 );
 
+Event.acceptEvent = acceptObj => (
+  knex('invitations').where('id', acceptObj.id).update('accepted', acceptObj.accepted)
+);
+
+Event.addChefToEvent = (inviteObj) => {
+  console.log(inviteObj);
+  return knex('events').where('id', inviteObj.event_id).update('chef_id', inviteObj.chef_id);
+};
+
+Event.declineEvent = declineObj => (
+  knex('invitations').where('id', declineObj.id).update('accepted', declineObj.accepted)
+);
+
 
 Event.insertEvent = (eventObj) => {
   const { eventName,

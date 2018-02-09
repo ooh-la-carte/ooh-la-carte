@@ -130,6 +130,19 @@ app.post('/api/createevent', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
+app.post('/api/user/acceptEvent', (req, res) => {
+  Event.acceptEvent(req.body)
+    .then(() => {
+      Event.addChefToEvent(req.body)
+        .then(() => res.sendStatus(201));
+    });
+});
+
+app.post('/api/user/declineEvent', (req, res) => {
+  Event.declineEvent(req.body)
+    .then(() => res.sendStatus(201));
+});
+
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const { id, name, streetAddress, city, state, zipcode, phone, email } = req.body;
