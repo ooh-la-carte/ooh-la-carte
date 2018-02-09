@@ -29,9 +29,9 @@ class Conversation extends Component {
     // this.listen();
   }
 
-  // componentDidUpdate() {
-  //   this.scrollToBottom();
-  // }
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
@@ -73,15 +73,18 @@ class Conversation extends Component {
       chat,
       input: '',
     });
-    // this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   changeInput = (e) => {
     this.setState({ input: e.target.value });
+    // this.scrollToBottom();
   }
 
   submit = (e) => {
     if (e.key === 'Enter' && this.state.input !== '') {
+      console.log('Convo info: ', this.props.selectedConversation);
+      console.log('User info: ', window.localStorage.getItem('userId)'));
       this.props.socketReducer.emit('send', {
         text: this.state.input,
         sender: Number(window.localStorage.getItem('userId')),
@@ -97,6 +100,7 @@ class Conversation extends Component {
       {this.state.chat.map((message, i) => (message.self === true
         ? <div key={i} className='chatMessages'>{message.text}</div>
         : <div key={i} className='chatMessages'>{message.text}</div>))}
+      <div ref={ (el) => { this.el = el; }} />
       <div className='chatInput'>
         <Input
         value={ this.state.input }
@@ -105,7 +109,6 @@ class Conversation extends Component {
         placeholder='Say hi!'
         style={{ width: '100%' }}
         />
-      <div ref={ (el) => { this.el = el; }} />
       </div>
     </div>
   )
