@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt');
 
 const User = {};
 
+/*
+  ==============================
+    Find
+  ==============================
+*/
 
 User.findUserByName = username => (
   knex('users')
@@ -46,12 +51,18 @@ User.findChefs = () => (
 );
 
 User.findUserById = id => (
-  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username').then()
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username', 'twitter', 'instagram', 'facebook').then()
 );
 
 User.findCuisinesById = id => (
   knex('users_cuisines').where('chef_id', id).select('cuisine', 'custom_description').then()
 );
+
+/*
+  ==============================
+    Insert/Update/Delete
+  ==============================
+*/
 
 User.insertMenuItem = menuObj => (
   knex('menu').insert(menuObj)
@@ -111,10 +122,19 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
-User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email) => knex('users')
+User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email, facebook, twitter, instagram) => knex('users')
   .where('id', id)
   .update({
-    name, street_name: streetAddress, city, state, zip_code: zipcode, phone, email,
+    name,
+    street_name: streetAddress,
+    city,
+    state,
+    zip_code: zipcode,
+    phone,
+    email,
+    facebook,
+    twitter,
+    instagram,
   });
 
 User.updateCuisineSelection = (id, cuisine) => knex('users')
@@ -124,6 +144,44 @@ User.updateCuisineSelection = (id, cuisine) => knex('users')
 User.updateChefRate = (id, rate) => knex('users')
   .where('id', id)
   .update({ rate });
+
+// This function accepts an object with eventID(number),
+// chefId(number), and rating(number 1-5) to update the
+// rating of the chef who provided their services for the event
+
+User.updateChefRating = eventObj => (
+  knex('users')
+    .where('id', eventObj.chefId)
+    .then((results) => {
+      const currentRating = results.rating;
+      // if the chef is not previously rated
+      if (currentRating === undefined) {
+        return knex('users')
+          .where('id', eventObj.chefId)
+          .update({ rating: `[${eventObj.rating}, 1]` })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      const arrRating = JSON.parse(currentRating);
+      const { currSum, currCount } = arrRating;
+      return knex('users')
+        .where('id', eventObj.chefId)
+        .update({ rating: `[${currSum + eventObj.rating}, ${currCount + 1}]` })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+);
+
+/*
+  ==============================
+    Authentication
+  ==============================
+*/
 
 User.getAndVerifyUser = (username, password) => {
   let userId;
