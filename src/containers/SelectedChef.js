@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -80,9 +80,9 @@ class SelectedChef extends Component {
                 <span><Icon name='food'/>Years experience: {chef.experience}</span>
               <div className='center miniPadding'>
                 {facebook ?
-                  <Link to={facebook}>
+                  <a target="_blank" href={facebook}>
                     <Icon name='facebook square' className='OLCcolor' size='huge' />
-                  </Link>
+                  </a>
                   : null
                 }
                 {twitter ?
@@ -92,7 +92,7 @@ class SelectedChef extends Component {
                   : null
                 }
                 {instagram ?
-                   <a href={twitter}>
+                   <a target="_blank" href={instagram}>
                     <Icon name='instagram' className='OLCcolor' size='huge' />
                   </a>
                   : null
