@@ -29,9 +29,9 @@ class Conversation extends Component {
     // this.listen();
   }
 
-  componentDidUpdate() {
-    // this.scrollToBottom();
-  }
+  // componentDidUpdate = () => {
+  //    this.scrollToBottom();
+  // }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
