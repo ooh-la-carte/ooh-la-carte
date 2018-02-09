@@ -203,7 +203,7 @@ class Settings extends Component {
             <div
             className='boxed center lightlyColored'
             key={item.id}
-            style={{ 'margin-bottom': '1%' }}>
+            style={{ marginBottom: '1%' }}>
               <div>{item.dish}</div>
               <div>{item.description}</div>
               <div>{item.price}</div>
