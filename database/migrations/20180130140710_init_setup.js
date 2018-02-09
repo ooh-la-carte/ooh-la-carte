@@ -74,10 +74,11 @@ exports.up = (knex, Promise) => (
       table.increments('id').unsigned().primary();
       table.integer('user_id').unsigned().references('users.id');
       table.string('host');
+      table.string('chef');
       table.string('event_name');
       table.integer('chef_id').unsigned().references('users.id');
       table.integer('event_id').unsigned().references('events.id');
-      table.boolean('accepted').defaultTo(false);
+      table.boolean('accepted');
     }),
   ])
 );

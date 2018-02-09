@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import '../style.scss';
 
@@ -43,7 +43,25 @@ class Notifications extends Component {
         chef: messageObj.chef_id,
       };
 
-    axios.post('/api/conversations', convo);
+    axios.post('/api/conversations', convo)
+      .then((results) => {
+        let receiver = '';
+        if (window.localStorage.getItem('isChef') === 'true') {
+          receiver = messageObj.user_id;
+        } else {
+          receiver = messageObj.chef_id;
+        }
+        const obj = results.data[0];
+        console.log('Before manipulation: ', obj);
+        obj.convo_id = obj.id;
+        obj.username = messageObj.username;
+        obj.user_id = receiver;
+        console.log('Select chef conversation store: ', obj);
+        this.props.selectConversation(obj);
+      })
+      .then(() => {
+        this.props.history.push('/conversation');
+      });
   }
 
   render = () => (
@@ -86,7 +104,20 @@ class Notifications extends Component {
                     }}>Decline</Button>
                   </div>
                   <div>
-                    <Button basic color='blue' style= {{ width: '100%' }}>Message!</Button>
+                    <Button basic color='blue' style= {{ width: '100%' }}
+                    onClick={() => {
+                      let receiver = '';
+                      if (window.localStorage.getItem('isChef') === 'true') {
+                        receiver = invite.host;
+                      } else {
+                        receiver = invite.chef;
+                      }
+                      this.sendMessage({
+                        username: receiver,
+                        user_id: invite.user_id,
+                        chef_id: invite.chef_id,
+                      });
+                    }}>Message!</Button>
                   </div>
                 </Card.Content>
               </Card>
