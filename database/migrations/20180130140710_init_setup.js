@@ -19,6 +19,9 @@ exports.up = (knex, Promise) => (
       table.string('experience');
       table.string('rate');
       table.string('bio');
+      table.string('twitter');
+      table.string('facebook');
+      table.string('instagram');
       table.string('rating');
       table.string('email').unique().notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));

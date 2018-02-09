@@ -40,7 +40,7 @@ User.findChefs = () => (
 );
 
 User.findUserById = id => (
-  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username').then()
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username', 'twitter', 'instagram', 'facebook').then()
 );
 
 User.findCuisinesById = id => (
@@ -111,10 +111,19 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
-User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email) => knex('users')
+User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email, facebook, twitter, instagram) => knex('users')
   .where('id', id)
   .update({
-    name, street_name: streetAddress, city, state, zip_code: zipcode, phone, email,
+    name,
+    street_name: streetAddress,
+    city,
+    state,
+    zip_code: zipcode,
+    phone,
+    email,
+    facebook,
+    twitter,
+    instagram,
   });
 
 User.updateCuisineSelection = (id, cuisine) => knex('users')
