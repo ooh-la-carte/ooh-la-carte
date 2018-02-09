@@ -13,6 +13,7 @@ class SelectedChef extends Component {
     super(props);
     this.state = {
       myEvents: [],
+      menu: [],
       eventsDropdown: false,
     };
   }
@@ -25,6 +26,10 @@ class SelectedChef extends Component {
       .then((events) => {
         console.log('Events from db: ', events.data);
         this.setState({ myEvents: events.data });
+      });
+    axios.get('/api/user/menus', { params: { id: this.props.selectedChefReducer.id } })
+      .then((menuItems) => {
+        this.setState({ menu: menuItems.data });
       });
   }
 
@@ -72,7 +77,20 @@ class SelectedChef extends Component {
                   }
                 </div>
                 <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
-                <div className='detailSegment'><Icon name='map outline'/> Menu: menu rendered here</div>
+                <div className='detailSegment'><Icon name='map outline'/> Menu:
+                {this.state.menu.map(item => (
+                    <div
+                    className='boxed center lightlyColored'
+                    key={item.id}
+                    style={{ marginTop: '2%' }}>
+                      <div>{item.dish}</div>
+                      <div>{item.description}</div>
+                      <div>{item.price}</div>
+                      <div>{item.cuisine_type}</div>
+                      <image src={item.pic}/>
+                    </div>
+                  ))}
+                </div>
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
