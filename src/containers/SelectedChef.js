@@ -86,13 +86,15 @@ class SelectedChef extends Component {
                   : null
                 }
                 {twitter ?
-                  <a href={twitter}>
+                  <a target="_blank" href={twitter}>
                     <Icon name='twitter' className='OLCcolor' size='huge' />
                   </a>
                   : null
                 }
                 {instagram ?
-                  <Icon name='instagram' className='OLCcolor' size='huge' />
+                   <a href={twitter}>
+                    <Icon name='instagram' className='OLCcolor' size='huge' />
+                  </a>
                   : null
                 }
               </div>

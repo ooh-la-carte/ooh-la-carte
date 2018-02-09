@@ -157,7 +157,7 @@ app.post('/api/updateContactInfo', (req, res) => {
     email,
     facebook,
     twitter,
-    instagram,
+    instagram
   )
     .then(() => {
       res.sendStatus(200);
