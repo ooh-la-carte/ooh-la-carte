@@ -4,46 +4,41 @@ import { bindActionCreators } from 'redux';
 import { Card, Icon, Image, Rating } from 'semantic-ui-react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { selectConversation } from '../actions';
+import { selectConversation, updateEventRating} from '../actions';
 import '../style.scss';
 
 class SelectedEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = { rating: 0 };
+    this.state = { rating: this.props.selectedEventReducer.rating };
   }
 
   handleRatingChange = (e, { rating }) => {
-    this.setState({ rating });
-    const eventRatingObj = {
-      rating,
-      eventId: this.props.selectedEventReducer.id,
-      chefId: this.props.selectedEventReducer.chef_id,
-    };
-    axios.post('/api/updateEventRating', eventRatingObj);
+    this.props.updateEventRating(rating);
   }
 
   shouldStarsDisplay = (eventDate, chefId) => {
     const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== true);
+    console.log(hasHappened, (window.localStorage.isChef !== true), (chefId));
+    return hasHappened && (window.localStorage.isChef !== true) && (chefId);
   };
+
 
   render() {
     const event = this.props.selectedEventReducer;
-    const { date_time: eventDate, chef_id: chefId } = this.props.selectedEventReducer;
-    const showStars = this.shouldStarsDisplay(eventDate, chefId);
-    console.log('show stars in render:', showStars);
+    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
     let stars;
+    console.log('here', showStars);
     if (showStars) {
-      if (this.props.selectedEventReducer.rating !== null) {
+      if (event.rating !== null) {
         stars = <Rating
-                    rating = {this.props.selectedEventReducer.rating}
+                    rating = {event.rating}
                     maxRating={5}
                   />;
       } else {
         stars = <Rating
                     icon='star'
-                    rating={this.state.rating}
+                    rating={event.rating}
                     maxRating={5}
                     onRate={this.handleRatingChange}
                   />;
@@ -52,7 +47,7 @@ class SelectedEvent extends Component {
     return (
       <div className='selectedEventCardDiv'>
         <Card id='selectedEventCard'>
-          <Image size='large' src={event.img} />
+          { /* add image tag here */ }
           <Card.Content>
             <Card.Header>
               <div className='selectedCardTitle'>{event.name}</div>
@@ -75,7 +70,7 @@ class SelectedEvent extends Component {
             <Card.Description>
               <div className='detailSegment'>{event.description}</div>
               <div className='detailSegment'>Location: {event.city}, {event.state} {event.zip_code}</div>
-              <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.date}</div>
+              <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.eventDate}</div>
               <div className='detailSegment'><Icon name='users'/>Guests: {event.party_size}</div>
               <div className='detailSegment'><Icon name='comment outline'/>Special requests: {event.requests}</div>
             </Card.Description>
@@ -116,7 +111,10 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectConversation }, dispatch);
+  return bindActionCreators({
+    selectConversation,
+    updateEventRating,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SelectedEvent));
