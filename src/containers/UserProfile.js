@@ -63,12 +63,21 @@ class UserProfile extends Component {
 
     // need an ter op here assigning the params object to diff between
     // retrieving a users created events, and a chefs attending events
-    axios.get('/api/events', { params: {
-      field: 'creator_id', target: window.localStorage.getItem('userId'),
-    } })
-      .then((events) => {
-        this.setState({ events: events.data });
-      });
+    if (window.localStorage.getItem('isChef') === 'true') {
+      axios.get('/api/events', { params: {
+        field: 'chef_id', target: window.localStorage.getItem('userId'),
+      } })
+        .then((events) => {
+          this.setState({ events: events.data });
+        });
+    } else {
+      axios.get('/api/events', { params: {
+        field: 'creator_id', target: window.localStorage.getItem('userId'),
+      } })
+        .then((events) => {
+          this.setState({ events: events.data });
+        });
+    }
   }
 
   componentWillMount() {
