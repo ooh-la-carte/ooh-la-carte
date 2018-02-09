@@ -143,7 +143,19 @@ app.post('/api/updateContactInfo', (req, res) => {
     facebook,
     twitter,
     instagram } = req.body;
-  User.insertContactInfo(id, name, streetAddress, city, state, zipcode, phone, email, facebook, twitter, instagram)
+  User.insertContactInfo(
+    id,
+    name,
+    streetAddress,
+    city,
+    state,
+    zipcode,
+    phone,
+    email,
+    facebook,
+    twitter,
+    instagram,
+  )
     .then(() => {
       res.sendStatus(200);
     });
