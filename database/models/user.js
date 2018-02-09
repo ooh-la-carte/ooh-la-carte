@@ -3,6 +3,11 @@ const bcrypt = require('bcrypt');
 
 const User = {};
 
+/*
+  ==============================
+    Find
+  ==============================
+*/
 
 User.findUserByName = username => (
   knex('users')
@@ -41,6 +46,12 @@ User.findUserById = id => (
 User.findCuisinesById = id => (
   knex('users_cuisines').where('chef_id', id).select('cuisine', 'custom_description').then()
 );
+
+/*
+  ==============================
+    Insert/Update/Delete
+  ==============================
+*/
 
 User.insertMenuItem = menuObj => (
   knex('menu').insert(menuObj)
@@ -122,6 +133,44 @@ User.updateCuisineSelection = (id, cuisine) => knex('users')
 User.updateChefRate = (id, rate) => knex('users')
   .where('id', id)
   .update({ rate });
+
+// This function accepts an object with eventID(number),
+// chefId(number), and rating(number 1-5) to update the
+// rating of the chef who provided their services for the event
+
+User.updateChefRating = eventObj => (
+  knex('users')
+    .where('id', eventObj.chefId)
+    .then((results) => {
+      const currentRating = results.rating;
+      // if the chef is not previously rated
+      if (currentRating === undefined) {
+        return knex('users')
+          .where('id', eventObj.chefId)
+          .update({ rating: `[${eventObj.rating}, 1]` })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      const arrRating = JSON.parse(currentRating);
+      const { currSum, currCount } = arrRating;
+      return knex('users')
+        .where('id', eventObj.chefId)
+        .update({ rating: `[${currSum + eventObj.rating}, ${currCount + 1}]` })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+);
+
+/*
+  ==============================
+    Authentication
+  ==============================
+*/
 
 User.getAndVerifyUser = (username, password) => {
   let userId;
