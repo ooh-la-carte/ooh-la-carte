@@ -25,7 +25,7 @@ exports.seed = (k, Promise) => (
         zip_code: 78759,
         name: 'Gorden Ramsay',
         phone: '222-222-2222',
-        cuisine: 'italian, french, british',
+        cuisine: null,
         menu: 'spaghetti, lasagna, other amazing things',
         img: '/img/22222222.png',
         availability: 'February 23, 2018',

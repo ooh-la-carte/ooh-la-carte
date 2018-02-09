@@ -19,7 +19,11 @@ class ContactInfo extends Component {
       zipcode: '',
       phone: '',
       email: '',
+      twitter: '',
+      facebook: '',
+      instagram: '',
       bio: '',
+      experience: '',
     };
   }
 
@@ -29,7 +33,7 @@ class ContactInfo extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
-        const { name, city, state, phone, email } = userInfo.data;
+        const { name, city, state, phone, email, twitter, facebook, instagram } = userInfo.data;
         const cuisine = {
           Asian: false,
           African: false,
@@ -49,7 +53,17 @@ class ContactInfo extends Component {
           Custom: false,
         };
         this.setState({
-          name, streetAddress, city, state, zipcode, phone, email, cuisine,
+          name,
+          streetAddress,
+          city,
+          state,
+          zipcode,
+          phone,
+          email,
+          cuisine,
+          twitter,
+          facebook,
+          instagram,
         });
       });
   }
@@ -164,6 +178,42 @@ class ContactInfo extends Component {
               value={this.state.email || ''}
             />
           </Form.Field>
+          <Form.Field>
+          <label>Facebook Link</label>
+            <Form.Input
+              type='facebook'
+              placeholder={this.state.facebook || 'Facebook URL'}
+              onChange={this.handleUpdate}
+              value={this.state.facebook || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Twitter Link</label>
+            <Form.Input
+              type='twitter'
+              placeholder={this.state.twitter || 'Twitter URL'}
+              onChange={this.handleUpdate}
+              value={this.state.twitter || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Instagram Link</label>
+            <Form.Input
+              type='instagram'
+              placeholder={this.state.instagram || 'Instagram URL'}
+              onChange={this.handleUpdate}
+              value={this.state.instagram || ''}
+            />
+          </Form.Field>
+          <Form.Field>
+          <label>Years of experience</label>
+            <Form.Input
+              type='experience'
+              placeholder={this.state.experience || 'Years of experience'}
+              onChange={this.handleUpdate}
+              value={this.state.experience || ''}
+            />
+          </Form.Field>
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button
@@ -181,6 +231,11 @@ class ContactInfo extends Component {
           </Button>
           </div>
         </Form>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </div>
     );
   }

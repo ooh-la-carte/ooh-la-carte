@@ -19,6 +19,9 @@ exports.up = (knex, Promise) => (
       table.string('experience');
       table.string('rate');
       table.string('bio');
+      table.string('twitter');
+      table.string('facebook');
+      table.string('instagram');
       table.string('rating');
       table.string('email').unique().notNullable();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
@@ -52,7 +55,8 @@ exports.up = (knex, Promise) => (
       table.timestamp('date_time');
       table.string('meal_type');
       table.text('description');
-      table.text('img');
+      table.text('img').defaultTo('/img/backyardEvent.jpg');
+      table.string('rating');
       table.text('requests');
     }),
     knex.schema.createTable('menu', (table) => {

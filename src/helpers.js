@@ -13,4 +13,8 @@ Helpers.getCuisineList = (cuisineObj) => {
   return cuisineList.join(', ');
 };
 
+Helpers.calculateRating = ratingString => (
+  JSON.parse(ratingString)
+);
+
 module.exports = Helpers;

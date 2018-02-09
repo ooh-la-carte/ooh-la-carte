@@ -22,7 +22,8 @@ class UserProfile extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
-        const { id, username, name, city, state, phone, email, rate } = userInfo.data;
+        const { id, username, name, city, state, phone, rate } = userInfo.data;
+        const { email, facebook, twitter, instagram } = userInfo.data;
         const cuisine = {
           Asian: false,
           African: false,
@@ -57,6 +58,9 @@ class UserProfile extends Component {
           email,
           rate,
           cuisine,
+          facebook,
+          twitter,
+          instagram,
         };
         this.props.setUserInfo(user);
       });

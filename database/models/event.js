@@ -80,4 +80,20 @@ Event.insertEvent = (eventObj) => {
     .catch(err => console.log('error inserting event into database: ', err));
 };
 
+// This function accepts an object with an event
+// id and a rating to update the rating of the chef
+// who provided their services for the event
+
+Event.updateRating = ratingObj => (
+  knex('events')
+    .where('id', ratingObj.eventId)
+    .update('rating', ratingObj.rating)
+    .then((updateResult) => {
+      console.log('event:update - event rating updated');
+      return updateResult;
+    })
+    .catch(err => console.log('error inserting event into database: ', err))
+);
+
+
 module.exports = Event;

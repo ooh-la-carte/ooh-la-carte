@@ -207,7 +207,7 @@ module.exports.partySizeOptions = [
   },
   {
     text: 'Small Gathering (up to 5)',
-    value: '2-5',
+    value: '3-5',
   },
   {
     text: 'Moderate Gathering (5 - 10)',

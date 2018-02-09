@@ -54,6 +54,13 @@ const updateCuisineSelection = cuisine => (
   }
 );
 
+const updateEventRating = rating => (
+  {
+    type: 'UPDATE_EVENT_RATING',
+    payload: rating,
+  }
+);
+
 export {
   changeSelectedChef,
   changeSelectedEvent,
@@ -63,4 +70,5 @@ export {
   setUserInfo,
   listenerOn,
   updateCuisineSelection,
+  updateEventRating,
 };

@@ -136,7 +136,6 @@ class SignUpForm extends Component {
             <Icon name='checkmark' /> Sign Up
           </Button>
 
-
         </Form>
       </div>
     );
