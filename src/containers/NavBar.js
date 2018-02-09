@@ -43,7 +43,8 @@ class NavBar extends Component {
       browseChefs: 'Chefs',
       createEvent: 'Add Event',
       userEvents: 'Events',
-      chatTab: 'Inbox',
+      chatList: 'Inbox',
+      notifications: 'Notifications',
       conversation: this.props.selectedConversation.host
         ? this.props.selectedConversation.host
         : this.props.selectedConversation.username,
