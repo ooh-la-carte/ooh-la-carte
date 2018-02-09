@@ -5,12 +5,16 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
+
+const passport = require('passport');
+
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
 const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
 const authRoutes = require('./routes/authRoutes.js');
+
 
 /*
   ==============================
@@ -46,6 +50,9 @@ app.use(express.static(path.join(__dirname, '/../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(passport.initialize());
+app.use('/auth', authRoutes);
+
 app.use((req, res, next) => {
   // log each request to the console
   console.log(req.method, req.url);
@@ -53,7 +60,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/auth', authRoutes);
 /*
   ==============================
     Post Routes

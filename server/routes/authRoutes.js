@@ -17,9 +17,9 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 // case. The value returned will be filtered through the function passed into
 // the google strategy. After which this handler will be called.
 //
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  console.log('Got back to the redirect');
-  res.send('Welcome back from the redirect');
-});
+router.get('/google/redirect', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/',
+}));
 
 module.exports = router;
