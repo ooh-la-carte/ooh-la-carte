@@ -142,16 +142,15 @@ User.updateChefRating = eventObj => (
           .catch((err) => {
             console.log(err);
           });
-      } else {
-        const arrRating = JSON.parse(currentRating);
-        const { currSum, currCount } = arrRating;
-        return knex('users')
-          .where('id', eventObj.chefId)
-          .update({ rating: `[${currSum + eventObj.rating}, ${currCount + 1}]` })
-          .catch((err) => {
-            console.log(err);
-          });
       }
+      const arrRating = JSON.parse(currentRating);
+      const { currSum, currCount } = arrRating;
+      return knex('users')
+        .where('id', eventObj.chefId)
+        .update({ rating: `[${currSum + eventObj.rating}, ${currCount + 1}]` })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);

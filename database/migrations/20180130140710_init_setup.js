@@ -52,7 +52,7 @@ exports.up = (knex, Promise) => (
       table.timestamp('date_time');
       table.string('meal_type');
       table.text('description');
-      table.text('img');
+      table.text('img').defaultTo('/img/backyardEvent.jpg');
       table.string('rating');
       table.text('requests');
     }),

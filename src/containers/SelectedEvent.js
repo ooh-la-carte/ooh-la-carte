@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Card, Icon, Image, Rating } from 'semantic-ui-react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { selectConversation, updateEventRating} from '../actions';
+import { selectConversation, updateEventRating } from '../actions';
 import '../style.scss';
 
 class SelectedEvent extends Component {
@@ -19,7 +19,6 @@ class SelectedEvent extends Component {
 
   shouldStarsDisplay = (eventDate, chefId) => {
     const hasHappened = new Date() > new Date(eventDate);
-    console.log(hasHappened, (window.localStorage.isChef !== true), (chefId));
     return hasHappened && (window.localStorage.isChef !== true) && (chefId);
   };
 
@@ -28,7 +27,6 @@ class SelectedEvent extends Component {
     const event = this.props.selectedEventReducer;
     const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
     let stars;
-    console.log('here', showStars);
     if (showStars) {
       if (event.rating !== null) {
         stars = <Rating
@@ -47,7 +45,7 @@ class SelectedEvent extends Component {
     return (
       <div className='selectedEventCardDiv'>
         <Card id='selectedEventCard'>
-          { /* add image tag here */ }
+          <Image size='large' src={event.img} />
           <Card.Content>
             <Card.Header>
               <div className='selectedCardTitle'>{event.name}</div>

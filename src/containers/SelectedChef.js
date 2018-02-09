@@ -39,7 +39,7 @@ class SelectedChef extends Component {
 
   render = () => {
     const chef = this.props.selectedChefReducer;
-    console.log('rating', Helpers);//.calculateRating(chef.rating).reduce((a, c) => a / c));
+    console.log('chef', chef);
     return (
         <div className='selectedEventCardDiv'>
           <Card id='selectedEventCard'>
