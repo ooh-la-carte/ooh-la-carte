@@ -29,9 +29,9 @@ class Conversation extends Component {
     // this.listen();
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
+  // componentDidUpdate() {
+  //   this.scrollToBottom();
+  // }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
@@ -78,7 +78,6 @@ class Conversation extends Component {
 
   changeInput = (e) => {
     this.setState({ input: e.target.value });
-    this.scrollToBottom();
   }
 
   submit = (e) => {
