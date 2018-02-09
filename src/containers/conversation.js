@@ -24,7 +24,8 @@ class Conversation extends Component {
       user: window.localStorage.getItem('userId'),
     })
       .then((chat) => {
-        this.setState({ chat: chat.data });
+        this.setState({ chat: chat.data })
+          .then(() => this.scrollToBottom());
       });
     // this.listen();
   }
@@ -96,7 +97,7 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div style={{ marginBottom: '20%' }}>
+    <div className='topLevelDiv'>
       <div className='chatDiv'>
         {this.state.chat.map((message, i) => (message.self === true
           ? <div key={i} className='chatMessages'>{message.text}</div>
