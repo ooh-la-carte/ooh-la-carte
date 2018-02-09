@@ -24,11 +24,29 @@ class Notifications extends Component {
   }
 
   acceptEvent = (acceptEventObj) => {
-    axios.post('/api/user/acceptEvent', acceptEventObj);
+    axios.post('/api/user/acceptEvent', acceptEventObj)
+      .then(() => {
+        const temp = this.state.invitations;
+        temp.forEach((invite, i) => {
+          if (invite.id === acceptEventObj.id) {
+            temp.splice(i, 1);
+          }
+        });
+        this.setState({ invitations: temp });
+      });
   }
 
   declineEvent = (declineEventObj) => {
-    axios.post('/api/user/declineEvent', declineEventObj);
+    axios.post('/api/user/declineEvent', declineEventObj)
+      .then(() => {
+        const temp = this.state.invitations;
+        temp.forEach((invite, i) => {
+          if (invite.id === declineEventObj.id) {
+            temp.splice(i, 1);
+          }
+        });
+        this.setState({ invitations: temp });
+      });
   }
 
   sendMessage = (messageObj) => {
