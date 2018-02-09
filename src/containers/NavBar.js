@@ -87,7 +87,7 @@ class NavBar extends Component {
                 :
                   <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
               }
-              <span className='navBarLink'><Link to='/chatTab' style={{ color: 'white' }}>Chat</Link></span>
+              <span className='navBarLink'><Link to='/chatList' style={{ color: 'white' }}>Chat</Link></span>
               <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
 
           </div>

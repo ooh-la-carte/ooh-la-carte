@@ -153,7 +153,7 @@ class UserProfile extends Component {
         {/* add a Link to a page for all of the user's upcoming events */}
           <div className='btnDiv'>
 
-          <Link to='/BrowseEvents'>
+          <Link to='/userEvents'>
             <Button className='butSec' inverted>
               See All Your Events
             </Button>
