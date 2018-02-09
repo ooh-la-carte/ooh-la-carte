@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -39,6 +39,7 @@ class SelectedChef extends Component {
 
   render = () => {
     const chef = this.props.selectedChefReducer;
+    const { facebook, twitter, instagram } = chef;
     return (
         <div className='selectedEventCardDiv'>
           <Card id='selectedEventCard'>
@@ -66,6 +67,24 @@ class SelectedChef extends Component {
             <Card.Content extra>
               <div>
                 <span><Icon name='food'/>Years experience: {chef.experience}</span>
+              <div className='center miniPadding'>
+                {facebook ?
+                  <Link to={facebook}>
+                    <Icon name='facebook square' className='OLCcolor' size='huge' />
+                  </Link>
+                  : null
+                }
+                {twitter ?
+                  <a href={twitter}>
+                    <Icon name='twitter' className='OLCcolor' size='huge' />
+                  </a>
+                  : null
+                }
+                {instagram ?
+                  <Icon name='instagram' className='OLCcolor' size='huge' />
+                  : null
+                }
+              </div>
                 <div onClick={() => {
                   const convo = {
                     user: window.localStorage.getItem('userId'),

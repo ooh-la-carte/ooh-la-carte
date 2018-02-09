@@ -24,7 +24,6 @@ class Settings extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.state.id);
     window.scrollTo(0, 0);
     axios.get('/api/user/menus', { params: { id: this.state.id } })
       .then((menuItems) => {
@@ -237,17 +236,25 @@ class Settings extends Component {
                 <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
                 <Grid.Column width={4}>Email:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
-                <Grid.Column width={4}>Faceboook:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.facebook}</Grid.Column>
-                <Grid.Column width={4}>Instagram:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.instagram}</Grid.Column>
-                <Grid.Column width={4}>Twitter:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.twitter}</Grid.Column>
                 <Grid.Column width={4}>Experience:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.experience}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
+        </div>
+        <div className='center miniPadding'>
+          {this.props.user.facebook ?
+            <Icon name='facebook square' className='OLCcolor' size='huge' />
+            : <Icon name='facebook square' style={{ opacity: '0.2' }} color='grey' size='huge' />
+          }
+          {this.props.user.twitter ?
+            <Icon name='twitter' className='OLCcolor' size='huge' />
+            : <Icon name='twitter square' style={{ opacity: '0.2' }} color='grey' size='huge' />
+          }
+          {this.props.user.instagram ?
+            <Icon name='instagram' className='OLCcolor' size='huge' />
+            : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' />
+          }
         </div>
         <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
         <br />
