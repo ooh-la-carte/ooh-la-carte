@@ -14,6 +14,10 @@ class ChatTab extends React.Component {
     this.state = { convos: [] };
   }
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   componentWillMount = () => {
     axios.post('/api/getConvos', {
       id: window.localStorage.getItem('userId'),
