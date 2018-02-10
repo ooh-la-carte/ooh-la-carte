@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { Card, Icon, Image, Rating } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
+import MenuListItem from '../components/MenuListItem';
 import Helpers from '../helpers';
 import '../style.scss';
 
@@ -24,7 +25,6 @@ class SelectedChef extends Component {
       target: Number(window.localStorage.getItem('userId')),
     } })
       .then((events) => {
-        console.log('Events from db: ', events.data);
         this.setState({ myEvents: events.data });
       });
     axios.get('/api/user/menus', { params: { id: this.props.selectedChefReducer.id } })
@@ -49,7 +49,7 @@ class SelectedChef extends Component {
         <div className='selectedEventCardDiv'>
           <Card id='selectedEventCard'>
             <Image size='large' src={chef.image} />
-            <Card.Content>
+            <Card.Content style={{ paddingBottom: '0%' }}>
               <Card.Header>
                 <div className='selectedCardTitle'>{chef.username}</div>
               </Card.Header>
@@ -63,7 +63,10 @@ class SelectedChef extends Component {
               </Card.Meta>
               <Card.Description>
                 <div className='detailSegment'>{chef.bio}</div>
-                <div className='detailSegment'>Restuarant: {chef.restuarant}</div>
+                {chef.restaurant ?
+                    <div className='detailSegment'><Icon name='food'/>Restuarant: {chef.restuarant}</div>
+                  : null
+                }
                 <div className='detailSegment'>
                   <Icon name='empty star'/>
                   Rating:
@@ -76,27 +79,17 @@ class SelectedChef extends Component {
                     ' no reviews yet'
                   }
                 </div>
-                <div className='detailSegment'><Icon name='calendar'/> Avalability: Calendar thing here </div>
-                <div className='detailSegment'><Icon name='map outline'/> Menu:
+                <div className='detailSegment'><Icon name='map outline'/> Sample Menu(s):
+
+                {/* ***** Menu List ***** */}
                 {this.state.menu.map(item => (
-                    <div
-                    className='boxed center lightlyColored'
-                    key={item.id}
-                    style={{ marginTop: '2%' }}>
-                      <div>{item.dish}</div>
-                      <div>{item.description}</div>
-                      <div>{item.price}</div>
-                      <div>{item.cuisine_type}</div>
-                      <image src={item.pic}/>
-                    </div>
-                  ))}
+                  <MenuListItem key={item.id} item={item} />
+                ))}
+
                 </div>
               </Card.Description>
             </Card.Content>
-            <Card.Content extra>
-              <div>
-                <span><Icon name='food'/>Years experience: {chef.experience}</span>
-              <div className='center miniPadding'>
+              <div style={{ paddingBottom: '5%' }} className='center'>
                 {facebook ?
                   <a target="_blank" href={facebook}>
                     <Icon name='facebook square' className='OLCcolor' size='huge' />
@@ -116,6 +109,7 @@ class SelectedChef extends Component {
                   : null
                 }
               </div>
+            <Card.Content extra>
                 <div onClick={() => {
                   const convo = {
                     user: window.localStorage.getItem('userId'),
@@ -138,7 +132,6 @@ class SelectedChef extends Component {
                 }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
                 <br/>
                 <div onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
-              </div>
               {this.state.eventsDropdown
                 ? this.state.myEvents.map(event =>
                   <div key={event.id}>

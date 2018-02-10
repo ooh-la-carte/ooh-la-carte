@@ -207,6 +207,13 @@ app.post('/api/updateEventRating', (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
+app.post('/api/user/sendInvite', (req, res) => {
+  User.sendInvite(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    });
+});
+
 /*
   ==============================
     Get Routes
@@ -257,13 +264,6 @@ app.get('/api/events', (req, res) => {
   }
 });
 
-app.post('/api/user/sendInvite', (req, res) => {
-  console.log(req.body);
-  User.sendInvite(req.body)
-    .then(() => {
-      res.sendStatus(201);
-    });
-});
 
 app.get('/api/user/invitations', (req, res) => {
   if (req.query.is_chef === 'true') {

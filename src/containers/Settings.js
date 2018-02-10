@@ -5,6 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
+import MenuListItem from '../components/MenuListItem';
 import '../style.scss';
 
 class Settings extends Component {
@@ -15,7 +16,7 @@ class Settings extends Component {
       menu: [],
       menuOpen: false,
       id: window.localStorage.getItem('userId'),
-      dish: '',
+      menuName: '',
       type: '',
       price: '',
       description: '',
@@ -44,27 +45,24 @@ class Settings extends Component {
   saveMenuItem = () => {
     axios.post('/api/user/saveMenuItem', {
       chef_id: Number(this.state.id),
-      dish: this.state.dish,
+      menuName: this.state.menuName,
       pic: this.state.pic,
       description: this.state.description,
       cuisine_type: this.state.type,
-      price: Number(this.state.price),
     })
       .then(() => this.setState({
         menu: [...this.state.menu, {
           id: 7777,
           chef_id: Number(this.state.id),
-          dish: this.state.dish,
+          menuName: this.state.menuName,
           pic: this.state.pic,
           description: this.state.description,
           cuisine_type: this.state.type,
-          price: Number(this.state.price),
         }],
-        dish: '',
+        menuName: '',
         pic: '',
         description: '',
         type: '',
-        price: '',
       }));
   }
 
@@ -89,7 +87,6 @@ class Settings extends Component {
   render() {
     return (
       <div className='topLevelDiv'>
-        <h1 className='center softText'>User Settings</h1>
         <div className='boxed center'>
           {/* ***** Cuisine Accordian ***** */}
           <div className='miniPadding'>
@@ -165,56 +162,8 @@ class Settings extends Component {
             </Accordion>
           </div>
         </div>
-        {/* ***** Add Menus ***** */}
-        <h1 className='center miniPadding softText'>Add Menus</h1>
-        <h5 className='center miniPadding softText'
-        onClick={this.openMenuForm}>Add a menu item!</h5>
-        {this.state.menuOpen
-          ?
-            <Form className='boxed center' onSubmit={() => {
-              this.openMenuForm();
-              this.saveMenuItem();
-            }}>
-                <Form.Field>
-                  <label>Dish</label>
-                  <Form.Input placeholder='Dish Name' onChange={this.setMenuItem} type='dish' value={this.state.dish}/>
-                </Form.Field>
-                <Form.Field style={{ width: '50%' }}>
-                  <label>Type</label>
-                  <Form.Input placeholder='Type of cuisine' onChange={this.setMenuItem} type='type' value={this.state.type}/>
-                </Form.Field>
-                <Form.Field style={{ width: '50%' }}>
-                  <label>Price</label>
-                  <Form.Input placeholder='Price' onChange={this.setMenuItem} type='price' value={this.state.price}/>
-                </Form.Field>
-                <Form.Field>
-                  <label>Description</label>
-                  <Form.Input placeholder='Description' onChange={this.setMenuItem} type='description' value={this.state.description}/>
-                </Form.Field>
-                <Form.Field>
-                  <label>Picture</label>
-                  <Form.Input placeholder='picture URL' onChange={this.setMenuItem} type='picture' value={this.state.picture}/>
-                </Form.Field>
-                <Button type='submit'>Save!</Button>
-              </Form>
-          : null
-        }
-        {this.state.menu.map(item => (
-            <div
-            className='boxed center lightlyColored'
-            key={item.id}
-            style={{ marginBottom: '1%' }}>
-              <div>{item.dish}</div>
-              <div>{item.description}</div>
-              <div>{item.price}</div>
-              <div>{item.cuisine_type}</div>
-              <image src={item.pic}/>
-            </div>
-          ))}
-
         {/* ***** Contact Info ***** */}
-        <h1 className='center miniPadding softText'>Profile Info</h1>
-        <div className='boxed center'>
+        <div className='miniPadding boxed center'>
           <Segment className='lightlyColored'>
             <Grid>
               <Grid.Row>
@@ -257,6 +206,43 @@ class Settings extends Component {
           }
         </div>
         <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
+        {/* ***** Add Menus ***** */}
+        <h1 className='center miniPadding softText'>Add Menus</h1>
+        <h5 className='center miniPadding softText'
+        onClick={this.openMenuForm}>Add a menu item!</h5>
+        {this.state.menuOpen
+          ?
+            <Form className='boxed center' onSubmit={() => {
+              this.openMenuForm();
+              this.saveMenuItem();
+            }}>
+                <Form.Field>
+                  <label>Menu name</label>
+                  <Form.Input placeholder='Menu name' onChange={this.setMenuItem} type='menuName' value={this.state.menuName}/>
+                </Form.Field>
+                <Form.Field style={{ width: '50%' }}>
+                  <label>Cuisine / Theme</label>
+                  <Form.Input placeholder='Cuisine / Theme' onChange={this.setMenuItem} type='type' value={this.state.type}/>
+                </Form.Field>
+                <Form.Field>
+                  <label>Description</label>
+                  <Form.Input placeholder='Description' onChange={this.setMenuItem} type='description' value={this.state.description}/>
+                </Form.Field>
+                <Form.Field>
+                  <label>Picture</label>
+                  <Form.Input placeholder='picture URL' onChange={this.setMenuItem} type='picture' value={this.state.picture}/>
+                </Form.Field>
+                <Button type='submit'>Save!</Button>
+              </Form>
+          : null
+        }
+
+       {/* ***** Menu List ***** */}
+        <div>
+          {this.state.menu.map(item => (
+            <MenuListItem key={item.id} item={item} />
+          ))}
+        </div>
         <br />
         <br />
         <br />
