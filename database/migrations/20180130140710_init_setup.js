@@ -24,6 +24,7 @@ exports.up = (knex, Promise) => (
       table.string('instagram');
       table.string('rating');
       table.string('email').unique().notNullable();
+      table.timestamp('last_prompted').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
     }),
@@ -63,10 +64,9 @@ exports.up = (knex, Promise) => (
       table.increments('id').unsigned().primary();
       table.integer('chef_id').unsigned().references('users.id');
       table.string('pic');
-      table.string('dish');
+      table.string('menu_name');
       table.text('description');
       table.string('cuisine_type');
-      table.decimal('price');
     }),
     knex.schema.createTable('users_cuisines', (table) => {
       table.increments('id').unsigned().primary();

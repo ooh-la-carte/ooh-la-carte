@@ -44,16 +44,24 @@ io.on('connection', SocketManager);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, '/../public')));
 
-
+// log each request to the console
 app.use((req, res, next) => {
-  // log each request to the console
   console.log(req.method, req.url);
   // continue doing what we were doing and go to the route
   next();
 });
 
+// middleware to return a compressed bundle
+app.get('*.js', (req, res, next) => {
+  req.url += '.gz';
+  console.log(req.url);
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
+  next();
+});
+
+app.use(express.static(path.join(__dirname, '/../public')));
 /*
   ==============================
     Post Routes
@@ -207,6 +215,13 @@ app.post('/api/updateEventRating', (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
+app.post('/api/user/sendInvite', (req, res) => {
+  User.sendInvite(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    });
+});
+
 /*
   ==============================
     Get Routes
@@ -257,13 +272,6 @@ app.get('/api/events', (req, res) => {
   }
 });
 
-app.post('/api/user/sendInvite', (req, res) => {
-  console.log(req.body);
-  User.sendInvite(req.body)
-    .then(() => {
-      res.sendStatus(201);
-    });
-});
 
 app.get('/api/user/invitations', (req, res) => {
   if (req.query.is_chef === 'true') {
