@@ -308,6 +308,7 @@ body {
 
 .senderMessages {
   min-height: 35px;
+  clear: both;
   float: right;
   width: 60%;
   margin: 1% 5%;
@@ -316,8 +317,9 @@ body {
   background-color: $light-color;
 }
 
-.recieverMessages {
+.receiverMessages {
   min-height: 35px;
+  clear: both;
   float: left;
   width: 60%;
   margin: 1% 5%;
@@ -331,7 +333,6 @@ body {
 }
 
 #chatInput {
-  height: 5%;
   border-radius: 0px;
 }
 
