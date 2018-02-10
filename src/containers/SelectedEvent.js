@@ -19,7 +19,7 @@ class SelectedEvent extends Component {
 
   shouldStarsDisplay = (eventDate, chefId) => {
     const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== true) && (chefId);
+    return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
   };
 
 
