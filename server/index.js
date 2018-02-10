@@ -51,13 +51,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use('/auth', authRoutes);
 
+
+// log each request to the console
 app.use((req, res, next) => {
-  // log each request to the console
   console.log(req.method, req.url);
   // continue doing what we were doing and go to the route
   next();
 });
 
+// middleware to return a compressed bundle
+app.get('*.js', (req, res, next) => {
+  req.url += '.gz';
+  console.log(req.url);
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
+  next();
+});
+
+app.use(express.static(path.join(__dirname, '/../public')));
 /*
   ==============================
     Post Routes
@@ -95,6 +106,19 @@ app.post('/api/createevent', (req, res) => {
       res.sendStatus(200);
     })
     .catch((error) => { console.log(error); });
+});
+
+app.post('/api/user/acceptEvent', (req, res) => {
+  Event.acceptEvent(req.body)
+    .then(() => {
+      Event.addChefToEvent(req.body)
+        .then(() => res.sendStatus(201));
+    });
+});
+
+app.post('/api/user/declineEvent', (req, res) => {
+  Event.declineEvent(req.body)
+    .then(() => res.sendStatus(201));
 });
 
 // post route for signup requests
@@ -148,7 +172,7 @@ app.post('/api/updateContactInfo', (req, res) => {
     email,
     facebook,
     twitter,
-    instagram,
+    instagram
   )
     .then(() => {
       res.sendStatus(200);
@@ -196,6 +220,13 @@ app.post('/api/updateEventRating', (req, res) => {
     .then(() => Event.updateRating(req.body))
     .then(() => User.updateChefRating(req.body))
     .then(() => res.sendStatus(200));
+});
+
+app.post('/api/user/sendInvite', (req, res) => {
+  User.sendInvite(req.body)
+    .then(() => {
+      res.sendStatus(201);
+    });
 });
 
 /*
@@ -248,13 +279,6 @@ app.get('/api/events', (req, res) => {
   }
 });
 
-app.post('/api/user/sendInvite', (req, res) => {
-  console.log(req.body);
-  User.sendInvite(req.body)
-    .then(() => {
-      res.sendStatus(201);
-    });
-});
 
 app.get('/api/user/invitations', (req, res) => {
   if (req.query.is_chef === 'true') {
