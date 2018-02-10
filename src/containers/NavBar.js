@@ -67,65 +67,14 @@ class NavBar extends Component {
     return (
       <div>
     {/* top bar */}
-    <div>
-      {window.localStorage.getItem('userId')
-        ?
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
-              {currentPage === 'browseEvents'
-                ?
-                  <div className='sortBy'>
-                    <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
-                    {this.state.sort
-                      ? <div className='loginDropdown'>
-                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('None');
-                            this.toggleSortMenu();
-                          }}>None</div>
-                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('Cuisine');
-                            this.toggleSortMenu();
-                          }}>Cuisine</div>
-                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('Size');
-                            this.toggleSortMenu();
-                          }}>Party size</div>
-                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('Budget');
-                            this.toggleSortMenu();
-                          }}>Budget</div>
-                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('Location');
-                            this.toggleSortMenu();
-                          }}>Location</div>
-                        </div>
-                      : null
-                    }
-                  </div>
-                : null
-              }
-              <span className='sortNavBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
-                {this.state.dropdown
-                  ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
-                        <Link to='/' className='loginLink'>Log out</Link>
-                      </div>
-                    </div>
-                  : null
-                }
-              </span>
-          </div>
-        : null
-      }
-      </div>
       <div>
         {window.localStorage.getItem('userId')
-          ?
+          ?// checks if user is logged in
             <div className='navBarContainer'>
               <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
-                {currentPage === 'browseChefs'
+                {currentPage === 'browseEvents'
+                // checks if current page is browse events
+                // if so render sort dropdown, if not render nothing
                   ?
                     <div className='sortBy'>
                       <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
@@ -140,13 +89,13 @@ class NavBar extends Component {
                               this.toggleSortMenu();
                             }}>Cuisine</div>
                             <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                              this.props.changeSort('Rate');
+                              this.props.changeSort('Size');
                               this.toggleSortMenu();
-                            }}>Rate</div>
+                            }}>Party size</div>
                             <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                              this.props.changeSort('Rating');
+                              this.props.changeSort('Budget');
                               this.toggleSortMenu();
-                            }}>Rating</div>
+                            }}>Budget</div>
                             <div className='dropdownLinkContainer sortLinks' onClick={() => {
                               this.props.changeSort('Location');
                               this.toggleSortMenu();
@@ -156,6 +105,39 @@ class NavBar extends Component {
                       }
                     </div>
                   : null
+                }
+                {currentPage === 'browseChefs'
+                    ?
+                    // same as above but for browse chefs, runs after events check
+                      <div className='sortBy'>
+                        <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
+                        {this.state.sort
+                          ? <div className='loginDropdown'>
+                              <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                                this.props.changeSort('None');
+                                this.toggleSortMenu();
+                              }}>None</div>
+                              <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                                this.props.changeSort('Cuisine');
+                                this.toggleSortMenu();
+                              }}>Cuisine</div>
+                              <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                                this.props.changeSort('Rate');
+                                this.toggleSortMenu();
+                              }}>Rate</div>
+                              <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                                this.props.changeSort('Rating');
+                                this.toggleSortMenu();
+                              }}>Rating</div>
+                              <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                                this.props.changeSort('Location');
+                                this.toggleSortMenu();
+                              }}>Location</div>
+                            </div>
+                          : null
+                        }
+                      </div>
+                    : null
                 }
                 <span className='sortNavBarLogin' >
                   <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
@@ -172,42 +154,43 @@ class NavBar extends Component {
             </div>
           : null
         }
-        </div>
-    {/* bottom bar */}
-      {window.localStorage.getItem('userId')
-        ?
-          <div className='loggedInNavBarContainer'>
-              <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
-              {window.localStorage.getItem('isChef') === 'true'
-                ?
-                  <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
-                :
-                  <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
-              }
-              <span className='navBarLink'><Link to='/chatList' style={{ color: 'white' }}>Chat</Link></span>
-              <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
 
-          </div>
-        :
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}>Login</a>
-                {this.state.dropdown
+        </div>
+      {/* bottom bar */}
+        {window.localStorage.getItem('userId')
+          ?
+            <div className='loggedInNavBarContainer'>
+                <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
+                {window.localStorage.getItem('isChef') === 'true'
                   ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
-                      </div>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
-                      </div>
-                    </div>
-                  : null
+                    <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
+                  :
+                    <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
                 }
-              </span>
-          </div>
-      }
+                <span className='navBarLink'><Link to='/chatList' style={{ color: 'white' }}>Chat</Link></span>
+                <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
+
+            </div>
+          :
+            <div className='navBarContainer'>
+              <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
+                <span className='navBarLogin' >
+                  <a className='loginDropdownText' onClick={this.toggleDropDown}>Login</a>
+                  {this.state.dropdown
+                    ?
+                      <div className='loginDropdown'>
+                        <div className='dropdownLinkContainer'>
+                          <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
+                        </div>
+                        <div className='dropdownLinkContainer'>
+                          <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
+                        </div>
+                      </div>
+                    : null
+                  }
+                </span>
+            </div>
+        }
       </div>
     );
   }
