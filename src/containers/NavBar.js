@@ -69,10 +69,12 @@ class NavBar extends Component {
     {/* top bar */}
       <div>
         {window.localStorage.getItem('userId')
-          ?
+          ?// checks if user is logged in
             <div className='navBarContainer'>
               <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
                 {currentPage === 'browseEvents'
+                // checks if current page is browse events
+                // if so render sort dropdown, if not render nothing
                   ?
                     <div className='sortBy'>
                       <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
@@ -106,6 +108,7 @@ class NavBar extends Component {
                 }
                 {currentPage === 'browseChefs'
                     ?
+                    // same as above but for browse chefs, runs after events check
                       <div className='sortBy'>
                         <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
                         {this.state.sort
