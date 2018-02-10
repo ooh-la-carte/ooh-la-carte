@@ -20,6 +20,7 @@ class SelectedChef extends Component {
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     axios.get('/api/events', { params: {
       field: 'creator_id',
       target: Number(window.localStorage.getItem('userId')),

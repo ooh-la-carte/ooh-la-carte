@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import io from 'socket.io-client';
-import { Input } from 'semantic-ui-react';
+// import { Input } from 'semantic-ui-react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,22 +16,23 @@ class Conversation extends Component {
     this.listen();
   }
 
-  componentDidMount() {
-    this.scrollToBottom();
+  componentDidMount = () => {
     console.log('reciever up');
     axios.post('/api/convoMessages', {
       id: this.props.selectedConversation.convo_id,
       user: window.localStorage.getItem('userId'),
     })
       .then((chat) => {
-        this.setState({ chat: chat.data });
+        console.log(chat.data);
+        this.setState({ chat: chat.data.slice(-10) });
+        this.scrollToBottom();
       });
     // this.listen();
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-  }
+  // componentDidUpdate = () => {
+  //    this.scrollToBottom();
+  // }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
@@ -78,11 +79,12 @@ class Conversation extends Component {
 
   changeInput = (e) => {
     this.setState({ input: e.target.value });
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   submit = (e) => {
     if (e.key === 'Enter' && this.state.input !== '') {
+      document.getElementById('chatInput').blur();
       console.log('Convo info: ', this.props.selectedConversation);
       console.log('User info: ', window.localStorage.getItem('userId)'));
       this.props.socketReducer.emit('send', {
@@ -96,21 +98,26 @@ class Conversation extends Component {
   }
 
   render = () => (
-    <div className='chatDiv'>
-      {this.state.chat.map((message, i) => (message.self === true
-        ? <div key={i} className='chatMessages'>{message.text}</div>
-        : <div key={i} className='chatMessages'>{message.text}</div>))}
-      <div className='chatInput'>
-        <Input
-        value={ this.state.input }
-        onChange={ this.changeInput }
-        onKeyPress= { this.submit }
-        placeholder='Say hi!'
-        style={{ width: '100%' }}
-        />
-      <div ref={ (el) => { this.el = el; }} />
+      <div className='chatDiv'>
+        {this.state.chat.map((message, i) => (message.self === true
+          ? <div key={i} className='senderMessages'>{message.text}</div>
+          : <div key={i} className='receiverMessages'>{message.text}</div>))}
+        <div ref={ (el) => { this.el = el; }} />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div className='chatInput'>
+          <input id='chatInput'
+          value={ this.state.input }
+          onChange={ this.changeInput }
+          onKeyPress= { this.submit }
+          placeholder='Say hi!'
+          style={{ width: '100%' }}
+          />
+        </div>
       </div>
-    </div>
   )
 }
 
