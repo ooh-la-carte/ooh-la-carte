@@ -79,7 +79,7 @@ class NavBar extends Component {
                     {this.state.sort
                       ? <div className='loginDropdown'>
                           <div className='dropdownLinkContainer sortLinks' onClick={() => {
-                            this.props.changeSort('');
+                            this.props.changeSort('None');
                             this.toggleSortMenu();
                           }}>None</div>
                           <div className='dropdownLinkContainer sortLinks' onClick={() => {
