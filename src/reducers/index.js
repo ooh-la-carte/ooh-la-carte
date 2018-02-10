@@ -5,6 +5,7 @@ import socketReducer from './socketReducer';
 import loggedInUserInfo from './loggedInUserInfo';
 import selectedConversation from './selectedConversation';
 import listenerReducer from './listenerReducer';
+import sortReducer from './sortReducer';
 
 const rootReducer = combineReducers({
   selectedChefReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   socketReducer,
   loggedInUserInfo,
   listenerReducer,
+  sortReducer,
 });
 
 export default rootReducer;
