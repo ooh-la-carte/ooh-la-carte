@@ -24,6 +24,7 @@ exports.up = (knex, Promise) => (
       table.string('instagram');
       table.string('rating');
       table.string('email').unique().notNullable();
+      table.timestamp('last_prompted').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
     }),
