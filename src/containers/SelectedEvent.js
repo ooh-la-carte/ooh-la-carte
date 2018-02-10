@@ -13,6 +13,10 @@ class SelectedEvent extends Component {
     this.state = { rating: this.props.selectedEventReducer.rating };
   }
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   handleRatingChange = (e, { rating }) => {
     this.props.updateEventRating(rating);
   }
