@@ -24,7 +24,7 @@ class Conversation extends Component {
     })
       .then((chat) => {
         console.log(chat.data);
-        this.setState({ chat: chat.data });
+        this.setState({ chat: chat.data.slice(-10) });
         this.scrollToBottom();
       });
     // this.listen();
