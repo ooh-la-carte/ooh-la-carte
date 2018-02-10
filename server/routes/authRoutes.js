@@ -8,7 +8,7 @@ const passport = require('../config/passportConfig.js');
 //
 // });
 
-router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // ------------------------------------------------------------------------------
 // redirect processs. First passport.authenticate gets redirect with the code
@@ -17,9 +17,9 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 // case. The value returned will be filtered through the function passed into
 // the google strategy. After which this handler will be called.
 //
-router.get('/google/redirect', passport.authenticate('google', {
-  successRedirect: '/',
-  failureRedirect: '/',
-}));
+router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  console.log('returned from redirect');
+  res.send('returned from redirect');
+});
 
 module.exports = router;

@@ -5,9 +5,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
-
 const passport = require('passport');
-
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');

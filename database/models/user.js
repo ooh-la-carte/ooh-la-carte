@@ -27,8 +27,17 @@ User.findUserByGoogleId = googleId => (
 // returns a promise
 User.insertOAuth = (info) => {
   const row = { name: info.name };
-  row[info.idType] = info.id;
-  row.img = info.img;
+  if (info.type === 'google') {
+    row.google_id = info.id;
+  }
+
+  if (info.img) {
+    row.img = info.img;
+  }
+  row.email = info.email;
+  row.city = info.city;
+  row.state = info.state;
+  row.zip_code = info.zip;
 
   return knex('users').insert(row).then();
 };

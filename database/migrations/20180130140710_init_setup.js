@@ -23,8 +23,8 @@ exports.up = (knex, Promise) => (
       table.string('facebook');
       table.string('instagram');
       table.string('rating');
-      table.string('email').unique().notNullable();
-      table.string('google_id').unique();
+      table.string('email');
+      table.string('google_id');
       table.string('facebook_id').unique();
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));

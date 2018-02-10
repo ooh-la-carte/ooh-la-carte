@@ -14,20 +14,27 @@ const googleConfig = {
 };
 
 passport.use(new GoogleStrategy(googleConfig, (accessToken, refreshToken, profile, done) => {
-  // at this point profile has part of the information we want
-  console.log('passport callback function fired');
+  /* eslint-disable */
+  const image = profile._json.image.isDefault ? false : profile.photos[0].value;
+  User.findUserByGoogleEmail(profile.id).then();
+  const info = {
+    type: 'google',
+    name: profile.displayName,
+    id: profile.id,
+    img: image,
+    email: profile.emails[0].value,
+  };
+
+  if (profile._json.placesLived) {
+    let array = profile._json.placesLived[0].value.split(/,?\s+/);
+    info.city = array[0];
+    info.state = array[1];
+    info.zip = array[2];
+  }
+  /* eslint-enable */
+
+  User.insertOAuth(info);
   done(null, 1);
-  // User.insertOAuth({
-  //   type: 'google_id',
-  //   name: profile.displayName,
-  //   id: profile.id,
-  // }).then(() => {
-  //   console.log('added person');
-  //   console.log(accessToken);
-  // }, () => {
-  //   console.log('already exists');
-  //   done();
-  // });
 }));
 
 
