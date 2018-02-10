@@ -3,18 +3,32 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { setSocket, removeSocket, listenerOn } from '../actions';
+import { setSocket, removeSocket, listenerOn, changeSort } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { dropdown: false };
+    this.state = {
+      dropdown: false,
+      sort: false,
+    };
     this.toggleDropDown = this.toggleDropDown.bind(this);
   }
 
   toggleDropDown() {
-    this.setState({ dropdown: !this.state.dropdown });
+    this.setState({
+      dropdown: !this.state.dropdown,
+      sort: false,
+    });
+  }
+
+  toggleSortMenu = () => {
+    console.log(this.state.sort);
+    this.setState({
+      sort: !this.state.sort,
+      dropdown: false,
+    });
   }
 
   logout = (username) => {
@@ -58,16 +72,45 @@ class NavBar extends Component {
         ?
           <div className='navBarContainer'>
             <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
-              <span className='navBarLogin' >
+              {currentPage === 'browseEvents'
+                ?
+                  <div className='sortBy'>
+                    <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
+                    {this.state.sort
+                      ? <div className='loginDropdown'>
+                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                            this.props.changeSort('');
+                            this.toggleSortMenu();
+                          }}>None</div>
+                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                            this.props.changeSort('Cuisine');
+                            this.toggleSortMenu();
+                          }}>Cuisine</div>
+                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                            this.props.changeSort('Size');
+                            this.toggleSortMenu();
+                          }}>Party size</div>
+                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                            this.props.changeSort('Budget');
+                            this.toggleSortMenu();
+                          }}>Budget</div>
+                          <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                            this.props.changeSort('Location');
+                            this.toggleSortMenu();
+                          }}>Location</div>
+                        </div>
+                      : null
+                    }
+                  </div>
+                : null
+              }
+              <span className='sortNavBarLogin' >
                 <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
                 {this.state.dropdown
                   ?
                     <div className='loginDropdown'>
                       <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
                         <Link to='/' className='loginLink'>Log out</Link>
-                      </div>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/' className='loginLink'>Else</Link>
                       </div>
                     </div>
                   : null
@@ -129,6 +172,7 @@ function mapDispatchToProps(dispatch) {
     setSocket,
     removeSocket,
     listenerOn,
+    changeSort,
   }, dispatch);
 }
 

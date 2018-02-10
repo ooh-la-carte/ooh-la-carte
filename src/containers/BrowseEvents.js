@@ -27,6 +27,11 @@ class BrowseEvents extends Component {
 
   render = () => (
     <div className='topLevelDiv center miniPadding profile event'>
+      {this.props.sortReducer === 'Cuisine'
+        ?
+          <div>Sort has been clicked</div>
+        : null
+      }
       {this.state.events.map(event => (
         event.chef_id === null
         ?
@@ -61,10 +66,14 @@ class BrowseEvents extends Component {
   )
 }
 
+function mapStateToProps(state) {
+  return { sortReducer: state.sortReducer };
+}
+
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ changeSelectedEvent }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(BrowseEvents));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BrowseEvents));
 
