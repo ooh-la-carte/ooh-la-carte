@@ -1,5 +1,5 @@
 {
-  "short_name": "Ooh La Carte",
+  "short_name": "OohLaCarte",
   "name": "Ooh La Carte",
   "icons": [
     {
@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/?utm_source=homescreen",
+  "start_url": "/userProfile",
   "background_color": "#222",
   "theme_color": "#222",
   "display": "standalone"
