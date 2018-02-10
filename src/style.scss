@@ -125,14 +125,18 @@ body {
   ====================
 */
 
+.nav {
+  background-color: $primary-color !important;
+  color: white !important;
+  font-weight: 400;
+}
+
 .navBarContainer {
   position: fixed;
   top: 0;
   z-index: 999;
   width: 100%;
   display: flex;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
@@ -142,11 +146,13 @@ body {
   z-index: 999;
   width: 100%;
   display: flex;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
+.navBackContainer {
+  width: 15% !important;
+
+}
 
 .navBarTitle {
   white-space: nowrap;
@@ -157,7 +163,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 75% !important;
@@ -175,7 +180,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
@@ -190,7 +194,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
@@ -206,7 +209,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
@@ -222,13 +224,10 @@ body {
   width: 25%;
   margin: 0% 0% 0% 0%;
   text-align: center;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
 .loginLink {
-  color: white;
   margin: 0px auto;
 
 }
@@ -334,6 +333,16 @@ body {
 
 #chatInput {
   border-radius: 0px;
+}
+
+/*
+  ====================
+  Button Styling
+  ====================
+*/
+
+.menuQuarterSegment {
+
 }
 
 /*

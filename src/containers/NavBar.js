@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import { Icon, Menu, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { setSocket, removeSocket, listenerOn } from '../actions';
 import '../style.scss';
@@ -53,21 +53,45 @@ class NavBar extends Component {
     return (
       <div>
     {/* top bar */}
+    <Menu className='nav navBarContainer'>
+
+      <Menu.Item name='back' className='nav' fitted>
+        <Icon className='nav' name='chevron left' />
+      </Menu.Item>
+
+      <Menu.Item className='nav menuQuarterSegment'>
+        {pages[currentPage]}
+      </Menu.Item>
+
+      <Menu.Item className='nav' position='right'>
+        <Dropdown className="right" pointing={true} icon='setting'>
+          <Dropdown.Menu>
+            <Dropdown.Item className='nav' text='Log Out' />
+          </Dropdown.Menu>
+        </Dropdown>
+      </Menu.Item>
+
+    </Menu>
+
+{/*
     <div>
       {window.localStorage.getItem('userId')
         ?
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
+          <div className='nav navBarContainer'>
+            <div className='nav navBarTitle'>
+                <a onClick={this.toggleDropDown}><Icon className='nav' name='chevron left' /></a>
+
+            <div>{pages[currentPage]}</div></div>
+              <span className='nav navBarLogin' >
+                <a onClick={this.toggleDropDown}><Icon className='nav' name='setting' /></a>
                 {this.state.dropdown
                   ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
-                        <Link to='/' className='loginLink'>Log out</Link>
+                    <div className='nav loginDropdown'>
+                      <div className='nav dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
+                        <Link to='/' className='nav loginLink'>Log out</Link>
                       </div>
                       <div className='dropdownLinkContainer'>
-                        <Link to='/' className='loginLink'>Else</Link>
+                        <Link to='/' className='nav loginLink'>Else</Link>
                       </div>
                     </div>
                   : null
@@ -80,31 +104,31 @@ class NavBar extends Component {
     {/* bottom bar */}
       {window.localStorage.getItem('userId')
         ?
-          <div className='loggedInNavBarContainer'>
-              <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
+          <div className='nav loggedInNavBarContainer'>
+              <Link className='nav navBarLink' to='/userProfile'>Home</Link>
               {window.localStorage.getItem('isChef') === 'true'
                 ?
-                  <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
+                  <Link className='nav navBarLink' to='/browseEvents'>Events</Link>
                 :
-                  <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
+                  <Link className='nav navBarLink' to='/browseChefs'>Chefs</Link>
               }
-              <span className='navBarLink'><Link to='/chatList' style={{ color: 'white' }}>Chat</Link></span>
-              <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
+              <Link className='nav navBarLink' to='/chatList'>Chat</Link>
+              <Link className='nav navBarLastLink' to='/notifications'>Alerts</Link>
 
           </div>
         :
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}>Login</a>
+          <div className='nav navBarContainer'>
+            <Link className='nav navBarTitle' to='/'>Ooh La Carte</Link>
+              <span className='nav navBarLogin' >
+                <a onClick={this.toggleDropDown}>Login</a>
                 {this.state.dropdown
                   ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
+                    <div className='nav loginDropdown'>
+                      <div className='nav dropdownLinkContainer'>
+                        <Link to='/loginForm' className='nav loginLink' onClick={this.toggleDropDown}>Login</Link>
                       </div>
                       <div className='dropdownLinkContainer'>
-                        <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
+                        <Link to='/signUpForm' className='nav loginLink' onClick={this.toggleDropDown}>Sign up</Link>
                       </div>
                     </div>
                   : null
