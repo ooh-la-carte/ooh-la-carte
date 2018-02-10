@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 });
 
 // middleware to return a compressed bundle
-app.get('*.js', (req, res, next) => {
+app.get('*bundle.js', (req, res, next) => {
   req.url += '.gz';
   console.log(req.url);
   res.set('Content-Encoding', 'gzip');
