@@ -120,6 +120,59 @@ class NavBar extends Component {
         : null
       }
       </div>
+      <div>
+        {window.localStorage.getItem('userId')
+          ?
+            <div className='navBarContainer'>
+              <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
+                {currentPage === 'browseChefs'
+                  ?
+                    <div className='sortBy'>
+                      <span onClick={() => { this.toggleSortMenu(); }}>Sort</span>
+                      {this.state.sort
+                        ? <div className='loginDropdown'>
+                            <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                              this.props.changeSort('None');
+                              this.toggleSortMenu();
+                            }}>None</div>
+                            <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                              this.props.changeSort('Cuisine');
+                              this.toggleSortMenu();
+                            }}>Cuisine</div>
+                            <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                              this.props.changeSort('Rate');
+                              this.toggleSortMenu();
+                            }}>Rate</div>
+                            <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                              this.props.changeSort('Rating');
+                              this.toggleSortMenu();
+                            }}>Rating</div>
+                            <div className='dropdownLinkContainer sortLinks' onClick={() => {
+                              this.props.changeSort('Location');
+                              this.toggleSortMenu();
+                            }}>Location</div>
+                          </div>
+                        : null
+                      }
+                    </div>
+                  : null
+                }
+                <span className='sortNavBarLogin' >
+                  <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
+                  {this.state.dropdown
+                    ?
+                      <div className='loginDropdown'>
+                        <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
+                          <Link to='/' className='loginLink'>Log out</Link>
+                        </div>
+                      </div>
+                    : null
+                  }
+                </span>
+            </div>
+          : null
+        }
+        </div>
     {/* bottom bar */}
       {window.localStorage.getItem('userId')
         ?
