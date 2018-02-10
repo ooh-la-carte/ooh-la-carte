@@ -2,6 +2,7 @@
 var path = require('path');
 var SRC_DIR = path.join(__dirname, '/src');
 var DIST_DIR = path.join(__dirname, '/public');
+var CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: `${SRC_DIR}/index.js`,
@@ -10,6 +11,15 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/',
   },
+  plugins: [
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$/,
+      threshold: 10240,
+      minRatio: 0.8
+    }),
+  ],
   module : {
     rules : [
       {
@@ -31,5 +41,5 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
 };
