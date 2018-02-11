@@ -16,10 +16,8 @@ User.findUserByName = username => (
     .catch((err) => { console.log(err); })
 );
 
-User.findUserByGoogleId = googleId => (
-  knex('users')
-    .where({ google_id: googleId })
-    .then()
+User.findUserByEmail = email => (
+  knex('users').where({ email }).then()
 );
 
 // the info object should have
@@ -96,6 +94,10 @@ User.insertCuisineById = (userObj) => {
     })
     .catch((err) => { console.log(err); });
 };
+
+User.update = userObj => (
+  knex('users').where('id', userObj.id).update({ google_id: userObj.google_id }).then()
+);
 
 User.deleteCuisineById = (userObj) => {
   const { id, cuisine } = userObj;

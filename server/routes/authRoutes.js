@@ -19,6 +19,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 //
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   console.log('returned from redirect');
+  console.log(req.user);
   res.send('returned from redirect');
 });
 

@@ -6,6 +6,7 @@ const path = require('path');
 const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const cookieSession = require('cookie-session');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
@@ -43,21 +44,24 @@ io.on('connection', SocketManager);
     Middleware
   ==============================
 */
-
-app.use(express.static(path.join(__dirname, '/../public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(passport.initialize());
-app.use('/auth', authRoutes);
-
-
 // log each request to the console
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   // continue doing what we were doing and go to the route
   next();
 });
+
+app.use(express.static(path.join(__dirname, '/../public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: ['super-secret-key'],
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRoutes);
 
 // middleware to return a compressed bundle
 app.get('*.js', (req, res, next) => {
@@ -68,7 +72,6 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '/../public')));
 /*
   ==============================
     Post Routes
