@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import { Icon, Menu, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { setSocket, removeSocket, listenerOn } from '../actions';
+import { setSocket, removeSocket, listenerOn, changeSort } from '../actions';
 import '../style.scss';
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { dropdown: false };
-    this.toggleDropDown = this.toggleDropDown.bind(this);
-  }
-
-  toggleDropDown() {
-    this.setState({ dropdown: !this.state.dropdown });
+    this.state = {};
   }
 
   logout = (username) => {
@@ -26,7 +21,6 @@ class NavBar extends Component {
     this.props.socketReducer.close();
     this.props.listenerOn(false);
     this.props.removeSocket();
-    this.toggleDropDown();
   }
 
   render() {
@@ -50,68 +44,95 @@ class NavBar extends Component {
         : this.props.selectedConversation.username,
     };
 
+    let sortByField;
+    if (currentPage === 'browseEvents') {
+      sortByField = (
+        <Menu.Item className='nav'>
+          <Dropdown className="right" pointing={true} text='Sort By'>
+            <Dropdown.Menu>
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
+              <Dropdown.Item text='Size' onClick={() => { this.props.changeSort('Size'); }} />
+              <Dropdown.Item text='Budget' onClick={() => { this.props.changeSort('Budget'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+      );
+    } else if (currentPage === 'browseChefs') {
+      sortByField = (
+        <Menu.Item className='nav'>
+          <Dropdown className="right" pointing={true} text='Sort By'>
+            <Dropdown.Menu>
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
+              <Dropdown.Item text='Rate' onClick={() => { this.props.changeSort('Rate'); }} />
+              <Dropdown.Item text='Rating' onClick={() => { this.props.changeSort('Rating'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+      );
+    }
+
     return (
       <div>
     {/* top bar */}
-    <div>
       {window.localStorage.getItem('userId')
-        ?
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><div style={{ color: 'white' }}>{pages[currentPage]}</div></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}><Icon name='setting' /></a>
-                {this.state.dropdown
-                  ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer' onClick={() => this.logout(window.localStorage.getItem('username')) }>
-                        <Link to='/' className='loginLink'>Log out</Link>
-                      </div>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/' className='loginLink'>Else</Link>
-                      </div>
-                    </div>
-                  : null
-                }
-              </span>
-          </div>
-        : null
-      }
-      </div>
-    {/* bottom bar */}
+        ? /* User IS logged in */
+          <Menu className='nav navBarContainer' size='large' >
+            <Menu.Item name='back' className='nav' onClick={() => this.props.history.goBack()}>
+              <Icon className='nav' name='chevron left' />
+            </Menu.Item>
+            <Menu.Item className='nav'>
+              {pages[currentPage] || 'Ooh La Carte'}
+            </Menu.Item>
+            {sortByField}
+            <Menu.Item className='nav' position='right'>
+              <Dropdown className="right" pointing={true} icon='setting'>
+                <Dropdown.Menu>
+                  <Dropdown.Item className='nav' text='Log Out'
+                    onClick={() => {
+                      this.logout(window.localStorage.getItem('username'));
+                      this.props.history.push('/loggedOut');
+                     }}/>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+          </Menu>
+        : /* User IS NOT logged in */
+          <Menu className='nav navBarContainer'>
+            <Menu.Item name='icon' className='nav' size='large'>
+              <Icon className='nav' name='home' onClick={() => this.props.history.push('/') } />
+            </Menu.Item>
+            <Menu.Item className='nav'>
+              Ooh La Carte
+            </Menu.Item>
+            <Menu.Item className='nav' position='right'>
+              <Dropdown className="right" pointing={true} icon='setting'>
+                <Dropdown.Menu>
+                  <Dropdown.Item text='Log In' onClick={() => this.props.history.push('/loginForm') } />
+                  <Dropdown.Item text='Sign Up' onClick={() => this.props.history.push('/signUpForm') } />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+          </Menu>
+        }
+      {/* bottom bar */}
       {window.localStorage.getItem('userId')
-        ?
-          <div className='loggedInNavBarContainer'>
-              <div className='navBarLink'><Link to='/userProfile' style={{ color: 'white' }}>Home</Link></div>
-              {window.localStorage.getItem('isChef') === 'true'
+        ? /* User IS logged in */
+        <Menu className='nav loggedInNavBarContainer' widths={4} size='massive'>
+            <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/userProfile')}>Home</Menu.Item>
+            {window.localStorage.getItem('isChef') === 'true'
                 ?
-                  <span className='navBarLink'><Link to='/browseEvents' style={{ color: 'white' }}>Events</Link></span>
+                <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/browseEvents')}>Events</Menu.Item>
                 :
-                  <span className='navBarLink'><Link to='/browseChefs' style={{ color: 'white' }}>Chefs</Link></span>
+                <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/browseChefs')}>Chefs</Menu.Item>
               }
-              <span className='navBarLink'><Link to='/chatList' style={{ color: 'white' }}>Chat</Link></span>
-              <span className='navBarLastLink'><Link to='/notifications' style={{ color: 'white' }}>Alerts</Link></span>
-
-          </div>
-        :
-          <div className='navBarContainer'>
-            <div className='navBarTitle'><Link to='/' style={{ color: 'white' }}>Ooh La Carte</Link></div>
-              <span className='navBarLogin' >
-                <a className='loginDropdownText' onClick={this.toggleDropDown}>Login</a>
-                {this.state.dropdown
-                  ?
-                    <div className='loginDropdown'>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/loginForm' className='loginLink' onClick={this.toggleDropDown}>Login</Link>
-                      </div>
-                      <div className='dropdownLinkContainer'>
-                        <Link to='/signUpForm' className='loginLink' onClick={this.toggleDropDown}>Sign up</Link>
-                      </div>
-                    </div>
-                  : null
-                }
-              </span>
-          </div>
-      }
+            <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/chatList')}>Chat</Menu.Item>
+            <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/notifications')}>Alerts</Menu.Item>
+          </Menu>
+        : null }
       </div>
     );
   }
@@ -129,8 +150,9 @@ function mapDispatchToProps(dispatch) {
     setSocket,
     removeSocket,
     listenerOn,
+    changeSort,
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));
 

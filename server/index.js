@@ -64,7 +64,7 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 
 // middleware to return a compressed bundle
-app.get('*.js', (req, res, next) => {
+app.get('*bundle.js', (req, res, next) => {
   req.url += '.gz';
   console.log(req.url);
   res.set('Content-Encoding', 'gzip');
@@ -190,6 +190,15 @@ app.post('/api/updateCuisineSelection', (req, res) => {
       res.sendStatus(200);
     });
 });
+
+app.post('/api/updateUserDataByField', (req, res) => {
+  const { id, field, updatedValue } = req.body;
+  User.updateUserDataByField(id, field, updatedValue)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
 
 // add cuisine selection to chef
 app.post('/api/user/cuisines', (req, res) => {

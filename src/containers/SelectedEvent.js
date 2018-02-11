@@ -13,13 +13,17 @@ class SelectedEvent extends Component {
     this.state = { rating: this.props.selectedEventReducer.rating };
   }
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   handleRatingChange = (e, { rating }) => {
     this.props.updateEventRating(rating);
   }
 
   shouldStarsDisplay = (eventDate, chefId) => {
     const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== true) && (chefId);
+    return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
   };
 
 

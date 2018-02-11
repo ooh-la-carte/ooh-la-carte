@@ -4,8 +4,10 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
-import { setUserInfo, updateCuisineSelection } from '../actions';
+import { setUserInfo, updateCuisineSelection, updateUserInfoByField } from '../actions';
 import MenuListItem from '../components/MenuListItem';
+import { budgetOptions } from '../formOptions';
+import Helpers from '../helpers';
 import '../style.scss';
 
 class Settings extends Component {
@@ -21,8 +23,13 @@ class Settings extends Component {
       price: '',
       description: '',
       pic: '',
+      socialMediaSelected: '',
+      showSocialMediaEntryField: false,
+      socialMediaEntry: '',
+      cuisineList: '',
     };
   }
+
 
   componentDidMount = () => {
     window.scrollTo(0, 0);
@@ -30,6 +37,28 @@ class Settings extends Component {
       .then((menuItems) => {
         this.setState({ menu: menuItems.data });
       });
+    this.setState({ cuisineList: Helpers.getCuisineList(this.props.user.cuisine) });
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({ cuisineList: Helpers.getCuisineList(nextProps.user.cuisine) });
+  }
+
+  setSocialMediaLink = (site) => {
+    this.setState({
+      socialMediaSelected: site,
+      socialMediaEntry: this.props.user[site],
+      showSocialMediaEntryField: true,
+    });
+  }
+
+  updateSocialMedia = () => {
+    const socialMediaInfo = {
+      field: this.state.socialMediaSelected,
+      updatedValue: this.state.socialMediaEntry,
+    };
+    this.props.updateUserInfoByField(socialMediaInfo);
+    this.setState({ showSocialMediaEntryField: false });
   }
 
   handleClick = (e, titleProps) => {
@@ -40,7 +69,7 @@ class Settings extends Component {
     this.setState({ activeIndex: newIndex });
   }
 
-  setMenuItem = (e, { type, value }) => this.setState({ [type]: value })
+  handleUpdate = (e, { type, value }) => this.setState({ [type]: value })
 
   saveMenuItem = () => {
     axios.post('/api/user/saveMenuItem', {
@@ -71,13 +100,11 @@ class Settings extends Component {
   }
 
   handleRateChange = (e, { value }) => {
-    this.setState({ rate: value });
-    const eventObj = {
-      id: this.state.id,
-      rate: this.state.rate,
+    const rateInfo = {
+      field: 'rate',
+      updatedValue: value,
     };
-    const url = '/api/updateChefRate';
-    axios.post(url, eventObj);
+    this.props.updateUserInfoByField(rateInfo);
   }
 
   handleCuisineSelection = (e, { value }) => {
@@ -85,6 +112,26 @@ class Settings extends Component {
   }
 
   render() {
+    let socialMediaEntry;
+    if (this.state.showSocialMediaEntryField) {
+      socialMediaEntry = (
+        <div>
+          <Form className='center boxed'>
+            <Form.Field>
+              <label>Update your {this.state.socialMediaSelected} link:</label>
+              <Form.Input
+                action={<Button className='butPri' inverted content='Save' type='button' onClick={this.updateSocialMedia} />}
+                type='socialMediaEntry'
+                placeholder={this.state.socialMediaEntry || `Enter your ${this.state.socialMediaSelected}...`}
+                onChange={this.handleUpdate}
+                value={this.state.socialMediaEntry || ''}
+              />
+            </Form.Field>
+          </Form>
+        </div>
+      );
+    }
+
     return (
       <div className='topLevelDiv'>
         <div className='boxed center'>
@@ -151,11 +198,12 @@ class Settings extends Component {
               <Accordion.Content active={this.state.activeIndex === 1}>
                 <Form>
                   <Form.Group grouped>
-                    <Form.Checkbox checked={this.state.rate === '1'} label='Budget' value='1' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.rate === '2'} label='Moderate' value='2' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.rate === '3'} label='High' value='3' onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.rate === '4'} label='Luxury' value='4'onChange={this.handleRateChange} />
-                    <Form.Checkbox checked={this.state.rate === '5'} label='Custom' value='5'onChange={this.handleRateChange} />
+                    {budgetOptions.map(option => (
+                      <Form.Checkbox key={option.value}
+                        checked={this.props.user.rate === option.value}
+                        label={option.text} value={option.text}
+                        onChange={this.handleRateChange} />
+                    ))}
                   </Form.Group>
                 </Form>
               </Accordion.Content>
@@ -185,24 +233,28 @@ class Settings extends Component {
                 <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
                 <Grid.Column width={4}>Email:</Grid.Column>
                 <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
-                <Grid.Column width={4}>Experience:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.experience}</Grid.Column>
+                <Grid.Column width={4}>Rate:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.rate}</Grid.Column>
+                <Grid.Column width={4}>Cuisines:</Grid.Column>
+                <Grid.Column width={12}>{this.state.cuisineList}</Grid.Column>
               </Grid.Row>
             </Grid>
           </Segment>
         </div>
+        {/* ***** Social Media Links ***** */}
+        {socialMediaEntry}
         <div className='center miniPadding'>
           {this.props.user.facebook ?
-            <Icon name='facebook square' className='OLCcolor' size='huge' />
-            : <Icon name='facebook square' style={{ opacity: '0.2' }} color='grey' size='huge' />
+            <Icon name='facebook square' className='OLCcolor' size='huge' onClick={() => { this.setSocialMediaLink('facebook'); }}/>
+            : <Icon name='facebook square' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('facebook'); }}/>
           }
           {this.props.user.twitter ?
-            <Icon name='twitter' className='OLCcolor' size='huge' />
-            : <Icon name='twitter square' style={{ opacity: '0.2' }} color='grey' size='huge' />
+            <Icon name='twitter' className='OLCcolor' size='huge' onClick={() => { this.setSocialMediaLink('twitter'); }}/>
+            : <Icon name='twitter' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('twitter'); }}/>
           }
           {this.props.user.instagram ?
-            <Icon name='instagram' className='OLCcolor' size='huge' />
-            : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' />
+            <Icon name='instagram' className='OLCcolor' size='huge' onClick={() => { this.setSocialMediaLink('instagram'); }}/>
+            : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('instagram'); }}/>
           }
         </div>
         <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
@@ -218,19 +270,19 @@ class Settings extends Component {
             }}>
                 <Form.Field>
                   <label>Menu name</label>
-                  <Form.Input placeholder='Menu name' onChange={this.setMenuItem} type='menuName' value={this.state.menuName}/>
+                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menuName' value={this.state.menuName}/>
                 </Form.Field>
                 <Form.Field style={{ width: '50%' }}>
                   <label>Cuisine / Theme</label>
-                  <Form.Input placeholder='Cuisine / Theme' onChange={this.setMenuItem} type='type' value={this.state.type}/>
+                  <Form.Input placeholder='Cuisine / Theme' onChange={this.handleUpdate} type='type' value={this.state.type}/>
                 </Form.Field>
                 <Form.Field>
                   <label>Description</label>
-                  <Form.Input placeholder='Description' onChange={this.setMenuItem} type='description' value={this.state.description}/>
+                  <Form.Input placeholder='Description' onChange={this.handleUpdate} type='description' value={this.state.description}/>
                 </Form.Field>
                 <Form.Field>
                   <label>Picture</label>
-                  <Form.Input placeholder='picture URL' onChange={this.setMenuItem} type='picture' value={this.state.picture}/>
+                  <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='picture' value={this.state.picture}/>
                 </Form.Field>
                 <Button type='submit'>Save!</Button>
               </Form>
@@ -257,6 +309,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setUserInfo,
     updateCuisineSelection,
+    updateUserInfoByField,
   }, dispatch);
 }
 

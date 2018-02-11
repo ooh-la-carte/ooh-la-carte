@@ -14,6 +14,7 @@ class Notifications extends Component {
   }
 
   componentDidMount = () => {
+    window.scrollTo(0, 0);
     axios.get('/api/user/invitations', { params: {
       id: Number(window.localStorage.getItem('userId')),
       is_chef: window.localStorage.getItem('isChef'),

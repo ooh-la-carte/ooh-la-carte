@@ -15,7 +15,7 @@ $soft-text: 'Arima Madurai', cursive;
 body {
     font-family: 'Roboto', sans-serif;
     // background-color: #e5f8fa;
-    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x900");
+    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
     margin-top: 20% !important;
     margin-bottom: 20% !important;
 }
@@ -125,14 +125,18 @@ body {
   ====================
 */
 
+.nav {
+  background-color: $primary-color !important;
+  color: white !important;
+  font-weight: 400;
+}
+
 .navBarContainer {
   position: fixed;
   top: 0;
   z-index: 999;
   width: 100%;
   display: flex;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
@@ -142,11 +146,13 @@ body {
   z-index: 999;
   width: 100%;
   display: flex;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
+.navBackContainer {
+  width: 15% !important;
+
+}
 
 .navBarTitle {
   white-space: nowrap;
@@ -157,7 +163,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 75% !important;
@@ -175,7 +180,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
@@ -190,7 +194,6 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
-  color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
@@ -206,10 +209,40 @@ body {
   letter-spacing: 0%;
   font-size: 150%;
   font-weight: 400;
+  height: 64px;
+  line-height: 64px;
+  width: 25% !important;
+}
+
+.sortNavBarLogin {
+  float: right;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  padding-right: 5%;
+  text-overflow: ellipsis;
+  letter-spacing: 0%;
+  font-size: 150%;
+  font-weight: 400;
   color: rgb(255, 255, 255) !important;
   height: 64px;
   line-height: 64px;
   width: 25% !important;
+}
+
+.sortBy {
+  float: left;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0%;
+  font-size: 100%;
+  font-weight: 400;
+  color: rgb(255, 255, 255) !important;
+  height: 64px;
+  line-height: 64px;
+  width: 15% !important;
 }
 
 .eventBudget {
@@ -222,12 +255,17 @@ body {
   width: 25%;
   margin: 0% 0% 0% 0%;
   text-align: center;
-  background-color: $primary-color;
-  color: white;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
+.sortLinks {
+  font-size: 120% !important;
+  color: white;
+  margin: 0px auto;
+}
+
 .loginLink {
+  font-size: 80% !important;
   color: white;
   margin: 0px auto;
 
@@ -325,7 +363,7 @@ body {
   margin: 1% 5%;
   border-radius: 5px;
   padding: 2%;
-  background-color: $light-color;
+  background-color: white;
 }
 
 .chatDiv {
@@ -334,6 +372,16 @@ body {
 
 #chatInput {
   border-radius: 0px;
+}
+
+/*
+  ====================
+  Button Styling
+  ====================
+*/
+
+.menuQuarterSegment {
+
 }
 
 /*
