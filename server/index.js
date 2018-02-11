@@ -181,6 +181,15 @@ app.post('/api/updateCuisineSelection', (req, res) => {
     });
 });
 
+app.post('/api/updateUserDataByField', (req, res) => {
+  const { id, field, updatedValue } = req.body;
+  User.updateUserDataByField(id, field, updatedValue)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
+
 // add cuisine selection to chef
 app.post('/api/user/cuisines', (req, res) => {
   User.insertCuisineById(req.body)

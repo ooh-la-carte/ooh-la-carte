@@ -319,3 +319,22 @@ module.exports.chefCuisineOptions = [
     value: 'Japanese',
   },
 ];
+
+module.exports.budgetOptions = [
+  {
+    text: 'Budget ($20 or less per hr)',
+    value: 'Budget ($20 or less per hr)',
+  },
+  {
+    text: 'Moderate ($20 - $50 hr)',
+    value: 'Moderate ($20 - $50 hr)',
+  },
+  {
+    text: 'High ($50-$100 per hr)',
+    value: 'High ($50-$100 per hr)',
+  },
+  {
+    text: 'Luxury (more than $100 per hr)',
+    value: 'Luxury (more than $100 per hr)',
+  },
+];

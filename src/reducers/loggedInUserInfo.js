@@ -25,6 +25,20 @@ const loggedInUserInfo = (state = {}, action) => {
       axios.post(url, eventObj);
     }
     return newState;
+  } else if (action.type === 'UPDATE_USER_FIELD') {
+    const { field, updatedValue } = action.payload;
+    const newState = {
+      ...state,
+      [field]: updatedValue,
+    };
+    const updatedInfoObj = {
+      id: state.id,
+      field,
+      updatedValue,
+    };
+    const url = '/api/updateUserDataByField';
+    axios.post(url, updatedInfoObj);
+    return newState;
   }
   return state;
 };
