@@ -21,7 +21,6 @@ class NavBar extends Component {
     this.props.socketReducer.close();
     this.props.listenerOn(false);
     this.props.removeSocket();
-    this.toggleDropDown();
   }
 
   render() {
@@ -86,7 +85,7 @@ class NavBar extends Component {
               <Icon className='nav' name='chevron left' />
             </Menu.Item>
             <Menu.Item className='nav'>
-              {pages[currentPage]}
+              {pages[currentPage] || 'Ooh La Carte'}
             </Menu.Item>
             {sortByField}
             <Menu.Item className='nav' position='right'>
@@ -95,7 +94,7 @@ class NavBar extends Component {
                   <Dropdown.Item className='nav' text='Log Out'
                     onClick={() => {
                       this.logout(window.localStorage.getItem('username'));
-                      this.props.history.push('/');
+                      this.props.history.push('/loggedOut');
                      }}/>
                 </Dropdown.Menu>
               </Dropdown>
