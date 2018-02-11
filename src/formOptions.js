@@ -239,3 +239,64 @@ module.exports.userOptions = [
     value: 'chef',
   },
 ];
+
+module.exports.cuisineOptions = [
+  {
+    text: 'American',
+    value: 'American',
+  },
+  {
+    text: 'Italian',
+    value: 'Italian',
+  },
+  {
+    text: 'Chinese',
+    value: 'Chinese',
+  },
+  {
+    text: 'Japanese',
+    value: 'Japanese',
+  },
+];
+
+module.exports.sizeOptions = [
+  {
+    text: '1',
+    value: '1',
+  },
+  {
+    text: '2',
+    value: '2',
+  },
+  {
+    text: '3',
+    value: '3',
+  },
+  {
+    text: '4',
+    value: '4',
+  },
+  {
+    text: '5',
+    value: '5',
+  },
+];
+
+module.exports.cityOptions = [
+  {
+    text: 'Austin',
+    value: 'austin',
+  },
+  {
+    text: 'Pflugerville',
+    value: 'pflugerville',
+  },
+  {
+    text: 'Round Rock',
+    value: 'round rock',
+  },
+  {
+    text: 'Georgetown',
+    value: 'georgetown',
+  },
+];

@@ -61,6 +61,13 @@ const updateEventRating = rating => (
   }
 );
 
+const changeSort = sortBy => (
+  {
+    type: 'CHANGE_SORT',
+    payload: sortBy,
+  }
+);
+
 export {
   changeSelectedChef,
   changeSelectedEvent,
@@ -71,4 +78,5 @@ export {
   listenerOn,
   updateCuisineSelection,
   updateEventRating,
+  changeSort,
 };
