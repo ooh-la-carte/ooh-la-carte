@@ -51,11 +51,11 @@ class NavBar extends Component {
         <Menu.Item className='nav'>
           <Dropdown className="right" pointing={true} text='Sort By'>
             <Dropdown.Menu>
-              <Dropdown.Item className='nav' text='None' onClick={() => { this.props.changeSort('None'); }} />
-              <Dropdown.Item className='nav' text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
-              <Dropdown.Item className='nav' text='Size' onClick={() => { this.props.changeSort('Size'); }} />
-              <Dropdown.Item className='nav' text='Budget' onClick={() => { this.props.changeSort('Budget'); }} />
-              <Dropdown.Item className='nav' text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
+              <Dropdown.Item text='Size' onClick={() => { this.props.changeSort('Size'); }} />
+              <Dropdown.Item text='Budget' onClick={() => { this.props.changeSort('Budget'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
@@ -65,11 +65,11 @@ class NavBar extends Component {
         <Menu.Item className='nav'>
           <Dropdown className="right" pointing={true} text='Sort By'>
             <Dropdown.Menu>
-              <Dropdown.Item className='nav' text='None' onClick={() => { this.props.changeSort('None'); }} />
-              <Dropdown.Item className='nav' text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
-              <Dropdown.Item className='nav' text='Rate' onClick={() => { this.props.changeSort('Rate'); }} />
-              <Dropdown.Item className='nav' text='Rating' onClick={() => { this.props.changeSort('Rating'); }} />
-              <Dropdown.Item className='nav' text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
+              <Dropdown.Item text='Rate' onClick={() => { this.props.changeSort('Rate'); }} />
+              <Dropdown.Item text='Rating' onClick={() => { this.props.changeSort('Rating'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
@@ -81,15 +81,15 @@ class NavBar extends Component {
     {/* top bar */}
       {window.localStorage.getItem('userId')
         ? /* User IS logged in */
-          <Menu className='nav navBarContainer'>
-            <Menu.Item name='back' className='nav' fitted onClick={() => this.props.history.goBack()}>
+          <Menu className='nav navBarContainer' size='large' >
+            <Menu.Item name='back' className='nav' onClick={() => this.props.history.goBack()}>
               <Icon className='nav' name='chevron left' />
             </Menu.Item>
             <Menu.Item className='nav'>
               {pages[currentPage]}
             </Menu.Item>
             {sortByField}
-            <Menu.Item className='nav'position='right'>
+            <Menu.Item className='nav' position='right'>
               <Dropdown className="right" pointing={true} icon='setting'>
                 <Dropdown.Menu>
                   <Dropdown.Item className='nav' text='Log Out'
@@ -103,7 +103,7 @@ class NavBar extends Component {
           </Menu>
         : /* User IS NOT logged in */
           <Menu className='nav navBarContainer'>
-            <Menu.Item name='icon' className='nav'>
+            <Menu.Item name='icon' className='nav' size='large'>
               <Icon className='nav' name='home' onClick={() => this.props.history.push('/') } />
             </Menu.Item>
             <Menu.Item className='nav'>
@@ -112,8 +112,8 @@ class NavBar extends Component {
             <Menu.Item className='nav' position='right'>
               <Dropdown className="right" pointing={true} icon='setting'>
                 <Dropdown.Menu>
-                  <Dropdown.Item className='nav' text='Log In' onClick={() => this.props.history.push('/loginForm') } />
-                  <Dropdown.Item className='nav' text='Sign Up' onClick={() => this.props.history.push('/signUpForm') } />
+                  <Dropdown.Item text='Log In' onClick={() => this.props.history.push('/loginForm') } />
+                  <Dropdown.Item text='Sign Up' onClick={() => this.props.history.push('/signUpForm') } />
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
@@ -122,7 +122,7 @@ class NavBar extends Component {
       {/* bottom bar */}
       {window.localStorage.getItem('userId')
         ? /* User IS logged in */
-        <Menu className='nav loggedInNavBarContainer' widths={4}>
+        <Menu className='nav loggedInNavBarContainer' widths={4} size='massive'>
             <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/userProfile')}>Home</Menu.Item>
             {window.localStorage.getItem('isChef') === 'true'
                 ?
