@@ -300,3 +300,22 @@ module.exports.cityOptions = [
     value: 'georgetown',
   },
 ];
+
+module.exports.chefCuisineOptions = [
+  {
+    text: 'American',
+    value: 'American',
+  },
+  {
+    text: 'Italian',
+    value: 'Italian',
+  },
+  {
+    text: 'Chinese',
+    value: 'Chinese',
+  },
+  {
+    text: 'Japanese',
+    value: 'Japanese',
+  },
+];

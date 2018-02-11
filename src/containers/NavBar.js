@@ -134,7 +134,6 @@ class NavBar extends Component {
             <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/notifications')}>Alerts</Menu.Item>
           </Menu>
         : null }
-
       </div>
     );
   }
