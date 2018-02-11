@@ -54,6 +54,13 @@ const updateCuisineSelection = cuisine => (
   }
 );
 
+const updateUserInfoByField = updatedInfoObj => (
+  {
+    type: 'UPDATE_USER_FIELD',
+    payload: updatedInfoObj,
+  }
+);
+
 const updateEventRating = rating => (
   {
     type: 'UPDATE_EVENT_RATING',
@@ -79,4 +86,5 @@ export {
   updateCuisineSelection,
   updateEventRating,
   changeSort,
+  updateUserInfoByField,
 };

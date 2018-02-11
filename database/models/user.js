@@ -130,6 +130,10 @@ User.updateCuisineSelection = (id, cuisine) => knex('users')
   .where('id', id)
   .update({ cuisine });
 
+User.updateUserDataByField = (id, field, updatedValue) => knex('users')
+  .where('id', id)
+  .update({ [field]: updatedValue });
+
 User.updateChefRate = (id, rate) => knex('users')
   .where('id', id)
   .update({ rate });
