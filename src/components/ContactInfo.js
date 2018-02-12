@@ -215,13 +215,13 @@ class ContactInfo extends Component {
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button
-              className='butSec'
+              className='btn'
               inverted
             > Cancel
             </Button>
           </Link>
           <Button
-            className='butPri'
+            className='btn'
             type='submit'
             inverted
           >

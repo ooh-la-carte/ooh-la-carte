@@ -154,12 +154,12 @@ class UserProfile extends Component {
           <div className='btnDiv'>
 
           <Link to='/userEvents'>
-            <Button className='butSec' inverted>
+            <Button className='btn' inverted>
               See All Your Events
             </Button>
           </Link>
           <Link to='/createEvent'>
-            <Button className='butPri' type='submit' inverted>
+            <Button className='btn' type='submit' inverted>
               Create New Event
             </Button>
           </Link>
