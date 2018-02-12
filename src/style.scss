@@ -13,7 +13,7 @@ $soft-text: 'Arima Madurai', cursive;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Asap', sans-serif;
     // background-color: #e5f8fa;
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x1200");
     margin-top: 10% !important;
@@ -393,11 +393,11 @@ body {
 */
 
 .butPri {
-  background-color: #00bcd4 !important;
+  background-color: $primary-color !important;
 }
 
 .butSec {
-  background-color: #00bcd4 !important;
+  background-color: $primary-color !important;
 }
 
 .btnDiv {
