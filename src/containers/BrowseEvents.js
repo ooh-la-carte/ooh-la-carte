@@ -45,7 +45,7 @@ class BrowseEvents extends Component {
   }
 
   render = () => (
-    <div className='topLevelDiv center miniPadding profile event'>
+    <div className='topLevelDiv center miniPadding profile'>
       {this.props.sortReducer === 'Cuisine'
         ?
           <div>
@@ -78,8 +78,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -119,8 +119,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -160,8 +160,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -195,14 +195,15 @@ class BrowseEvents extends Component {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <span className='partySize'>Size: {event.party_size}</span>
-                  <span className='eventBudget'>Budget: {event.budget}</span>
+                  <span>Size: {event.party_size}</span>
+                  <span className='floatRight'>Budget: {event.budget}</span>
                 </Card.Content>
               </Card>
             : null
           ))
         : null
       }
+      <br /> <br />
     </div>
   );
 }

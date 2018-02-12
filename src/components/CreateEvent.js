@@ -195,7 +195,7 @@ class CreateEventForm extends Component {
               </Form.Field>
               </div>
               <div className='miniPadding center'>
-                <Button.Group size='medium' className='center butPri'>
+                <Button.Group size='medium' className='center btn'>
                   <Button
                     onClick={() => { this.setState({ meal: 'breakfast' }); } }
                     inverted
@@ -252,17 +252,17 @@ class CreateEventForm extends Component {
                 ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
                 : null
               }
-              <div style={styles.btnDiv}>
+              <div className='btnDiv'>
                 <Link to='/userProfile'>
                   <Button
-                    className='butSec'
+                    className='btn'
                     inverted
                   > Cancel
                   </Button>
                 </Link>
 
                 <Button
-                  className='butPri'
+                  className='btn'
                   type='submit'
                   inverted
                 >

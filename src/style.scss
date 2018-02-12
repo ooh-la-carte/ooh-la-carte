@@ -16,12 +16,12 @@ body {
     font-family: 'Asap', sans-serif;
     // background-color: #e5f8fa;
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
-    margin-top: 20% !important;
+    margin-top: 15% !important;
     margin-bottom: 20% !important;
 }
 
 .topLevelDiv {
-  margin: 20% 0% 20% 0%;
+  margin: 0% 0% 0% 0%;
 }
 
 .pageHeader {
@@ -140,146 +140,11 @@ body {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
-.loggedInNavBarContainer {
-  position: fixed;
+.bottom {
+  top: initial;
   bottom: 0;
-  z-index: 999;
-  width: 100%;
-  display: flex;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
-.navBackContainer {
-  width: 15% !important;
-
-}
-
-.navBarTitle {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0% 0% 0% 5%;
-  padding: 0%;
-  letter-spacing: 0%;
-  font-size: 150%;
-  font-weight: 400;
-  height: 64px;
-  line-height: 64px;
-  width: 75% !important;
-}
-
-.navBarLink {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0% 0% 0% 5%;
-  padding: 0%;
-  border-right-style: solid;
-  border-right-color: white;
-  border-right-width: thin;
-  letter-spacing: 0%;
-  font-size: 150%;
-  font-weight: 400;
-  height: 64px;
-  line-height: 64px;
-  width: 25% !important;
-}
-
-.navBarLastLink {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0% 0% 0% 5%;
-  padding: 0%;
-  letter-spacing: 0%;
-  font-size: 150%;
-  font-weight: 400;
-  height: 64px;
-  line-height: 64px;
-  width: 25% !important;
-}
-
-.navBarLogin {
-  float: right;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 5%;
-  text-overflow: ellipsis;
-  letter-spacing: 0%;
-  font-size: 150%;
-  font-weight: 400;
-  height: 64px;
-  line-height: 64px;
-  width: 25% !important;
-}
-
-.sortNavBarLogin {
-  float: right;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  padding-right: 5%;
-  text-overflow: ellipsis;
-  letter-spacing: 0%;
-  font-size: 150%;
-  font-weight: 400;
-  color: rgb(255, 255, 255) !important;
-  height: 64px;
-  line-height: 64px;
-  width: 25% !important;
-}
-
-.sortBy {
-  float: left;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: 0%;
-  font-size: 100%;
-  font-weight: 400;
-  color: rgb(255, 255, 255) !important;
-  height: 64px;
-  line-height: 64px;
-  width: 15% !important;
-}
-
-.eventBudget {
-  float: right;
-}
-
-
-.loginDropdown {
-  position: fixed;
-  width: 25%;
-  margin: 0% 0% 0% 0%;
-  text-align: center;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-}
-
-.sortLinks {
-  font-size: 120% !important;
-  color: white;
-  margin: 0px auto;
-}
-
-.loginLink {
-  font-size: 80% !important;
-  color: white;
-  margin: 0px auto;
-
-}
-
-.dropdownLinkContainer {
-  border-bottom-style: solid;
-  border-color: white;
-  border-bottom-width: thin;
-}
-
-.loginDropdownText {
-  color: white;
-}
 
 /*
   ====================
@@ -311,6 +176,10 @@ body {
 .miniPadding {
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.floatRight {
+  float: right;
 }
 
 /*
@@ -380,21 +249,7 @@ body {
   ====================
 */
 
-.menuQuarterSegment {
-
-}
-
-/*
-  ====================
-  Button Styling
-  ====================
-*/
-
-.butPri {
-  background-color: $primary-color !important;
-}
-
-.butSec {
+.btn {
   background-color: $primary-color !important;
 }
 
