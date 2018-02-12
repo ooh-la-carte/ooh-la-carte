@@ -29,7 +29,6 @@ exports.seed = (k, Promise) => (
         menu: 'spaghetti, lasagna, other amazing things',
         img: '/img/22222222.png',
         availability: 'February 23, 2018',
-        experience: '20 years of professional experience',
         rate: '5 Stars',
         bio: 'Gordon James Ramsay Jr is a British celebrity chef, restaurateur, and television personality. In July 2006, Ramsay won the Catey award for "Independent Restaurateur of the Year", becoming only the third person to have won three Catey awards.',
       })

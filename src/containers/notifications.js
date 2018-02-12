@@ -20,7 +20,9 @@ class Notifications extends Component {
       is_chef: window.localStorage.getItem('isChef'),
     } })
       .then((invites) => {
-        this.setState({ invitations: invites.data });
+        const invitesForMe = invites.data.filter(invite => invite.sender !== window.localStorage.getItem('username'));
+        console.log(invitesForMe);
+        this.setState({ invitations: invitesForMe });
       });
   }
 
