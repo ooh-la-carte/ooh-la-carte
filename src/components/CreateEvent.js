@@ -24,6 +24,7 @@ class CreateEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: false,
       name: '',
       eventId: null,
       hostId: window.localStorage.getItem('userId'),
@@ -84,7 +85,7 @@ class CreateEventForm extends Component {
     }
     if (!eventObj.date || !eventObj.partySize || !eventObj.budget ||
         !eventObj.name || !eventObj.zip) {
-      console.log('Required fields not provided');
+      this.setState({ error: true }, () => { window.scrollTo(0, document.body.scrollHeight); });
     } else {
       console.log('submitting event');
       axios.post(url, eventObj)
@@ -247,7 +248,10 @@ class CreateEventForm extends Component {
                 type='description'
                 />
               </Form.Field>
-
+              {this.state.error
+                ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
+                : null
+              }
               <div style={styles.btnDiv}>
                 <Link to='/userProfile'>
                   <Button
