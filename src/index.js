@@ -20,6 +20,7 @@ import ContactInfo from './components/ContactInfo';
 import ChatTab from './containers/ChatList';
 import Conversation from './containers/conversation';
 import Notifications from './containers/notifications';
+import LoggedOut from './components/LoggedOut';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -35,6 +36,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/selectedChef' component={SelectedChef} />
                         <Route exact path='/browseChefs' component={BrowseChefs} />
                         <Route exact path='/createEvent' component={CreateEvent} />
+                        <Route exact path='/editEvent' component={CreateEvent} />
                         <Route exact path='/userProfile' component={UserProfile}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
                         <Route exact path='/chatList' component={ChatTab} />
@@ -42,6 +44,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/settings' component={Settings}/>
                         <Route exact path='/contactInfo' component={ContactInfo}/>
                         <Route exact path='/notifications' component={Notifications}/>
+                        <Route exact path='/loggedOut' component={LoggedOut}/>
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));

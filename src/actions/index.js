@@ -54,10 +54,24 @@ const updateCuisineSelection = cuisine => (
   }
 );
 
+const updateUserInfoByField = updatedInfoObj => (
+  {
+    type: 'UPDATE_USER_FIELD',
+    payload: updatedInfoObj,
+  }
+);
+
 const updateEventRating = rating => (
   {
     type: 'UPDATE_EVENT_RATING',
     payload: rating,
+  }
+);
+
+const changeSort = sortBy => (
+  {
+    type: 'CHANGE_SORT',
+    payload: sortBy,
   }
 );
 
@@ -71,4 +85,6 @@ export {
   listenerOn,
   updateCuisineSelection,
   updateEventRating,
+  changeSort,
+  updateUserInfoByField,
 };

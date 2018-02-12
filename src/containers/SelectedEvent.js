@@ -21,9 +21,9 @@ class SelectedEvent extends Component {
     this.props.updateEventRating(rating);
   }
 
-  shouldStarsDisplay = (eventDate, chefId) => {
+  shouldStarsDisplay = (eventDate, chefId, creatorId) => {
     const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
+    return hasHappened && (Number.parseInt(window.localStorage.userId) === creatorId) && (chefId);
   };
 
 
@@ -32,7 +32,7 @@ class SelectedEvent extends Component {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
       'July', 'August', 'September', 'October', 'November', 'December'];
     const eventDate = new Date(event.date_time);
-    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
+    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id, event.creator_id);
     let stars;
     if (showStars) {
       if (event.rating !== null) {
@@ -84,6 +84,10 @@ class SelectedEvent extends Component {
           </Card.Content>
           <Card.Content extra>
             <div>
+                {event.hostId === window.localStorage.getItem('userId')
+                  ? <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
+                  : null
+                }
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
                   const convo = {
@@ -103,7 +107,9 @@ class SelectedEvent extends Component {
                     .then(() => {
                       this.props.history.push('/conversation');
                     });
-                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
+                }}>
+                <div style={{ textAlign: 'center' }}>Send a message!</div>
+                </div>
               </div>
           </Card.Content>
         </Card>

@@ -11,6 +11,7 @@ class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: false,
       id: window.localStorage.getItem('userId'),
       name: '',
       streetAddress: '',
@@ -88,12 +89,14 @@ class ContactInfo extends Component {
         .catch((error) => {
           console.log('submission error: ', error);
         });
+    } else {
+      this.setState({ error: true }, () => { window.scrollTo(0, document.body.scrollHeight); });
     }
   }
 
   render() {
     return (
-      <div>
+      <div className='topLevelDiv'>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
           <Form.Field required>
             <label>Name</label>
@@ -205,15 +208,10 @@ class ContactInfo extends Component {
               value={this.state.instagram || ''}
             />
           </Form.Field>
-          <Form.Field>
-          <label>Years of experience</label>
-            <Form.Input
-              type='experience'
-              placeholder={this.state.experience || 'Years of experience'}
-              onChange={this.handleUpdate}
-              value={this.state.experience || ''}
-            />
-          </Form.Field>
+          {this.state.error
+            ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
+            : null
+          }
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button
@@ -231,11 +229,6 @@ class ContactInfo extends Component {
           </Button>
           </div>
         </Form>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
       </div>
     );
   }

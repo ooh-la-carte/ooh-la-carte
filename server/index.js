@@ -109,6 +109,15 @@ app.post('/api/user/acceptEvent', (req, res) => {
     });
 });
 
+// post route for updating events
+app.post('/api/editEvent', (req, res) => {
+  Event.editEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
+});
+
 app.post('/api/user/declineEvent', (req, res) => {
   Event.declineEvent(req.body)
     .then(() => res.sendStatus(201));
@@ -180,6 +189,15 @@ app.post('/api/updateCuisineSelection', (req, res) => {
       res.sendStatus(200);
     });
 });
+
+app.post('/api/updateUserDataByField', (req, res) => {
+  const { id, field, updatedValue } = req.body;
+  User.updateUserDataByField(id, field, updatedValue)
+    .then(() => {
+      res.sendStatus(200);
+    });
+});
+
 
 // add cuisine selection to chef
 app.post('/api/user/cuisines', (req, res) => {
