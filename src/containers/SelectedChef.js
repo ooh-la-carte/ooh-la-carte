@@ -112,46 +112,48 @@ class SelectedChef extends Component {
               </div>
             <Card.Content extra>
                 <div onClick={() => {
-                  const convo = {
-                    user: window.localStorage.getItem('userId'),
-                    chef: chef.id,
-                  };
-                  axios.post('/api/conversations', convo)
-                    .then((results) => {
-                      // need convo id here
-                      const obj = results.data[0];
-                      console.log('Before manipulation: ', obj);
-                      obj.convo_id = obj.id;
-                      obj.username = chef.username;
-                      obj.user_id = obj.chef_id;
-                      console.log('Select chef conversation store: ', obj);
-                      this.props.selectConversation(obj);
-                    })
-                    .then(() => {
-                      this.props.history.push('/conversation');
-                    });
-                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
+                    const convo = {
+                      user: window.localStorage.getItem('userId'),
+                      chef: chef.id,
+                    };
+                    axios.post('/api/conversations', convo)
+                      .then((results) => {
+                        // need convo id here
+                        const obj = results.data[0];
+                        console.log('Before manipulation: ', obj);
+                        obj.convo_id = obj.id;
+                        obj.username = chef.username;
+                        obj.user_id = obj.chef_id;
+                        console.log('Select chef conversation store: ', obj);
+                        this.props.selectConversation(obj);
+                      })
+                      .then(() => {
+                        this.props.history.push('/conversation');
+                      });
+                  }}><div style={{ textAlign: 'center' }}>Send a message!</div>
+                </div>
                 <br/>
                 <div onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
-              {this.state.eventsDropdown
-                ? this.state.myEvents.map(event =>
-                  <div key={event.id}>
-                    <span>{event.name}</span>
-                    <span style={{ float: 'right' }} onClick={() => {
-                      this.sendInvite({
-                        event_id: event.id,
-                        user_id: Number(window.localStorage.getItem('userId')),
-                        host: window.localStorage.getItem('username'),
-                        chef_id: chef.id,
-                        chef: chef.username,
-                        event_name: event.name,
-                        accepted: null,
-                      });
-                      this.setState({ eventsDropdown: false });
-                    }}>Send Invite</span>
-                  </div>)
-                : null
-              }
+                {this.state.eventsDropdown
+                  ? this.state.myEvents.map(event =>
+                    <div key={event.id}>
+                      <span>{event.name}</span>
+                      <span style={{ float: 'right' }} onClick={() => {
+                        this.sendInvite({
+                          event_id: event.id,
+                          user_id: Number(window.localStorage.getItem('userId')),
+                          host: window.localStorage.getItem('username'),
+                          chef_id: chef.id,
+                          sender: window.localStorage.getItem('username'),
+                          chef: chef.username,
+                          event_name: event.name,
+                          accepted: null,
+                        });
+                        this.setState({ eventsDropdown: false });
+                      }}>Send Invite</span>
+                    </div>)
+                  : null
+                }
             </Card.Content>
           </Card>
         </div>

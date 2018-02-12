@@ -16,7 +16,6 @@ exports.up = (knex, Promise) => (
       table.string('menu');
       table.string('img');
       table.string('availability');
-      table.string('experience');
       table.string('rate');
       table.string('bio');
       table.string('twitter');
@@ -79,6 +78,7 @@ exports.up = (knex, Promise) => (
       table.integer('user_id').unsigned().references('users.id');
       table.string('host');
       table.string('chef');
+      table.string('sender');
       table.string('event_name');
       table.integer('chef_id').unsigned().references('users.id');
       table.integer('event_id').unsigned().references('events.id');

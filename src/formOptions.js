@@ -322,19 +322,19 @@ module.exports.chefCuisineOptions = [
 
 module.exports.budgetOptions = [
   {
-    text: '$20 or less per hr',
-    value: '$20 or less per hr',
+    text: '$0-$50',
+    value: '$',
   },
   {
-    text: '$20 - $50 hr',
-    value: '$20 - $50 hr',
+    text: '$50-$100',
+    value: '$$',
   },
   {
-    text: '$50-$100 per hr',
-    value: '$50-$100 per hr',
+    text: '$100-$200',
+    value: '$$$',
   },
   {
-    text: '$100 per hr or more',
-    value: '$100 per hr or more',
+    text: '$200+',
+    value: '$$$$',
   },
 ];

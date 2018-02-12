@@ -30,8 +30,12 @@ class ChatTab extends React.Component {
   }
 
   render = () => (
-        <div className='container'>
+        <div className='container topLevelDiv'>
             <div>
+              {this.state.convos.length === 0
+                ? <div className='chatMessages'>You have not started any chats yet!</div>
+                : null
+              }
               {this.state.convos.map(convo =>
                 <div key={convo.chatId} className='chatMessages'>
                   <div onClick={() => {
