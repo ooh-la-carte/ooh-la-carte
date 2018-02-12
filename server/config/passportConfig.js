@@ -7,6 +7,7 @@ passport.serializeUser((userId, done) => {
 });
 
 passport.deserializeUser((id, done) => {
+  console.log('in deserialize');
   User.findUserById(id).then(user => done(null, user));
 });
 
@@ -17,7 +18,6 @@ const googleConfig = {
 };
 
 passport.use(new GoogleStrategy(googleConfig, (accessToken, refreshToken, profile, done) => {
-  console.log(profile);
   User.findUserByEmail(profile.emails[0].value).then((users) => {
     if (users.length === 0) {
       /* eslint-disable */

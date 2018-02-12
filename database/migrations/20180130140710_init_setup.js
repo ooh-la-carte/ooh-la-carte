@@ -3,7 +3,7 @@ exports.up = (knex, Promise) => (
   Promise.all([
     knex.schema.createTable('users', (table) => {
       table.increments('id').unsigned().primary();
-      table.boolean('is_chef').defaultTo(false);
+      table.boolean('is_chef');
       table.string('street_name');
       table.string('city');
       table.string('state');

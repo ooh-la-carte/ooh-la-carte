@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const router = require('express').Router();
 const passport = require('../config/passportConfig.js');
 
@@ -18,9 +20,11 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 // the google strategy. After which this handler will be called.
 //
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  const src = fs.createReadStream(path.join(__dirname, '../../public/index.html'));
+  src.pipe(res);
+  src.on('end', () => res.end());
   console.log('returned from redirect');
   console.log(req.user);
-  res.send('returned from redirect');
 });
 
 module.exports = router;

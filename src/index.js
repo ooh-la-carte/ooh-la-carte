@@ -37,6 +37,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/browseChefs' component={BrowseChefs} />
                         <Route exact path='/createEvent' component={CreateEvent} />
                         <Route exact path='/userProfile' component={UserProfile}/>
+                        <Route exact path='/auth/google/redirect' component={LoginForm}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
                         <Route exact path='/chatList' component={ChatTab} />
                         <Route exact path='/conversation' component={Conversation} />
