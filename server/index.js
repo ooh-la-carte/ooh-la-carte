@@ -109,6 +109,15 @@ app.post('/api/user/acceptEvent', (req, res) => {
     });
 });
 
+// post route for updating events
+app.post('/api/editEvent', (req, res) => {
+  Event.editEvent(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => { console.log(error); });
+});
+
 app.post('/api/user/declineEvent', (req, res) => {
   Event.declineEvent(req.body)
     .then(() => res.sendStatus(201));

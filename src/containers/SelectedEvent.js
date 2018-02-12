@@ -79,6 +79,7 @@ class SelectedEvent extends Component {
           </Card.Content>
           <Card.Content extra>
             <div>
+                <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
                   const convo = {
@@ -98,7 +99,9 @@ class SelectedEvent extends Component {
                     .then(() => {
                       this.props.history.push('/conversation');
                     });
-                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
+                }}>
+                <div style={{ textAlign: 'center' }}>Send a message!</div>
+                </div>
               </div>
           </Card.Content>
         </Card>
