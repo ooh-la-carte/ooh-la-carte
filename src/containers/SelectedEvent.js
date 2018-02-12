@@ -29,6 +29,9 @@ class SelectedEvent extends Component {
 
   render() {
     const event = this.props.selectedEventReducer;
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    const eventDate = new Date(event.date_time);
     const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
     let stars;
     if (showStars) {
@@ -72,7 +75,9 @@ class SelectedEvent extends Component {
             <Card.Description>
               <div className='detailSegment'>{event.description}</div>
               <div className='detailSegment'>Location: {event.city}, {event.state} {event.zip_code}</div>
-              <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.eventDate}</div>
+              <div className='detailSegment'><Icon name='calendar'/>
+                Date: {`${monthNames[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`}
+              </div>
               <div className='detailSegment'><Icon name='users'/>Guests: {event.party_size}</div>
               <div className='detailSegment'><Icon name='comment outline'/>Special requests: {event.requests}</div>
             </Card.Description>

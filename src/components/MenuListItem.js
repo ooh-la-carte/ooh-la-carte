@@ -8,7 +8,7 @@ const MenuListItem = props => (
         <Grid>
           <Grid.Row>
             <Grid.Column width={4}>Name:</Grid.Column>
-            <Grid.Column width={12}>{props.item.dish}</Grid.Column>
+            <Grid.Column width={12}>{props.item.menu_name}</Grid.Column>
             <Grid.Column width={4}>Cuisine:</Grid.Column>
             <Grid.Column width={12}>{props.item.cuisine_type}</Grid.Column>
             <Grid.Column width={4}>Details:</Grid.Column>
