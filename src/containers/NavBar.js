@@ -124,7 +124,7 @@ class NavBar extends Component {
       {/* bottom bar */}
       {window.localStorage.getItem('userId')
         ? /* User IS logged in */
-        <Menu className='nav loggedInNavBarContainer' widths={4} size='massive'>
+        <Menu className='nav navBarContainer bottom' widths={4} size='massive'>
             <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/userProfile')}>Home</Menu.Item>
             {window.localStorage.getItem('isChef') === 'true'
                 ?

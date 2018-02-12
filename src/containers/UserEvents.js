@@ -58,8 +58,8 @@ class UserEvents extends Component {
               </Card.Description>
             </Card.Content>
             <Card.Content extra>
-              <span className='partySize'>Size: {event.party_size}</span>
-              <span className='eventBudget'>Budget: {event.budget}</span>
+              <span>Size: {event.party_size}</span>
+              <span className='onSubmitEditing'>Budget: {event.budget}</span>
             </Card.Content>
           </Card>
       ))}
