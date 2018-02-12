@@ -13,7 +13,21 @@ class AuthRedirect extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+    axios.get('/auth/verify')
+      .then((response) => {
+        window.localStorage.accessToken = response.data.token;
+        window.localStorage.userId = response.data.userId;
+        window.localStorage.username = response.data.username;
+
+        if (response.data.isChef === undefined) {
+          this.setState({
+            callbackReturned: true,
+            newUser: true,
+          });
+        } else {
+          this.setState({ callbackReturned: true });
+        }
+      });
   }
   /* eslint-disable */
   render() {

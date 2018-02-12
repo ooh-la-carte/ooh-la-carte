@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const router = require('express').Router();
 const passport = require('../config/passportConfig.js');
+const jwt = require('jsonwebtoken');
 
 // -----------------------------------------
 // consider moving the main login over here
@@ -25,6 +26,19 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   src.on('end', () => res.end());
   console.log('returned from redirect');
   console.log(req.user);
+});
+
+router.get('/verify', (req, res) => {
+  console.log(req.user);
+  const user = req.user[0];
+  const token = jwt.sign({ id: user.id }, 'super-secret');
+  // send the token back to the client
+  res.json({
+    token,
+    userId: user.id,
+    isChef: user.isChef,
+    username: '',
+  });
 });
 
 module.exports = router;
