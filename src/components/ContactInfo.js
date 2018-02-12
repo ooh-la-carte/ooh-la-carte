@@ -3,9 +3,10 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Form, Grid, Input } from 'semantic-ui-react';
+import { Button, Form, Grid, Input, Dropdown } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
+import options from '../formOptions';
 
 class ContactInfo extends Component {
   constructor(props) {
@@ -95,6 +96,17 @@ class ContactInfo extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
+          <Form.Field required>
+            <label>Account Type</label>
+            <Dropdown
+              type='isChef'
+              onChange={this.handleUpdate}
+              placeholder="Will this be a client or chef account?"
+              fluid
+              selection
+              options={options.userOptions}
+            />
+          </Form.Field>
           <Form.Field required>
             <label>Name</label>
             <Form.Input
