@@ -9,17 +9,6 @@ import '../style.scss';
 
 import options from '../formOptions';
 
-const styles = {
-  btnDiv: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  rows: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-};
-
 class CreateEventForm extends Component {
   constructor(props) {
     super(props);
