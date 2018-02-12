@@ -79,7 +79,10 @@ class SelectedEvent extends Component {
           </Card.Content>
           <Card.Content extra>
             <div>
-                <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
+                {event.hostId === window.localStorage.getItem('userId')
+                  ? <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
+                  : null
+                }
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
                   const convo = {
