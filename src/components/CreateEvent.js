@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import axios from 'axios';
 import { Dropdown, Button, Form, Input, TextArea, Grid } from 'semantic-ui-react';
+import { selectConversation, updateEventRating } from '../actions';
 import '../style.scss';
 
 import options from '../formOptions';
-
-const axios = require('axios');
 
 const styles = {
   btnDiv: {
@@ -22,12 +24,13 @@ class CreateEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventName: '',
+      name: '',
+      eventId: null,
       hostId: window.localStorage.getItem('userId'),
       hostUsername: window.localStorage.getItem('username'),
       chefID: '',
       city: '',
-      stat: '',
+      state: '',
       zip: '',
       month: '',
       date: '',
@@ -36,65 +39,51 @@ class CreateEventForm extends Component {
       description: '',
       budget: '',
       partySize: '',
-      meal: 'breakfast', // breakfast, brunch, lunch, dinner
+      meal: '', // breakfast, brunch, lunch, dinner
     };
   }
 
-  handleChange = (e, { value }) => {
-    this.setState({ value });
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+    if (window.location.pathname.split('/')[1] === 'editEvent') {
+      const date = new Date(this.props.event.date_time);
+      this.setState({
+        name: this.props.event.name || '',
+        eventId: this.props.event.id || null,
+        hostId: window.localStorage.getItem('userId'),
+        hostUsername: window.localStorage.getItem('username'),
+        chefID: this.props.event.chef_id || '',
+        city: this.props.event.city || '',
+        state: this.props.event.state || '',
+        zip: this.props.event.zip_code || '',
+        month: options.monthOptions[date.getMonth()].value || '',
+        date: date.getDate() || '',
+        year: date.getFullYear() || '',
+        cuisine: this.props.event.cuisine_type || '',
+        description: this.props.event.description || '',
+        budget: this.props.event.budget || '',
+        partySize: this.props.event.party_size || '',
+        meal: this.props.event.meal_type || '', // breakfast, brunch, lunch, dinner
+      });
+    }
   }
 
-  setEventName = (e) => {
-    this.setState({ eventName: e.target.value });
-  }
-
-  setCuisine = (e) => {
-    this.setState({ cuisine: e.target.value });
-  }
-
-  setDescription = (e) => {
-    this.setState({ description: e.target.value });
-  }
-
-  setStat = (e) => {
-    this.setState({ stat: e.target.value });
-  }
-
-  setCity = (e) => {
-    this.setState({ city: e.target.value });
-  }
-
-  setZip = (e) => {
-    this.setState({ zip: e.target.value });
+  handleUpdate = (e, { type, value }) => {
+    this.setState({ [type]: value });
   }
 
   setSubmitted = () => { this.setState({ submitted: true }); }
 
-  handleMonthSelectionChange = (e, { value }) => {
-    this.setState({ month: value });
-  }
-
-  handleDateSelectionChange = (e, { value }) => {
-    this.setState({ date: value });
-  }
-
-  handleYearSelectionChange = (e, { value }) => {
-    this.setState({ year: value });
-  }
-
-  handlePartySizeSelectionChange = (e, { value }) => {
-    this.setState({ partySize: value });
-  }
-
-  handleBudgetChange = (e, { value }) => {
-    this.setState({ budget: value });
-  }
-
   handleSubmit = () => {
     const eventObj = this.state;
-    const url = '/api/createevent';
-    if (!eventObj.date || !eventObj.partySize || !eventObj.meal ||
-        !eventObj.eventName || !eventObj.zip) {
+    let url = '';
+    if (window.location.pathname.split('/')[1] === 'editEvent') {
+      url = '/api/editEvent';
+    } else {
+      url = '/api/createevent';
+    }
+    if (!eventObj.date || !eventObj.partySize || !eventObj.budget ||
+        !eventObj.name || !eventObj.zip) {
       console.log('Required fields not provided');
     } else {
       console.log('submitting event');
@@ -114,17 +103,13 @@ class CreateEventForm extends Component {
   render() {
     return (
       <div className='topLevelDiv'>
-        <h1 className='center softText'>Create Event</h1>
         <div className='boxed center'>
           <div>
             <Form onSubmit={this.handleSubmit}>
 
               <Form.Field required>
                 <label>Event Name</label>
-                <Input placeholder='Event Title'
-                  onChange={this.setEventName}
-                  value={this.state.eventName}
-                />
+                <Input placeholder='Event Title' type='name' onChange={this.handleUpdate} value={this.state.name} />
               </Form.Field>
 
               <Grid columns={3}>
@@ -132,31 +117,19 @@ class CreateEventForm extends Component {
                   <Grid.Column style={{ paddingRight: '0px' }} width={8}>
                     <Form.Field>
                       <label>City</label>
-                      <Input
-                        placeholder='City'
-                        value={this.state.city}
-                        onChange={this.setCity}
-                      />
+                      <Input placeholder='City' value={this.state.city} type='city' onChange={this.handleUpdate} />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ padding: '0px' }} width={3}>
                     <Form.Field>
                       <label>State</label>
-                      <Input
-                        placeholder='State'
-                        value={this.state.stat}
-                        onChange={this.setStat}
-                      />
+                      <Input placeholder='State' value={this.state.state} type='state' onChange={this.handleUpdate} />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
                     <Form.Field required>
                       <label>Zip</label>
-                      <Input
-                        placeholder='Zipcode'
-                        value={this.state.zip}
-                        onChange={this.setZip}
-                      />
+                      <Input placeholder='Zipcode' value={this.state.zip} type='zip' onChange={this.handleUpdate} />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
@@ -169,8 +142,9 @@ class CreateEventForm extends Component {
                         placeholder='Month'
                         fluid
                         selection
-                        label='Month'
-                        onChange={this.handleMonthSelectionChange}
+                        label='Month' type='month'
+                        value={this.state.month}
+                        onChange={this.handleUpdate}
                         options={options.monthOptions}
                       />
                     </Form.Field>
@@ -183,8 +157,9 @@ class CreateEventForm extends Component {
                         placeholder='Day'
                         fluid
                         selection
-                        label='Day'
-                        onChange={this.handleDateSelectionChange}
+                        label='Day' type='date'
+                        value={this.state.date}
+                        onChange={this.handleUpdate}
                         options={options.dateOptions}
                       />
                     </Form.Field>
@@ -197,8 +172,9 @@ class CreateEventForm extends Component {
                         placeholder='Year'
                         fluid
                         selection
-                        label='Year'
-                        onChange={this.handleYearSelectionChange}
+                        label='Year' type='year'
+                        value={this.state.year}
+                        onChange={this.handleUpdate}
                         options={options.yearOptions}
                       />
                     </Form.Field>
@@ -207,13 +183,12 @@ class CreateEventForm extends Component {
               </Grid>
               <div className='miniPadding'>
               <Form.Field required>
-                <label>Meal</label>
+                <label>Party Size</label>
                 <Dropdown
-                  onChange={this.handlePartySizeSelectionChange}
                   placeholder="Party Size"
-                  fluid
-                  upward
-                  selection
+                  fluid upward selection
+                  value={this.state.partySize} type='partySize'
+                  onChange={this.handleUpdate}
                   options={options.partySizeOptions}
                 />
               </Form.Field>
@@ -221,20 +196,23 @@ class CreateEventForm extends Component {
               <div className='miniPadding center'>
                 <Button.Group size='medium' className='center butPri'>
                   <Button
-                    onClick={() => { this.setState({ meal: 'Breakfast' }); } }
+                    onClick={() => { this.setState({ meal: 'breakfast' }); } }
                     inverted
                     type='button'
+                    active={this.state.meal === 'breakfast' }
                     >Breakfast
                   </Button>
                   <Button
-                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    onClick={() => { this.setState({ meal: 'lunch' }); } }
                     type='button'
+                    active={this.state.meal === 'lunch' }
                     inverted
                     >Lunch
                   </Button>
                   <Button
-                    onClick={() => { this.setState({ meal: 'Lunch' }); } }
+                    onClick={() => { this.setState({ meal: 'dinner' }); } }
                     type='button'
+                    active={this.state.meal === 'dinner' }
                     inverted
                     >Dinner
                   </Button>
@@ -243,10 +221,7 @@ class CreateEventForm extends Component {
 
               <Form.Field>
                 <label>Cuisine</label>
-                <Input placeholder='Cuisine Description'
-                  onChange={this.setCuisine}
-                  value={this.state.cusine}
-                />
+                <Input placeholder='Cuisine Description' type='cuisine' onChange={this.handleUpdate} value={this.state.cuisine} />
               </Form.Field>
 
               <br/>
@@ -254,8 +229,9 @@ class CreateEventForm extends Component {
               <Form.Field required>
                 <label>Budget</label>
                 <Input placeholder='Budget'
-                  onChange={this.handleBudgetChange}
+                  onChange={this.handleUpdate}
                   value={`${this.state.budget}`}
+                  type='budget'
                 />
               </Form.Field>
 
@@ -264,9 +240,11 @@ class CreateEventForm extends Component {
               <label>Description</label>
                 <TextArea
                 autoHeight
-                placeholder='Add any additional revelent information...'
+                placeholder='Add any additional relevent information...'
                 rows={2}
-                onChange={this.setDescription}
+                onChange={this.handleUpdate}
+                value={this.state.description}
+                type='description'
                 />
               </Form.Field>
 
@@ -287,12 +265,6 @@ class CreateEventForm extends Component {
                   Submit
                 </Button>
               </div>
-
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
             </Form>
           </div>
         </div>
@@ -301,5 +273,16 @@ class CreateEventForm extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return { event: state.selectedEventReducer };
+}
 
-export default withRouter(CreateEventForm);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    selectConversation,
+    updateEventRating,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CreateEventForm));
+

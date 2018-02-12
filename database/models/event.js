@@ -44,11 +44,11 @@ Event.declineEvent = declineObj => (
 
 
 Event.insertEvent = (eventObj) => {
-  const { eventName,
+  const { name,
     hostId,
     hostUsername,
     city,
-    stat,
+    state,
     zip,
     month,
     date,
@@ -60,11 +60,11 @@ Event.insertEvent = (eventObj) => {
     meal } = eventObj;
 
   return knex('events').insert({
-    name: eventName,
+    name,
     creator_id: hostId,
     creator_username: hostUsername,
     city,
-    state: stat,
+    state,
     zip_code: zip,
     date_time: (`${year}-${month}-${date} 00:00:00`),
     cuisine_type: cuisine,
@@ -73,6 +73,46 @@ Event.insertEvent = (eventObj) => {
     party_size: partySize,
     meal_type: meal,
   })
+    .then((insertResult) => {
+      console.log('event:insert - event sucessfully inserted');
+      return insertResult;
+    })
+    .catch(err => console.log('error inserting event into database: ', err));
+};
+
+Event.editEvent = (eventObj) => {
+  const { name,
+    hostId,
+    eventId,
+    hostUsername,
+    city,
+    state,
+    zip,
+    month,
+    date,
+    year,
+    cuisine,
+    budget,
+    description,
+    partySize,
+    meal } = eventObj;
+
+  return knex('events')
+    .where('id', eventId)
+    .update({
+      name,
+      creator_id: hostId,
+      creator_username: hostUsername,
+      city,
+      state,
+      zip_code: zip,
+      date_time: (`${year}-${month}-${date} 00:00:00`),
+      cuisine_type: cuisine,
+      budget,
+      description,
+      party_size: partySize,
+      meal_type: meal,
+    })
     .then((insertResult) => {
       console.log('event:insert - event sucessfully inserted');
       return insertResult;
