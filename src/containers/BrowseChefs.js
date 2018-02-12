@@ -15,6 +15,7 @@ class BrowseChefs extends Component {
     this.state = {
       chefs: [],
       sorted: [],
+      input: '',
     };
   }
 
@@ -33,12 +34,25 @@ class BrowseChefs extends Component {
   handleChange = (e, { value }, prop, data) => {
     const sorting = [];
     data.forEach((event) => {
-      if (event[prop] === value.toLowerCase()) {
-        sorting.push(event);
+      if (event[prop] !== null) {
+        if (event[prop].toLowerCase() === value.toLowerCase()) {
+          sorting.push(event);
+        }
       }
     });
     this.setState({ sorted: sorting });
     console.log('After sorting: ', sorting);
+  }
+
+  changeInput = (e) => {
+    this.setState({ input: e.target.value });
+  }
+
+  handleLocationSubmit = (e) => {
+    if (e.which === 13 && this.state.input !== '') {
+      this.handleChange(null, { value: this.state.input }, 'city', this.state.chefs);
+      this.setState({ input: '' });
+    }
   }
 
   render = () => (
@@ -79,7 +93,7 @@ class BrowseChefs extends Component {
                 'no ratings yet'
               }
             </span>
-            <span className='floatRight'>{chef.rate}</span>
+            <span className='eventBudget'>{chef.rate}</span>
           </Card.Content>
         </Card>
         ))
@@ -126,14 +140,159 @@ class BrowseChefs extends Component {
                   'no ratings yet'
                 }
               </span>
-              <span className='floatRight'>{chef.rate}</span>
+              <span className='eventBudget'>{chef.rate}</span>
             </Card.Content>
           </Card>
           ))}
         </div>
       : null
       }
-      <br /> <br />
+      {this.props.sortReducer === 'Rate'
+        ?
+          <div>
+            <Dropdown
+            value={ this.state.sortValue }
+            onChange={(e, value) => { this.handleChange(e, value, 'cuisine_type', this.state.chefs); }}
+            placeholder='Select cuisine'
+            fluid selection options={chefCuisineOptions} />
+            {this.state.sorted.map(chef => (
+            <Card
+              key={chef.id} style= {{ margin: '5% auto' }}
+              onClick={() => {
+              this.props.changeSelectedChef(chef);
+              this.props.history.push('/selectedChef');
+            }}>
+            <Card.Content>
+              <Image floated='right' size='mini' src={chef.image} />
+              <Card.Header>
+                {chef.username}
+              </Card.Header>
+              <Card.Meta>
+                <div>Name: {chef.name}</div>
+                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+                 {chef.city ?
+                  <div>{chef.city}, {chef.state}</div>
+                  : null }
+              </Card.Meta>
+              <Card.Description>
+                <div>{chef.bio}</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <span className=''>
+                {chef.rating ?
+                  <Rating
+                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                    maxRating={5}
+                  /> :
+                  'no ratings yet'
+                }
+              </span>
+              <span className='eventBudget'>{chef.rate}</span>
+            </Card.Content>
+          </Card>
+          ))}
+        </div>
+      : null
+      }
+      {this.props.sortReducer === 'Rating'
+        ?
+          <div>
+            <Dropdown
+            value={ this.state.sortValue }
+            onChange={(e, value) => { this.handleChange(e, value, 'cuisine_type', this.state.chefs); }}
+            placeholder='Select cuisine'
+            fluid selection options={chefCuisineOptions} />
+            {this.state.sorted.map(chef => (
+            <Card
+              key={chef.id} style= {{ margin: '5% auto' }}
+              onClick={() => {
+              this.props.changeSelectedChef(chef);
+              this.props.history.push('/selectedChef');
+            }}>
+            <Card.Content>
+              <Image floated='right' size='mini' src={chef.image} />
+              <Card.Header>
+                {chef.username}
+              </Card.Header>
+              <Card.Meta>
+                <div>Name: {chef.name}</div>
+                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+                 {chef.city ?
+                  <div>{chef.city}, {chef.state}</div>
+                  : null }
+              </Card.Meta>
+              <Card.Description>
+                <div>{chef.bio}</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <span className=''>
+                {chef.rating ?
+                  <Rating
+                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                    maxRating={5}
+                  /> :
+                  'no ratings yet'
+                }
+              </span>
+              <span className='eventBudget'>{chef.rate}</span>
+            </Card.Content>
+          </Card>
+          ))}
+        </div>
+      : null
+      }
+      {this.props.sortReducer === 'Location'
+        ?
+          <div>
+            <input
+            value={ this.state.input }
+            onChange={ this.changeInput }
+            onKeyPress={ this.handleLocationSubmit }
+            placeholder='Find your city!'
+            style={{ width: '100%' }}
+            />
+            {this.state.sorted.map(chef => (
+            <Card
+              key={chef.id} style= {{ margin: '5% auto' }}
+              onClick={() => {
+              this.props.changeSelectedChef(chef);
+              this.props.history.push('/selectedChef');
+            }}>
+            <Card.Content>
+              <Image floated='right' size='mini' src={chef.image} />
+              <Card.Header>
+                {chef.username}
+              </Card.Header>
+              <Card.Meta>
+                <div>Name: {chef.name}</div>
+                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+                 {chef.city ?
+                  <div>{chef.city}, {chef.state}</div>
+                  : null }
+              </Card.Meta>
+              <Card.Description>
+                <div>{chef.bio}</div>
+              </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <span className=''>
+                {chef.rating ?
+                  <Rating
+                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                    maxRating={5}
+                  /> :
+                  'no ratings yet'
+                }
+              </span>
+              <span className='eventBudget'>{chef.rate}</span>
+            </Card.Content>
+          </Card>
+          ))}
+        </div>
+      : null
+      }
     </div>
   )
 }
