@@ -26,6 +26,10 @@ class SelectedEvent extends Component {
     return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
   };
 
+  sendInvite = (inviteObj) => {
+    axios.post('/api/user/sendInvite', inviteObj);
+  }
+
 
   render() {
     const event = this.props.selectedEventReducer;
@@ -103,9 +107,21 @@ class SelectedEvent extends Component {
                       this.props.history.push('/conversation');
                     });
                 }}>
-                <div style={{ textAlign: 'center' }}>Send a message!</div>
+                  <div style={{ textAlign: 'center' }}>Send a message!</div>
                 </div>
               </div>
+              <div onClick={() => {
+                this.sendInvite({
+                  event_id: event.id,
+                  user_id: event.creator_id,
+                  host: event.creator_username,
+                  chef_id: Number(window.localStorage.getItem('userId')),
+                  sender: window.localStorage.getItem('username'),
+                  chef: window.localStorage.getItem('username'),
+                  event_name: event.name,
+                  accepted: null,
+                });
+              }}>Send an offer!</div>
           </Card.Content>
         </Card>
       </div>
