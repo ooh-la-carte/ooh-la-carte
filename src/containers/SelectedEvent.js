@@ -88,7 +88,7 @@ class SelectedEvent extends Component {
           </Card.Content>
           <Card.Content extra>
             <div>
-                {event.hostId === window.localStorage.getItem('userId')
+                {event.creator_id === Number(window.localStorage.getItem('userId'))
                   ? <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
                   : null
                 }
