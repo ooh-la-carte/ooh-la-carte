@@ -25,15 +25,15 @@ class Conversation extends Component {
     })
       .then((chat) => {
         console.log(chat.data);
-        this.setState({ chat: chat.data.slice(-10) });
+        this.setState({ chat: chat.data });
         this.scrollToBottom();
       });
     // this.listen();
   }
 
-  componentDidUpdate = () => {
-    this.scrollToBottom();
-  }
+  // componentDidUpdate = () => {
+  //   this.scrollToBottom();
+  // }
 
   scrollToBottom = () => {
     this.el.scrollIntoView({ behaviour: 'smooth' });
@@ -105,12 +105,7 @@ class Conversation extends Component {
         {this.state.chat.map((message, i) => (message.self === true
           ? <div key={i} className='senderMessages'>{message.text} <span className='chatTime'>{message.time_sent}</span></div>
           : <div key={i} className='receiverMessages'>{message.text} <span className='chatTime'>{message.time_sent}</span></div>))}
-        <div ref={ (el) => { this.el = el; }} />
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+        <div style={{ clear: 'both' }} ref={ (el) => { this.el = el; }} />
         <div className='chatInput'>
           <input id='chatInput'
           value={ this.state.input }
