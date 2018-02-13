@@ -83,7 +83,7 @@ class Conversation extends Component {
   }
 
   submit = (e) => {
-    if (e.key === 'Enter' && this.state.input !== '') {
+    if (e.which === 13 && this.state.input !== '') {
       document.getElementById('chatInput').blur();
       console.log('Convo info: ', this.props.selectedConversation);
       console.log('User info: ', window.localStorage.getItem('userId)'));

@@ -18,7 +18,7 @@ class Settings extends Component {
       menu: [],
       menuOpen: false,
       id: window.localStorage.getItem('userId'),
-      menuName: '',
+      menu_name: '',
       type: '',
       price: '',
       description: '',
@@ -74,7 +74,7 @@ class Settings extends Component {
   saveMenuItem = () => {
     axios.post('/api/user/saveMenuItem', {
       chef_id: Number(this.state.id),
-      menuName: this.state.menuName,
+      menu_name: this.state.menu_name,
       pic: this.state.pic,
       description: this.state.description,
       cuisine_type: this.state.type,
@@ -83,12 +83,12 @@ class Settings extends Component {
         menu: [...this.state.menu, {
           id: 7777,
           chef_id: Number(this.state.id),
-          menuName: this.state.menuName,
+          menu_name: this.state.menu_name,
           pic: this.state.pic,
           description: this.state.description,
           cuisine_type: this.state.type,
         }],
-        menuName: '',
+        menu_name: '',
         pic: '',
         description: '',
         type: '',
@@ -120,7 +120,7 @@ class Settings extends Component {
             <Form.Field>
               <label>Update your {this.state.socialMediaSelected} link:</label>
               <Form.Input
-                action={<Button className='butPri' inverted content='Save' type='button' onClick={this.updateSocialMedia} />}
+                action={<Button className='btn' inverted content='Save' type='button' onClick={this.updateSocialMedia} />}
                 type='socialMediaEntry'
                 placeholder={this.state.socialMediaEntry || `Enter your ${this.state.socialMediaSelected}...`}
                 onChange={this.handleUpdate}
@@ -200,7 +200,7 @@ class Settings extends Component {
                   <Form.Group grouped>
                     {budgetOptions.map(option => (
                       <Form.Checkbox key={option.value}
-                        checked={this.props.user.rate === option.value}
+                        checked={this.props.user.rate === option.text}
                         label={option.text} value={option.text}
                         onChange={this.handleRateChange} />
                     ))}
@@ -257,7 +257,11 @@ class Settings extends Component {
             : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('instagram'); }}/>
           }
         </div>
-        <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
+        <div className='center miniPadding'>
+          <Link to='/contactInfo'>
+            <Button className='btn' inverted> Update Contact Info</Button>
+          </Link>
+        </div>
         {/* ***** Add Menus ***** */}
         <h1 className='center miniPadding softText'>Add Menus</h1>
         <h5 className='center miniPadding softText'
@@ -270,7 +274,7 @@ class Settings extends Component {
             }}>
                 <Form.Field>
                   <label>Menu name</label>
-                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menuName' value={this.state.menuName}/>
+                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menu_name' value={this.state.menu_name}/>
                 </Form.Field>
                 <Form.Field style={{ width: '50%' }}>
                   <label>Cuisine / Theme</label>
@@ -295,11 +299,6 @@ class Settings extends Component {
             <MenuListItem key={item.id} item={item} />
           ))}
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     );
   }

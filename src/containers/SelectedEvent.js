@@ -21,15 +21,22 @@ class SelectedEvent extends Component {
     this.props.updateEventRating(rating);
   }
 
-  shouldStarsDisplay = (eventDate, chefId) => {
-    const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
+  shouldStarsDisplay = (eventDate, chefId, creatorId) => {
+    const isOver = new Date() > new Date(eventDate);
+    return isOver && (Number.parseInt(window.localStorage.userId, 10) === creatorId) && (chefId);
   };
+
+  sendInvite = (inviteObj) => {
+    axios.post('/api/user/sendInvite', inviteObj);
+  }
 
 
   render() {
     const event = this.props.selectedEventReducer;
-    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    const eventDate = new Date(event.date_time);
+    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id, event.creator_id);
     let stars;
     if (showStars) {
       if (event.rating !== null) {
@@ -72,13 +79,19 @@ class SelectedEvent extends Component {
             <Card.Description>
               <div className='detailSegment'>{event.description}</div>
               <div className='detailSegment'>Location: {event.city}, {event.state} {event.zip_code}</div>
-              <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.eventDate}</div>
+              <div className='detailSegment'><Icon name='calendar'/>
+                Date: {`${monthNames[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`}
+              </div>
               <div className='detailSegment'><Icon name='users'/>Guests: {event.party_size}</div>
               <div className='detailSegment'><Icon name='comment outline'/>Special requests: {event.requests}</div>
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
             <div>
+                {event.hostId === window.localStorage.getItem('userId')
+                  ? <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
+                  : null
+                }
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
                   const convo = {
@@ -98,8 +111,22 @@ class SelectedEvent extends Component {
                     .then(() => {
                       this.props.history.push('/conversation');
                     });
-                }}><div style={{ textAlign: 'center' }}>Send a message!</div></div>
+                }}>
+                  <div>Send a message!</div>
+                </div>
               </div>
+              <div onClick={() => {
+                this.sendInvite({
+                  event_id: event.id,
+                  user_id: event.creator_id,
+                  host: event.creator_username,
+                  chef_id: Number(window.localStorage.getItem('userId')),
+                  sender: window.localStorage.getItem('username'),
+                  chef: window.localStorage.getItem('username'),
+                  event_name: event.name,
+                  accepted: null,
+                });
+              }}>Send an offer!</div>
           </Card.Content>
         </Card>
       </div>

@@ -322,19 +322,42 @@ module.exports.chefCuisineOptions = [
 
 module.exports.budgetOptions = [
   {
-    text: 'Budget ($20 or less per hr)',
-    value: 'Budget ($20 or less per hr)',
+    text: '$0-$50',
+    value: '$',
   },
   {
-    text: 'Moderate ($20 - $50 hr)',
-    value: 'Moderate ($20 - $50 hr)',
+    text: '$50-$100',
+    value: '$$',
   },
   {
-    text: 'High ($50-$100 per hr)',
-    value: 'High ($50-$100 per hr)',
+    text: '$100-$200',
+    value: '$$$',
   },
   {
-    text: 'Luxury (more than $100 per hr)',
-    value: 'Luxury (more than $100 per hr)',
+    text: '$200+',
+    value: '$$$$',
+  },
+];
+
+module.exports.chefRating = [
+  {
+    text: '1 Star',
+    value: '1',
+  },
+  {
+    text: '2 Star',
+    value: '2',
+  },
+  {
+    text: '3 Star',
+    value: '3',
+  },
+  {
+    text: '4 Star',
+    value: '4',
+  },
+  {
+    text: '5 Star',
+    value: '5',
   },
 ];

@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import '../style.scss';
 import { changeSelectedEvent } from '../actions';
-import { cuisineOptions, sizeOptions, cityOptions } from '../formOptions';
+import { cuisineOptions, sizeOptions, budgetOptions } from '../formOptions';
 // import data from '../MockData';
 
 
@@ -17,6 +17,7 @@ class BrowseEvents extends Component {
       events: [],
       sorted: [],
       sortValue: '',
+      input: '',
     };
   }
 
@@ -35,17 +36,62 @@ class BrowseEvents extends Component {
 
   handleChange = (e, { value }, prop, data) => {
     const sorting = [];
-    data.forEach((event) => {
-      if (event[prop] === value.toLowerCase()) {
-        sorting.push(event);
+    if (this.props.sortReducer === 'Budget') {
+      if (value === '$') {
+        data.forEach((event) => {
+          if (+event.budget > 0 && +event.budget <= 50) {
+            sorting.push(event);
+          }
+        });
+        this.setState({ sorted: sorting });
+      } else if (value === '$$') {
+        data.forEach((event) => {
+          if (+event.budget > 50 && +event.budget <= 100) {
+            sorting.push(event);
+          }
+        });
+        this.setState({ sorted: sorting });
+      } else if (value === '$$$') {
+        data.forEach((event) => {
+          if (+event.budget > 100 && +event.budget <= 200) {
+            sorting.push(event);
+          }
+        });
+        this.setState({ sorted: sorting });
+      } else if (value === '$$$$') {
+        data.forEach((event) => {
+          if (+event.budget > 200) {
+            sorting.push(event);
+          }
+        });
+        this.setState({ sorted: sorting });
+      } else {
+        this.setState({ sorted: [] });
       }
-    });
-    this.setState({ sorted: sorting });
-    console.log('After sorting: ', sorting);
+    } else {
+      data.forEach((event) => {
+        if (event[prop] === value.toLowerCase()) {
+          sorting.push(event);
+        }
+      });
+      this.setState({ sorted: sorting });
+      console.log('After sorting: ', sorting);
+    }
+  }
+
+  changeInput = (e) => {
+    this.setState({ input: e.target.value });
+  }
+
+  handleLocationSubmit = (e) => {
+    if (e.which === 13 && this.state.input !== '') {
+      this.handleChange(null, { value: this.state.input }, 'city', this.state.events);
+      this.setState({ input: '' });
+    }
   }
 
   render = () => (
-    <div className='topLevelDiv center miniPadding profile event'>
+    <div className='topLevelDiv center miniPadding profile'>
       {this.props.sortReducer === 'Cuisine'
         ?
           <div>
@@ -78,8 +124,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -119,8 +165,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -131,11 +177,13 @@ class BrowseEvents extends Component {
       {this.props.sortReducer === 'Location'
         ?
           <div>
-            <Dropdown
-            value={ this.state.sortValue }
-            onChange={(e, value) => { this.handleChange(e, value, 'city', this.state.events); }}
-            placeholder='Select a city'
-            fluid selection options={cityOptions} />
+            <input
+            value={ this.state.input }
+            onChange={ this.changeInput }
+            onKeyPress={ this.handleLocationSubmit }
+            placeholder='Find your city!'
+            style={{ width: '100%' }}
+            />
             {this.state.sorted.map(event => (
               event.chef_id === null
               ?
@@ -160,8 +208,49 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
+                  </Card.Content>
+                </Card>
+              : null
+            ))}
+          </div>
+        : null
+      }
+      {this.props.sortReducer === 'Budget'
+        ?
+          <div>
+            <Dropdown
+            value={ this.state.sortValue }
+            onChange={(e, value) => { this.handleChange(e, value, 'budget', this.state.events); }}
+            placeholder='Select a budget'
+            fluid selection options={budgetOptions} />
+            {this.state.sorted.map(event => (
+              event.chef_id === null
+              ?
+                <Card
+                  key={event.id}
+                  className='eventCard'
+                  onClick={() => {
+                    console.log('Selected Event store: ', event);
+                    this.props.changeSelectedEvent(event);
+                    this.props.history.push('/selectedEvent');
+                }}>
+                  <Card.Content>
+                    <Image floated='right' size='mini' src={event.img} />
+                    <Card.Header>
+                      {event.name} ({event.cuisine_type})
+                    </Card.Header>
+                    <Card.Meta>
+                      <div>{event.creator_username}</div>
+                    </Card.Meta>
+                    <Card.Description>
+                      <div>{event.description}</div>
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null
@@ -195,8 +284,8 @@ class BrowseEvents extends Component {
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <span className='partySize'>Size: {event.party_size}</span>
-                  <span className='eventBudget'>Budget: {event.budget}</span>
+                  <span>Size: {event.party_size}</span>
+                  <span className='floatRight'>Budget: {event.budget}</span>
                 </Card.Content>
               </Card>
             : null
