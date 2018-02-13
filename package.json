@@ -13,7 +13,9 @@
   "author": "Jake Lee",
   "license": "ISC",
   "devDependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "file-loader": "^1.1.6",
+    "url-loader": "^0.6.2"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -41,13 +43,16 @@
     "jsonwebtoken": "^8.1.1",
     "knex": "^0.14.2",
     "material-ui": "^0.20.0",
+    "moment": "^2.20.1",
     "node-sass": "^4.7.2",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^3.0.1",
     "pg": "^7.4.1",
     "react": "^15.4.2",
+    "react-collapse": "^4.0.3",
     "react-dom": "^15.4.2",
+    "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.0.0",

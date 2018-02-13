@@ -45,6 +45,7 @@ Messaging.insertMessage = messageObj => (
     user_id: messageObj.sender,
     conversation_id: messageObj.convo_id,
     text: messageObj.text,
+    time_sent: messageObj.time_sent,
     self: true,
   })
     .then(() => {
@@ -53,6 +54,7 @@ Messaging.insertMessage = messageObj => (
         user_id: messageObj.reciever_id,
         conversation_id: messageObj.convo_id,
         text: messageObj.text,
+        time_sent: messageObj.time_sent,
         self: false,
       })
         .catch(err => console.log(err));
@@ -60,14 +62,21 @@ Messaging.insertMessage = messageObj => (
     .catch(err => console.log(err))
 );
 
+Messaging.updateConvoTime = updateObj => (
+  knex('conversations').where('id', updateObj.convo_id).update({
+    last_updated: Date.now(),
+    formatted_time: updateObj.time_sent,
+  })
+);
+
 Messaging.getConvosChef = chefId => (
-  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId', 'conversations.last_updated', 'conversations.formatted_time').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.user_id');
   }).where('conversations.chef_id', chefId)
 );
 
 Messaging.getConvosClient = userId => (
-  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId').from('conversations').innerJoin('users', function combiner() {
+  knex.select('conversations.id as chatId', 'users.username as recipientUsername', 'users.id as recipientId', 'conversations.last_updated', 'conversations.formatted_time').from('conversations').innerJoin('users', function combiner() {
     this.on('users.id', 'conversations.chef_id');
   }).where('conversations.user_id', userId)
 );
