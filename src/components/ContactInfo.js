@@ -229,6 +229,7 @@ class ContactInfo extends Component {
           </Button>
           </div>
         </Form>
+        <br />
       </div>
     );
   }
