@@ -120,7 +120,7 @@ class Settings extends Component {
             <Form.Field>
               <label>Update your {this.state.socialMediaSelected} link:</label>
               <Form.Input
-                action={<Button className='butPri' inverted content='Save' type='button' onClick={this.updateSocialMedia} />}
+                action={<Button className='btn' inverted content='Save' type='button' onClick={this.updateSocialMedia} />}
                 type='socialMediaEntry'
                 placeholder={this.state.socialMediaEntry || `Enter your ${this.state.socialMediaSelected}...`}
                 onChange={this.handleUpdate}
@@ -200,7 +200,7 @@ class Settings extends Component {
                   <Form.Group grouped>
                     {budgetOptions.map(option => (
                       <Form.Checkbox key={option.value}
-                        checked={this.props.user.rate === option.value}
+                        checked={this.props.user.rate === option.text}
                         label={option.text} value={option.text}
                         onChange={this.handleRateChange} />
                     ))}
@@ -299,11 +299,6 @@ class Settings extends Component {
             <MenuListItem key={item.id} item={item} />
           ))}
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
       </div>
     );
   }
