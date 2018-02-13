@@ -299,6 +299,7 @@ class Settings extends Component {
             <MenuListItem key={item.id} item={item} />
           ))}
         </div>
+        <br /> <br />
       </div>
     );
   }

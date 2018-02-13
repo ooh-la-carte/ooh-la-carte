@@ -292,6 +292,7 @@ class BrowseEvents extends Component {
           ))
         : null
       }
+      <br /> <br />
     </div>
   );
 }
