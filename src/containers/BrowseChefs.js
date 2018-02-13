@@ -79,7 +79,7 @@ class BrowseChefs extends Component {
                 'no ratings yet'
               }
             </span>
-            <span className='eventBudget'>{chef.rate}</span>
+            <span className='floatRight'>{chef.rate}</span>
           </Card.Content>
         </Card>
         ))
@@ -126,13 +126,14 @@ class BrowseChefs extends Component {
                   'no ratings yet'
                 }
               </span>
-              <span className='eventBudget'>{chef.rate}</span>
+              <span className='floatRight'>{chef.rate}</span>
             </Card.Content>
           </Card>
           ))}
         </div>
       : null
       }
+      <br /> <br />
     </div>
   )
 }

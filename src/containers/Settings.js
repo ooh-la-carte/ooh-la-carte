@@ -257,7 +257,11 @@ class Settings extends Component {
             : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('instagram'); }}/>
           }
         </div>
-        <div className='center miniPadding'><Link to='/contactInfo'>Update Contact Info</Link></div>
+        <div className='center miniPadding'>
+          <Link to='/contactInfo'>
+            <Button className='btn' inverted> Update Contact Info</Button>
+          </Link>
+        </div>
         {/* ***** Add Menus ***** */}
         <h1 className='center miniPadding softText'>Add Menus</h1>
         <h5 className='center miniPadding softText'
