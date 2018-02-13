@@ -285,19 +285,19 @@ module.exports.sizeOptions = [
 module.exports.cityOptions = [
   {
     text: 'Austin',
-    value: 'austin',
+    value: 'Austin',
   },
   {
     text: 'Pflugerville',
-    value: 'pflugerville',
+    value: 'Pflugerville',
   },
   {
     text: 'Round Rock',
-    value: 'round rock',
+    value: 'Round Rock',
   },
   {
     text: 'Georgetown',
-    value: 'georgetown',
+    value: 'Georgetown',
   },
 ];
 
@@ -323,41 +323,41 @@ module.exports.chefCuisineOptions = [
 module.exports.budgetOptions = [
   {
     text: '$0-$50',
-    value: '$',
+    value: '$0-$50',
   },
   {
     text: '$50-$100',
-    value: '$$',
+    value: '$50-$100',
   },
   {
     text: '$100-$200',
-    value: '$$$',
+    value: '$100-$200',
   },
   {
     text: '$200+',
-    value: '$$$$',
+    value: '$200+',
   },
 ];
 
 module.exports.chefRating = [
   {
     text: '1 Star',
-    value: '1',
+    value: '1 Star',
   },
   {
     text: '2 Star',
-    value: '2',
+    value: '2 Star',
   },
   {
     text: '3 Star',
-    value: '3',
+    value: '3 Star',
   },
   {
     text: '4 Star',
-    value: '4',
+    value: '4 Star',
   },
   {
     text: '5 Star',
-    value: '5',
+    value: '5 Star',
   },
 ];

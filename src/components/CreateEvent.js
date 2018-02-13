@@ -261,6 +261,7 @@ class CreateEventForm extends Component {
             </Form>
           </div>
         </div>
+        <br /> <br /> <br />
       </div>
     );
   }
