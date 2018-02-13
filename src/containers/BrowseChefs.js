@@ -15,7 +15,7 @@ class BrowseChefs extends Component {
     this.state = {
       chefs: [],
       sorted: [],
-      input: '',
+      city: '',
     };
   }
 
@@ -32,352 +32,120 @@ class BrowseChefs extends Component {
       .catch(err => console.log(err));
   }
 
-  handleChange = (e, { value }, prop, data) => {
-    const sorting = [];
-    console.log(value);
-    console.log(data);
-    if (this.props.sortReducer === 'Rate') {
-      if (value === '$') {
-        data.forEach((chef) => {
-          if (chef[prop] === '$0-$50') {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '$$') {
-        data.forEach((chef) => {
-          if (chef[prop] === '$50-$100') {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '$$$') {
-        console.log('here: ', data);
-        data.forEach((chef) => {
-          console.log(chef[prop]);
-          if (chef[prop] === '$100-$200') {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '$$$$') {
-        data.forEach((chef) => {
-          if (chef[prop] === '$200+') {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else {
-        this.setState({ sorted: [] });
-      }
-    } else if (this.props.sortReducer === 'Rating') {
-      if (value === '1') {
-        data.forEach((chef) => {
-          const parsed = JSON.parse(chef[prop]);
-          if (chef[prop] && parsed[0] > 0 && parsed[0] < 2) {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '2') {
-        data.forEach((chef) => {
-          const parsed = JSON.parse(chef[prop]);
-          if (chef[prop] && parsed[0] >= 2 && parsed[0] < 3) {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '3') {
-        data.forEach((chef) => {
-          const parsed = JSON.parse(chef[prop]);
-          if (chef[prop] && parsed[0] >= 3 && parsed[0] < 4) {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '4') {
-        data.forEach((chef) => {
-          const parsed = JSON.parse(chef[prop]);
-          if (chef[prop] && parsed[0] >= 4 && parsed[0] < 5) {
-            console.log('got through: ', chef);
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else if (value === '5') {
-        data.forEach((chef) => {
-          const parsed = JSON.parse(chef[prop]);
-          if (chef[prop] && parsed[0] === 5) {
-            sorting.push(chef);
-          }
-        });
-        this.setState({ sorted: sorting });
-      } else {
-        this.setState({ sorted: [] });
-      }
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.sortReducer !== nextProps.sortReducer) {
+      this.setState({ sorted: this.state.chefs.slice() });
+    }
+  }
+
+  handleChange = (e, { value }) => {
+    let sorting = [];
+    const sortField = this.props.sortReducer;
+    if (sortField === 'none') {
+      sorting = this.state.chefs;
     } else {
-      data.forEach((chef) => {
-        if (chef[prop] === value.toLowerCase()) {
+      this.state.chefs.forEach((chef) => {
+        if (chef[sortField] && chef[sortField].toLowerCase() === value.toLowerCase()) {
           sorting.push(chef);
         }
       });
-      this.setState({ sorted: sorting });
-      console.log('After sorting: ', sorting);
+    }
+    this.setState({ sorted: sorting });
+  }
+
+  changeCity = (e) => {
+    this.setState({ city: e.target.value });
+  }
+
+  handleCitySubmit = (e) => {
+    if (e.which === 13 && this.state.city !== '') {
+      this.handleChange(null, { value: this.state.city }, 'city', this.state.chefs);
+      this.setState({ city: '' });
     }
   }
 
-  changeInput = (e) => {
-    this.setState({ input: e.target.value });
-  }
-
-  handleLocationSubmit = (e) => {
-    if (e.which === 13 && this.state.input !== '') {
-      this.handleChange(null, { value: this.state.input }, 'city', this.state.chefs);
-      this.setState({ input: '' });
-    }
-  }
-
-  render = () => (
-
-    <div className='topLevelDiv center miniPadding profile event'>
-      {this.props.sortReducer === 'None'
-        ?
-          this.state.chefs.map(chef => (
-          <Card
-            key={chef.id} style= {{ margin: '5% auto' }}
-            onClick={() => {
-            this.props.changeSelectedChef(chef);
-            this.props.history.push('/selectedChef');
-          }}>
-          <Card.Content>
-            <Image floated='right' size='mini' src={chef.image} />
-            <Card.Header>
-              {chef.username}
-            </Card.Header>
-            <Card.Meta>
-              <div>Name: {chef.name}</div>
-              <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
-               {chef.city ?
-                <div>{chef.city}, {chef.state}</div>
-                : null }
-            </Card.Meta>
-            <Card.Description>
-              <div>{chef.bio}</div>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <span className=''>
-              {chef.rating ?
-                <Rating
-                  rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
-                  maxRating={5}
-                /> :
-                'no ratings yet'
-              }
-            </span>
-            <span className='eventBudget'>{chef.rate}</span>
-          </Card.Content>
-        </Card>
-        ))
-      : null
-      }
-      {this.props.sortReducer === 'Cuisine'
-        ?
-          <div>
-            <Dropdown
+  render = () => {
+    let sortDiv;
+    if (this.props.sortReducer === 'cuisine') {
+      sortDiv = (
+        <Dropdown
             value={ this.state.sortValue }
-            onChange={(e, value) => { this.handleChange(e, value, 'cuisine_type', this.state.chefs); }}
+            onChange={this.handleChange}
             placeholder='Select cuisine'
             fluid selection options={chefCuisineOptions} />
-            {this.state.sorted.map(chef => (
-            <Card
-              key={chef.id} style= {{ margin: '5% auto' }}
-              onClick={() => {
-              this.props.changeSelectedChef(chef);
-              this.props.history.push('/selectedChef');
-            }}>
-            <Card.Content>
-              <Image floated='right' size='mini' src={chef.image} />
-              <Card.Header>
-                {chef.username}
-              </Card.Header>
-              <Card.Meta>
-                <div>Name: {chef.name}</div>
-                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
-                 {chef.city ?
-                  <div>{chef.city}, {chef.state}</div>
-                  : null }
-              </Card.Meta>
-              <Card.Description>
-                <div>{chef.bio}</div>
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <span className=''>
-                {chef.rating ?
-                  <Rating
-                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
-                    maxRating={5}
-                  /> :
-                  'no ratings yet'
-                }
-              </span>
-              <span className='eventBudget'>{chef.rate}</span>
-            </Card.Content>
-          </Card>
-          ))}
-        </div>
-      : null
-      }
-      {this.props.sortReducer === 'Rate'
-        ?
-          <div>
+      );
+    } else if (this.props.sortReducer === 'rate') {
+      sortDiv = (
             <Dropdown
             value={ this.state.sortValue }
-            onChange={(e, value) => { this.handleChange(e, value, 'rate', this.state.chefs); }}
+            onChange={this.handleChange}
             placeholder='Select rate'
             fluid selection options={budgetOptions} />
-            {this.state.sorted.map(chef => (
-            <Card
-              key={chef.id} style= {{ margin: '5% auto' }}
-              onClick={() => {
-              this.props.changeSelectedChef(chef);
-              this.props.history.push('/selectedChef');
-            }}>
-            <Card.Content>
-              <Image floated='right' size='mini' src={chef.image} />
-              <Card.Header>
-                {chef.username}
-              </Card.Header>
-              <Card.Meta>
-                <div>Name: {chef.name}</div>
-                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
-                 {chef.city ?
-                  <div>{chef.city}, {chef.state}</div>
-                  : null
-                }
-              </Card.Meta>
-              <Card.Description>
-                <div>{chef.bio}</div>
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <span className=''>
-                {chef.rating ?
-                  <Rating
-                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
-                    maxRating={5}
-                  /> :
-                  'no ratings yet'
-                }
-              </span>
-              <span className='eventBudget'>{chef.rate}</span>
-            </Card.Content>
-          </Card>
-          ))}
-        </div>
-      : null
-      }
-      {this.props.sortReducer === 'Rating'
-        ?
-          <div>
+      );
+    } else if (this.props.sortReducer === 'rating') {
+      sortDiv = (
             <Dropdown
             value={ this.state.sortValue }
-            onChange={(e, value) => { this.handleChange(e, value, 'rating', this.state.chefs); }}
+            onChange={this.handleChange}
             placeholder='Select rating range'
             fluid selection options={chefRating} />
-            {this.state.sorted.map(chef => (
-            <Card
-              key={chef.id} style= {{ margin: '5% auto' }}
-              onClick={() => {
-              this.props.changeSelectedChef(chef);
-              this.props.history.push('/selectedChef');
-            }}>
-            <Card.Content>
-              <Image floated='right' size='mini' src={chef.image} />
-              <Card.Header>
-                {chef.username}
-              </Card.Header>
-              <Card.Meta>
-                <div>Name: {chef.name}</div>
-                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
-                 {chef.city ?
-                  <div>{chef.city}, {chef.state}</div>
-                  : null }
-              </Card.Meta>
-              <Card.Description>
-                <div>{chef.bio}</div>
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <span className=''>
-                {chef.rating ?
-                  <Rating
-                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
-                    maxRating={5}
-                  /> :
-                  'no ratings yet'
-                }
-              </span>
-              <span className='eventBudget'>{chef.rate}</span>
-            </Card.Content>
-          </Card>
-          ))}
-        </div>
-      : null
-      }
-      {this.props.sortReducer === 'Location'
-        ?
-          <div>
+      );
+    } else if (this.props.sortReducer === 'city') {
+      sortDiv = (
             <input
-            value={ this.state.input }
-            onChange={ this.changeInput }
-            onKeyPress={ this.handleLocationSubmit }
+            value={ this.state.city }
+            onChange={ this.changeCity }
+            onKeyPress={ this.handleCitySubmit }
             placeholder='Find your city!'
             style={{ width: '100%' }}
             />
-            {this.state.sorted.map(chef => (
-            <Card
-              key={chef.id} style= {{ margin: '5% auto' }}
-              onClick={() => {
-              this.props.changeSelectedChef(chef);
-              this.props.history.push('/selectedChef');
-            }}>
-            <Card.Content>
-              <Image floated='right' size='mini' src={chef.image} />
-              <Card.Header>
-                {chef.username}
-              </Card.Header>
-              <Card.Meta>
-                <div>Name: {chef.name}</div>
-                <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
-                 {chef.city ?
-                  <div>{chef.city}, {chef.state}</div>
-                  : null }
-              </Card.Meta>
-              <Card.Description>
-                <div>{chef.bio}</div>
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <span className=''>
-                {chef.rating ?
-                  <Rating
-                    rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
-                    maxRating={5}
-                  /> :
-                  'no ratings yet'
-                }
-              </span>
-              <span className='eventBudget'>{chef.rate}</span>
-            </Card.Content>
-          </Card>
-          ))}
-        </div>
-      : null
+      );
+    }
+
+    return (
+    <div className='topLevelDiv center miniPadding profile event'>
+      {sortDiv}
+      {this.state.sorted.map(chef => (
+        <Card key={chef.id} style= {{ margin: '5% auto' }}
+          onClick={() => {
+          this.props.changeSelectedChef(chef);
+          this.props.history.push('/selectedChef');
+        }}>
+        <Card.Content>
+          <Image floated='right' size='mini' src={chef.image} />
+          <Card.Header>
+            {chef.username}
+          </Card.Header>
+          <Card.Meta>
+            <div>Name: {chef.name}</div>
+            <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+             {chef.city ?
+              <div>{chef.city}, {chef.state}</div>
+              : null }
+          </Card.Meta>
+          <Card.Description>
+            <div>{chef.bio}</div>
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <span className=''>
+            {chef.rating ?
+              <Rating
+                rating = {Helpers.calculateRating(chef.rating).reduce((a, c) => a / c)}
+                maxRating={5}
+              /> :
+              'no ratings yet'
+            }
+          </span>
+          <span className='floatRight'>{chef.rate}</span>
+        </Card.Content>
+      </Card>
+      ))
       }
+      <br /> <br />
     </div>
-  )
+    );
+  }
 }
 
 function mapStateToProps(state) {

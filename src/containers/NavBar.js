@@ -51,11 +51,11 @@ class NavBar extends Component {
         <Menu.Item className='nav'>
           <Dropdown className="right" pointing={true} text='Sort By'>
             <Dropdown.Menu>
-              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
-              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
-              <Dropdown.Item text='Size' onClick={() => { this.props.changeSort('Size'); }} />
-              <Dropdown.Item text='Budget' onClick={() => { this.props.changeSort('Budget'); }} />
-              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('none'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('cuisine'); }} />
+              <Dropdown.Item text='Party Size' onClick={() => { this.props.changeSort('partySize'); }} />
+              <Dropdown.Item text='Budget' onClick={() => { this.props.changeSort('budget'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('location'); }} />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
@@ -65,11 +65,11 @@ class NavBar extends Component {
         <Menu.Item className='nav'>
           <Dropdown className="right" pointing={true} text='Sort By'>
             <Dropdown.Menu>
-              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('None'); }} />
-              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('Cuisine'); }} />
-              <Dropdown.Item text='Rate' onClick={() => { this.props.changeSort('Rate'); }} />
-              <Dropdown.Item text='Rating' onClick={() => { this.props.changeSort('Rating'); }} />
-              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('Location'); }} />
+              <Dropdown.Item text='None' onClick={() => { this.props.changeSort('none'); }} />
+              <Dropdown.Item text='Cuisine' onClick={() => { this.props.changeSort('cuisine'); }} />
+              <Dropdown.Item text='Rate' onClick={() => { this.props.changeSort('rate'); }} />
+              <Dropdown.Item text='Rating' onClick={() => { this.props.changeSort('rating'); }} />
+              <Dropdown.Item text='Location' onClick={() => { this.props.changeSort('city'); }} />
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
