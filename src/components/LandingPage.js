@@ -19,21 +19,25 @@ const LandingPage = props => (
       <br />
         <div className='center boxed'>
 
-            <Grid>
-              <Grid.Row>
-                <Grid.Column width={8}>Are you a prospective chef?</Grid.Column>
-                <Grid.Column width={8}>Are you a prospective client? </Grid.Column>
-                <Grid.Column width={8}>Create an account and show of your abilities</Grid.Column>
-                <Grid.Column width={8}>Set up a profile and browse though chefs in your area</Grid.Column>
-                <Grid.Column width={8}>Browse user events available in your area</Grid.Column>
-                <Grid.Column width={8}>See chef's ratings and view some of thier menus</Grid.Column>
-                <Grid.Column width={16}>chat with each other in real time to discuss the details</Grid.Column>
-                <Grid.Column width={16}>Arrane a time for your event</Grid.Column>
-                <Grid.Column width={16}>Have a professionally catered dining experience</Grid.Column>
-                <Grid.Column width={16}>Start your search now by browsing our chefs and events!</Grid.Column>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={8}>Are you a prospective chef?</Grid.Column>
+          <Grid.Column width={8}>Are you a prospective client? </Grid.Column>
+          <Grid.Column width={8}>Create an account and show of your abilities</Grid.Column>
+          <Grid.Column width={8}>Set up a profile and browse though chefs in your area</Grid.Column>
+          <Grid.Column width={8}>Browse user events available in your area</Grid.Column>
+          <Grid.Column width={8}>See chef's ratings and view some of thier menus</Grid.Column>
+          <Grid.Column width={16}>
+            chat with each other in real time to discuss the details
+          </Grid.Column>
+          <Grid.Column width={16}>Arrane a time for your event</Grid.Column>
+          <Grid.Column width={16}>Have a professionally catered dining experience</Grid.Column>
+          <Grid.Column width={16}>
+            Start your search now by browsing our chefs and events!
+          </Grid.Column>
 
-              </Grid.Row>
-            </Grid>
+        </Grid.Row>
+      </Grid>
       </div>
         <div className='cardHolder'>
           <Card className='landingCards' onClick={() => { props.history.push('/browseEvents'); }}>
