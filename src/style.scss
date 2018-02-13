@@ -7,6 +7,7 @@
 $primary-color: #00bcd4;
 $light-color: #e6fcff;
 $soft-text: 'Arima Madurai', cursive;
+$olc-font: 'Dancing Script', cursive;
 
 .softText {
   font-family: 'Asap', sans-serif;
@@ -103,15 +104,25 @@ body {
   ====================
 */
 
-.loggedOutText {
-
+.OLCtitle {
+  font-family: $olc-font;
+  text-align: center;
+  font-size: 300%;
 }
 
-/*
-  ====================
-  Landing Page Styling
-  ====================
-*/
+.logoColumn {
+  padding-right: 0 !important;
+}
+
+.textColumn{
+  padding-left: 0 !important;
+}
+
+.OLClogo {
+  background-color: $light-color;
+  margin: 0, 1rem !important;
+  padding: 0 !important;
+}
 
 .textBox {
   background-color: $primary-color !important;

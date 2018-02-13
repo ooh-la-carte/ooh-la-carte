@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Image, Segment, Grid } from 'semantic-ui-react';
 import { Redirect, withRouter } from 'react-router-dom';
+import logo from '../../public/android-chrome-512x512.png';
 
 const LandingPage = props => (
   <div>
@@ -10,10 +11,23 @@ const LandingPage = props => (
       :
       <div className='topLevelDiv'>
 
+        <h4 className='OLCtitle'>Ooh La Carte</h4>
+
       <div className='center boxed'>
-      <Segment className='textBox'>
-        <h4 className='nav center'>A new and exciting way to connect chefs with clients for individualized dining experiences!</h4>
-        </Segment>
+      <Grid>
+        <Grid.Row>
+        <Grid.Column className='logoColumn' width={5}>
+          <Image size='small' id="logo" src={logo} alt='logo image' />
+        </Grid.Column>
+        <Grid.Column className='textColumn' width={11}>
+            <Segment className='textBox'>
+              <h4 className='nav center'>A new and exciting way to connect chefs with clients for individualized dining experiences!</h4>
+            </Segment>
+        </Grid.Column>
+
+        </Grid.Row>
+      </Grid>
+      <br />
         <Image rounded src='https://source.unsplash.com/zhiZOpm99Iw'/>
       </div>
       <br />
@@ -30,7 +44,7 @@ const LandingPage = props => (
           <Grid.Column width={16}>
             chat with each other in real time to discuss the details
           </Grid.Column>
-          <Grid.Column width={16}>Arrane a time for your event</Grid.Column>
+          <Grid.Column width={16}>Arrange a time for your event</Grid.Column>
           <Grid.Column width={16}>Have a professionally catered dining experience</Grid.Column>
           <Grid.Column width={16}>
             Start your search now by browsing our chefs and events!
@@ -43,18 +57,14 @@ const LandingPage = props => (
           <Card className='landingCards' onClick={() => { props.history.push('/browseEvents'); }}>
             <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
             <Card.Content>
-              <Card.Header>
                 Browse Events
-              </Card.Header>
             </Card.Content>
           </Card>
 
           <Card className='landingCards' onClick={() => { props.history.push('/browseChefs'); }}>
             <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
             <Card.Content>
-              <Card.Header>
                 Browse Chefs
-              </Card.Header>
             </Card.Content>
           </Card>
         </div>

@@ -22,6 +22,10 @@ class SignUpForm extends Component {
       Object.assign(this.state.creds, { username: e.target.value }) });
   }
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   setPassword1 = (e) => {
     this.setState({ creds:
       Object.assign(this.state.creds, { password1: e.target.value }) });
