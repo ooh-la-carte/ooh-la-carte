@@ -5,7 +5,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import logo from '../../public/android-chrome-512x512.png';
 import chatPic from '../../public/chat.png';
 import chefPic from '../../public/chef.png';
-import eventPic from '../../public/event.png';
+// import eventPic from '../../public/event.png';
 
 class LandingPage extends Component {
   constructor(props) {
