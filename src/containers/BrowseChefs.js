@@ -104,9 +104,7 @@ class BrowseChefs extends Component {
 
     return (
     <div className='topLevelDiv center miniPadding profile event'>
-    <div>
-    {sortDiv}
-    </div>
+      {sortDiv}
       {this.state.sorted.map(chef => (
         <Card key={chef.id} style= {{ margin: '5% auto' }}
           onClick={() => {
