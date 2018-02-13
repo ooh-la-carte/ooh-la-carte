@@ -20,6 +20,15 @@ body {
     margin-bottom: 25% !important;
 }
 
+.standardWidth {
+  width: 95%;
+  margin: 0% auto !important;
+}
+
+.whiteBackground {
+  background-color: white;
+}
+
 .topLevelDiv {
   margin: 10% 0% 15% 0%;
 }
@@ -229,19 +238,6 @@ body {
   // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
 }
 
-.chatMessages {
-  min-height: 35px;
-  width: 80%;
-  margin: 1% auto;
-  border-radius: 5px;
-  padding: 2%;
-  background-color: $light-color;
-}
-
-// WHEN YOU USE THESE IT MAKES SCROLL TO BOTTOM NOT WORK AND
-// AND SOMETIMES WONT LOAD NEW MESSAGES
-// MAYBE TRY CLEAR FLOAT FROM THE DIVS AND IN THE HOLDER DIV
-
 .senderMessages {
   min-height: 35px;
   clear: both;
@@ -271,6 +267,18 @@ body {
 #chatInput {
   border-radius: 0px;
 }
+
+.chatListItems {
+  font-size: 150% !important;
+}
+
+.chatHeader {
+  font-size: 150% !important;
+  font-weight: bold;
+  text-align: center;
+  font-family: helvetica;
+}
+
 
 /*
   ====================

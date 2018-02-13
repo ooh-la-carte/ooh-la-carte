@@ -1,6 +1,7 @@
 import React from 'react';
 // import io from 'socket.io-client';
 import axios from 'axios';
+import { Segment, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,14 +31,16 @@ class ChatTab extends React.Component {
   }
 
   render = () => (
-        <div className='container topLevelDiv'>
-            <div>
-              {this.state.convos.length === 0
-                ? <div className='chatMessages'>You have not started any chats yet!</div>
+        <div>
+          <Segment.Group className='whiteBackground standardWidth'>
+              <Segment className='chatHeader'>My Conversations</Segment>
+              <Segment.Group>
+                {this.state.convos.length === 0
+                ? <Segment>You have not started any chats yet!</Segment>
                 : null
               }
               {this.state.convos.map(convo =>
-                <div key={convo.chatId} className='chatMessages'>
+                <Segment className='chatListItems' key={convo.chatId}>
                   <div onClick={() => {
                     axios.get('/api/user/info', { params: { id: convo.recipientId } })
                       .then((user) => {
@@ -50,9 +53,10 @@ class ChatTab extends React.Component {
                       .then(() => {
                         this.props.history.push('/conversation');
                       });
-                  }}>{convo.recipientUsername}</div>
-                </div>)}
-            </div>
+                  }}><Icon name='comment'/> {convo.recipientUsername}</div>
+                </Segment>)}
+              </Segment.Group>
+          </Segment.Group>
         </div>
   );
 }
