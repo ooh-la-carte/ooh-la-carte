@@ -31,6 +31,8 @@ exports.up = (knex, Promise) => (
       table.increments('id').unsigned().primary();
       table.integer('user_id').unsigned().references('users.id');
       table.integer('chef_id').unsigned().references('users.id');
+      table.string('last_updated');
+      table.string('formatted_time');
     }),
     knex.schema.createTable('messages', (table) => {
       table.increments('id').unsigned().primary();
@@ -38,6 +40,7 @@ exports.up = (knex, Promise) => (
       table.integer('conversation_id').unsigned().references('conversations.id');
       table.text('text');
       table.boolean('self');
+      table.string('time_sent');
     }),
     knex.schema.createTable('events', (table) => {
       table.increments('id').unsigned().primary();

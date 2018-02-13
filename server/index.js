@@ -385,7 +385,11 @@ app.post('/api/convoMessages', (req, res) => {
 app.post('/api/insertMessage', (req, res) => {
   Messaging.insertMessage(req.body)
     .then(() => {
-      res.sendStatus(201);
+      Messaging.updateConvoTime(req.body)
+        .then(() => {
+          res.sendStatus(201);
+        })
+        .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
 });
