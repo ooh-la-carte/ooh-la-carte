@@ -74,7 +74,9 @@ class LandingPage extends Component {
       <Collapse isOpened={this.state.user === 'user'}>
       <Grid>
         <Grid.Row>
-          <Grid.Column width={16}>Set up a profile and browse though chefs in your area</Grid.Column>
+          <Grid.Column width={16}>
+            Set up a profile and browse though chefs in your area
+          </Grid.Column>
           <Grid.Column width={16}>See chef's ratings and view some of thier menus</Grid.Column>
           <Grid.Column width={16}>
             chat with each other in real time to discuss the details
