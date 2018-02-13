@@ -113,17 +113,32 @@ body {
   ====================
 */
 
+.flexy {
+  display: flex;
+}
+
 .OLCtitle {
   font-family: $olc-font;
   text-align: center;
   font-size: 300%;
 }
 
-.scriptFontTitle {
+.scriptFont {
   font-family: $olc-font;
+}
+
+.scriptFont.storyText {
+  text-align: center;
+  font-size: 125%;
+  padding-bottom: 1em;
+}
+
+.scriptFont.title {
   text-align: center;
   font-size: 200%;
 }
+
+
 
 .logoColumn {
   padding-right: 0 !important;
