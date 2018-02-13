@@ -30,6 +30,7 @@ class SelectedChef extends Component {
       });
     axios.get('/api/user/menus', { params: { id: this.props.selectedChefReducer.id } })
       .then((menuItems) => {
+        console.log(menuItems.data);
         this.setState({ menu: menuItems.data });
       });
   }
