@@ -19,22 +19,26 @@ class AuthRedirect extends React.Component {
         window.localStorage.userId = response.data.userId;
         window.localStorage.username = response.data.username;
 
-        if (response.data.isChef === undefined) {
+        if (response.data.is_chef === null) {
           this.setState({
             callbackReturned: true,
             newUser: true,
           });
         } else {
-          this.setState({ callbackReturned: true });
+          this.setState({
+            callbackReturned: true,
+            newUser: false,
+          });
         }
       });
   }
   /* eslint-disable */
   render() {
+    console.log(this.state);
     return (
       <div>
         {this.state.callbackReturned 
-          ? this.state.newUser ? <Redirect to='/contactinfo' />  : <Redirect to='/userProfile' />
+          ? (this.state.newUser ? <Redirect to='/contactinfo' />  : <Redirect to='/userProfile' />)
           : 
             <div className='cardHolder'>
               <Card className='landingCards'>

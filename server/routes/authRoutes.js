@@ -36,7 +36,7 @@ router.get('/verify', (req, res) => {
     token,
     userId: user.id,
     isChef: user.isChef,
-    username: '',
+    username: user.username,
   });
 });
 

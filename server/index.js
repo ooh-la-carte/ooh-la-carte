@@ -251,13 +251,6 @@ app.post('/api/user/sendInvite', (req, res) => {
 
 // This should be a protected route
 app.get('/api/user/info', (req, res) => {
-  // console.log(req.headers);
-  // res.end();
-  // const token = req.headers.authorization;
-  // console.log(token);
-
-  // const decoded = jwt.verify(token, 'super-secret');
-  // console.log(decoded);
   User.findUserById(req.query.id).then((data) => {
     res.set('Content-Type', 'application/json');
     res.end(JSON.stringify(data[0]));

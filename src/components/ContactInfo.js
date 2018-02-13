@@ -12,6 +12,7 @@ class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isChef: null,
       id: window.localStorage.getItem('userId'),
       name: '',
       streetAddress: '',
@@ -34,6 +35,7 @@ class ContactInfo extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
+        const isChef = userInfo.data.is_chef;
         const { name, city, state, phone, email, twitter, facebook, instagram } = userInfo.data;
         const cuisine = {
           Asian: false,
@@ -54,6 +56,7 @@ class ContactInfo extends Component {
           Custom: false,
         };
         this.setState({
+          isChef,
           name,
           streetAddress,
           city,
@@ -96,17 +99,19 @@ class ContactInfo extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
-          <Form.Field required>
-            <label>Account Type</label>
-            <Dropdown
-              type='isChef'
-              onChange={this.handleUpdate}
-              placeholder="Will this be a client or chef account?"
-              fluid
-              selection
-              options={options.userOptions}
-            />
-          </Form.Field>
+          {this.state.isChef === null &&
+            <Form.Field required>
+              <label>Account Type</label>
+              <Dropdown
+                type='isChef'
+                onChange={this.handleUpdate}
+                placeholder="Will this be a client or chef account?"
+                fluid
+                selection
+                options={options.userOptions}
+              />
+            </Form.Field>
+          }
           <Form.Field required>
             <label>Name</label>
             <Form.Input
