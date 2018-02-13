@@ -34,31 +34,37 @@ class BrowseEvents extends Component {
       .catch(err => console.log(err));
   }
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.props.sortReducer !== nextProps.sortReducer) {
+      this.setState({ sorted: this.state.chefs.slice() });
+    }
+  }
+
   handleChange = (e, { value }, prop, data) => {
     const sorting = [];
-    if (this.props.sortReducer === 'Budget') {
-      if (value === '$') {
+    if (this.props.sortReducer === 'budget') {
+      if (value === '$0-$50') {
         data.forEach((event) => {
           if (+event.budget > 0 && +event.budget <= 50) {
             sorting.push(event);
           }
         });
         this.setState({ sorted: sorting });
-      } else if (value === '$$') {
+      } else if (value === '$50-$100') {
         data.forEach((event) => {
           if (+event.budget > 50 && +event.budget <= 100) {
             sorting.push(event);
           }
         });
         this.setState({ sorted: sorting });
-      } else if (value === '$$$') {
+      } else if (value === '$100-$200') {
         data.forEach((event) => {
           if (+event.budget > 100 && +event.budget <= 200) {
             sorting.push(event);
           }
         });
         this.setState({ sorted: sorting });
-      } else if (value === '$$$$') {
+      } else if (value === '$200+') {
         data.forEach((event) => {
           if (+event.budget > 200) {
             sorting.push(event);
@@ -92,7 +98,7 @@ class BrowseEvents extends Component {
 
   render = () => (
     <div className='topLevelDiv center miniPadding profile'>
-      {this.props.sortReducer === 'Cuisine'
+      {this.props.sortReducer === 'cuisine'
         ?
           <div>
             <Dropdown
@@ -133,7 +139,7 @@ class BrowseEvents extends Component {
           </div>
         : null
       }
-      {this.props.sortReducer === 'Size'
+      {this.props.sortReducer === 'partySize'
         ?
           <div>
             <Dropdown
@@ -174,7 +180,7 @@ class BrowseEvents extends Component {
           </div>
         : null
       }
-      {this.props.sortReducer === 'Location'
+      {this.props.sortReducer === 'location'
         ?
           <div>
             <input
@@ -217,7 +223,7 @@ class BrowseEvents extends Component {
           </div>
         : null
       }
-      {this.props.sortReducer === 'Budget'
+      {this.props.sortReducer === 'budget'
         ?
           <div>
             <Dropdown
@@ -258,7 +264,7 @@ class BrowseEvents extends Component {
           </div>
         : null
       }
-      {this.props.sortReducer === 'None'
+      {this.props.sortReducer === 'none'
         ?
           this.state.events.map(event => (
             event.chef_id === null
