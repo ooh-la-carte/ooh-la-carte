@@ -158,30 +158,22 @@ app.post('/api/signup', (req, res) => {
 
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
-  const { id,
-    name,
-    streetAddress,
-    city,
-    state,
-    zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram } = req.body;
-  User.insertContactInfo(
-    id,
-    name,
-    streetAddress,
-    city,
-    state,
-    zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram
-  )
+  const user = req.body;
+  console.log(user);
+  const params = {
+    id: user.id,
+    street_name: user.streetAddress,
+    city: user.city,
+    state: user.state,
+    zip_code: user.zip_code,
+    phone: user.phone,
+    email: user.email,
+    facebook: user.facebook,
+    twitter: user.twitter,
+    instagram: user.instagram,
+  };
+
+  User.insertContactInfo(params)
     .then(() => {
       res.sendStatus(200);
     });

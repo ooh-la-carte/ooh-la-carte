@@ -133,20 +133,9 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
-User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email, facebook, twitter, instagram) => knex('users')
-  .where('id', id)
-  .update({
-    name,
-    street_name: streetAddress,
-    city,
-    state,
-    zip_code: zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram,
-  });
+User.insertContactInfo = params => (
+  knex('users').where('id', params.id).update(params).then()
+);
 
 User.updateCuisineSelection = (id, cuisine) => knex('users')
   .where('id', id)
