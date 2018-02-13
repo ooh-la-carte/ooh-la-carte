@@ -12,6 +12,7 @@ class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstOAuth: false,
       username: null,
       isChef: null,
       error: false,
@@ -58,7 +59,7 @@ class ContactInfo extends Component {
           Vegan: false,
           Custom: false,
         };
-        this.setState({
+        const update = {
           username,
           isChef,
           name,
@@ -72,7 +73,12 @@ class ContactInfo extends Component {
           twitter,
           facebook,
           instagram,
-        });
+        };
+
+        if (isChef === null) {
+          update.firstOAuth = true;
+        }
+        this.setState(update);
       });
   }
 
@@ -84,7 +90,8 @@ class ContactInfo extends Component {
     const eventObj = this.state;
     this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
-    if (eventObj.name && eventObj.phone && eventObj.email) {
+    if (eventObj.name && eventObj.phone && eventObj.email &&
+      (!eventObj.firstOAuth || (eventObj.username && eventObj.isChef))) {
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
@@ -105,7 +112,7 @@ class ContactInfo extends Component {
     return (
       <div className='topLevelDiv'>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
-          {this.state.isChef === null &&
+          {this.state.firstOAuth &&
             <Form.Field required>
               <label>Account Type</label>
               <Dropdown
@@ -118,13 +125,13 @@ class ContactInfo extends Component {
               />
             </Form.Field>
           }
-          {this.state.isChef === null &&
+          {this.state.firstOAuth &&
             <Form.Field required>
               <label>Username</label>
               <Input
                 type='username'
                 placeholder='This will be your display name and your username'
-                onChange={this.setUsername}
+                onChange={this.handleUpdate}
               />
             </Form.Field>
           }

@@ -24,8 +24,6 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   const src = fs.createReadStream(path.join(__dirname, '../../public/index.html'));
   src.pipe(res);
   src.on('end', () => res.end());
-  console.log('returned from redirect');
-  console.log(req.user);
 });
 
 router.get('/verify', (req, res) => {

@@ -35,18 +35,14 @@ const io = socket(server);
 
 io.on('connection', SocketManager);
 
-// http.listen(8888, () => {
-//   console.log('listening on *:8888');
-// });
-
 /*
   ==============================
     Middleware
   ==============================
 */
-// log each request to the console
 
 app.use(express.static(path.join(__dirname, '/../public')));
+// log each request to the console
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   // continue doing what we were doing and go to the route
@@ -162,7 +158,6 @@ app.post('/api/signup', (req, res) => {
 
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
-  console.log(req.body);
   const { id,
     name,
     streetAddress,
@@ -310,7 +305,6 @@ app.get('/api/user/invitations', (req, res) => {
 });
 
 app.get('/api/user/cuisines', (req, res) => {
-  console.log('in the query', req.query.id);
   User.findCuisinesById(req.query.id)
     .then((results) => {
       res.type('json').json(results);
