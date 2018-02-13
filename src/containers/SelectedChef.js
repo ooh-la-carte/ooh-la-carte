@@ -130,7 +130,7 @@ class SelectedChef extends Component {
                       .then(() => {
                         this.props.history.push('/conversation');
                       });
-                  }}><div style={{ textAlign: 'center' }}>Send a message!</div>
+                  }}><div>Send a message!</div>
                 </div>
                 <br/>
                 <div onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
