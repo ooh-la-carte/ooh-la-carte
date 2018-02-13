@@ -220,8 +220,6 @@ class BrowseEvents extends Component {
       {this.props.sortReducer === 'Budget'
         ?
           <div>
-            <br/>
-            <br/>
             <Dropdown
             value={ this.state.sortValue }
             onChange={(e, value) => { this.handleChange(e, value, 'budget', this.state.events); }}
@@ -251,8 +249,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null

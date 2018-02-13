@@ -103,11 +103,15 @@ body {
   ====================
 */
 
+.textBox {
+  background-color: $primary-color !important;
+  text-align: center;
+}
+
 .cardHolder {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 75%;
 }
 
 .landingCards {
@@ -173,9 +177,17 @@ body {
   width: 90%;
 }
 
+.rounded {
+  border-radius: 50%;
+}
+
 .miniPadding {
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.floatRight {
+  float: right;
 }
 
 .floatRight {
