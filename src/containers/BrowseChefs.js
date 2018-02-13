@@ -41,8 +41,16 @@ class BrowseChefs extends Component {
   handleChange = (e, { value }) => {
     let sorting = [];
     const sortField = this.props.sortReducer;
+    console.log(sortField);
     if (sortField === 'none') {
       sorting = this.state.chefs;
+    } else if (sortField === 'rating') {
+      this.state.chefs.forEach((chef) => {
+        const parsed = chef[sortField] ? JSON.parse(chef[sortField])[0] : null;
+        if (chef[sortField] && parsed === value) {
+          sorting.push(chef);
+        }
+      });
     } else {
       this.state.chefs.forEach((chef) => {
         if (chef[sortField] && chef[sortField].toLowerCase() === value.toLowerCase()) {
