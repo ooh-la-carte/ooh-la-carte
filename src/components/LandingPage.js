@@ -31,6 +31,27 @@ const LandingPage = props => (
         <Image rounded src='https://source.unsplash.com/zhiZOpm99Iw'/>
       </div>
       <br />
+
+
+        <h3 className='scriptFontTitle'>Interested in being</h3>
+
+        <div className='cardHolder'>
+          <Card className='landingCards' onClick={() => { props.history.push('/browseEvents'); }}>
+            <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
+            <Card.Content>
+                a patron?
+            </Card.Content>
+          </Card>
+
+          <Card className='landingCards' onClick={() => { props.history.push('/browseChefs'); }}>
+            <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
+            <Card.Content>
+                 a chef?
+            </Card.Content>
+          </Card>
+        </div>
+
+
         <div className='center boxed'>
 
       <Grid>
