@@ -21,9 +21,9 @@ class SelectedEvent extends Component {
     this.props.updateEventRating(rating);
   }
 
-  shouldStarsDisplay = (eventDate, chefId) => {
-    const hasHappened = new Date() > new Date(eventDate);
-    return hasHappened && (window.localStorage.isChef !== 'true') && (chefId);
+  shouldStarsDisplay = (eventDate, chefId, creatorId) => {
+    const isOver = new Date() > new Date(eventDate);
+    return isOver && (Number.parseInt(window.localStorage.userId, 10) === creatorId) && (chefId);
   };
 
   sendInvite = (inviteObj) => {
@@ -33,7 +33,10 @@ class SelectedEvent extends Component {
 
   render() {
     const event = this.props.selectedEventReducer;
-    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    const eventDate = new Date(event.date_time);
+    const showStars = this.shouldStarsDisplay(event.date_time, event.chef_id, event.creator_id);
     let stars;
     if (showStars) {
       if (event.rating !== null) {
@@ -76,7 +79,9 @@ class SelectedEvent extends Component {
             <Card.Description>
               <div className='detailSegment'>{event.description}</div>
               <div className='detailSegment'>Location: {event.city}, {event.state} {event.zip_code}</div>
-              <div className='detailSegment'><Icon name='calendar'/>Date:  {event.time}, {event.eventDate}</div>
+              <div className='detailSegment'><Icon name='calendar'/>
+                Date: {`${monthNames[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`}
+              </div>
               <div className='detailSegment'><Icon name='users'/>Guests: {event.party_size}</div>
               <div className='detailSegment'><Icon name='comment outline'/>Special requests: {event.requests}</div>
             </Card.Description>
