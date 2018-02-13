@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Icon, Form, Input, Dropdown } from 'semantic-ui-react';
+import { Button, Icon, Form, Input, Dropdown, Label } from 'semantic-ui-react';
 import axios from 'axios';
 import '../style.scss';
 import options from '../formOptions';
@@ -42,11 +42,32 @@ class SignUpForm extends Component {
       Object.assign(this.state.creds, { value }) });
   }
 
+  showRequiredFieldsLabel = () => {
+    document.getElementById('invalidEntriesNotifier').classList.remove('hidden');
+  }
+
+  hideRequiredFieldsLabel = () => {
+    document.getElementById('invalidEntriesNotifier').classList.add('hidden');
+    this.hidePasswordMismatch();
+  }
+
+  showPasswordMismatch = () => {
+    document.getElementById('passwordMismatchNotifier').classList.remove('hidden');
+  }
+
+  hidePasswordMismatch = () => {
+    document.getElementById('passwordMismatchNotifier').classList.add('hidden');
+  }
+
   submitCreds = (credsObj) => {
-    const { username, password1, password2 } = credsObj;
     const url = '/api/signup';
-    if (!(username && password1) || !(password1 === password2)) {
+    const { username, password1, password2, email, value } = this.state.creds;
+    if (!(username && password1 && password2 && email && value)) {
+      this.showRequiredFieldsLabel();
       console.log('invalid entries');
+    } else if (!(password1 === password2)) {
+      this.showPasswordMismatch();
+      console.log('password mismatch');
     } else {
       console.log('submitting');
       axios.post(url, credsObj)
@@ -76,6 +97,7 @@ class SignUpForm extends Component {
             <Input placeholder='Username'
               onChange={this.setUsername}
               value={this.state.creds.username}
+              onFocus={this.hideRequiredFieldsLabel}
              />
           </Form.Field>
 
@@ -85,6 +107,7 @@ class SignUpForm extends Component {
               type='password'
               onChange={this.setPassword1}
               value={this.state.creds.password1}
+              onFocus={this.hideRequiredFieldsLabel}
              />
           </Form.Field>
 
@@ -94,8 +117,13 @@ class SignUpForm extends Component {
               type='password'
               onChange={this.setPassword2}
               value={this.state.creds.password2}
-             />
+              onFocus={this.hideRequiredFieldsLabel}
+          />
           </Form.Field>
+
+          <div id="passwordMismatchNotifier" className="hidden">
+            <Label basic color='red' pointing>Passwords don't match</Label>
+          </div>
 
           <Form.Field>
             <label>Email</label>
@@ -103,6 +131,7 @@ class SignUpForm extends Component {
               placeholder='anthonyB@confidential.com'
               onChange={this.setEmail}
               value={this.state.creds.email}
+              onFocus={this.hideRequiredFieldsLabel}
              />
           </Form.Field>
 
@@ -113,7 +142,14 @@ class SignUpForm extends Component {
               fluid
               selection
               options={options.userOptions}
+              onFocus={this.hideRequiredFieldsLabel}
             />
+          </div>
+
+          <br/>
+
+          <div id="invalidEntriesNotifier" className="hidden">
+            <Label basic color='red' pointing>Please correct invalid entries</Label>
           </div>
 
           <br/>
