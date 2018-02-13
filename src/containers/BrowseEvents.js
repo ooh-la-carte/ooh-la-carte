@@ -34,11 +34,11 @@ class BrowseEvents extends Component {
       .catch(err => console.log(err));
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if (this.props.sortReducer !== nextProps.sortReducer) {
-      this.setState({ sorted: this.state.chefs.slice() });
-    }
-  }
+  // componentWillReceiveProps = (nextProps) => {
+  //   if (this.props.sortReducer !== nextProps.sortReducer) {
+  //     this.setState({ sorted: this.state.chefs });
+  //   }
+  // }
 
   handleChange = (e, { value }, prop, data) => {
     const sorting = [];

@@ -94,38 +94,46 @@ class SelectedEvent extends Component {
                 }
               <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
-                  const convo = {
-                    user: event.creator_id,
-                    chef: window.localStorage.getItem('userId'),
-                  };
-                  axios.post('/api/conversations', convo)
-                    .then((results) => {
-                      // need convo id here
-                      const obj = results.data[0];
-                      obj.chef_id = Number(window.localStorage.getItem('userId'));
-                      obj.convo_id = obj.id;
-                      obj.username = event.creator_username;
-                      console.log('Select chef conversation store: ', obj);
-                      this.props.selectConversation(obj);
-                    })
-                    .then(() => {
-                      this.props.history.push('/conversation');
-                    });
+                  if (window.localStorage.getItem('userId')) {
+                    const convo = {
+                      user: event.creator_id,
+                      chef: window.localStorage.getItem('userId'),
+                    };
+                    axios.post('/api/conversations', convo)
+                      .then((results) => {
+                        // need convo id here
+                        const obj = results.data[0];
+                        obj.chef_id = Number(window.localStorage.getItem('userId'));
+                        obj.convo_id = obj.id;
+                        obj.username = event.creator_username;
+                        console.log('Select chef conversation store: ', obj);
+                        this.props.selectConversation(obj);
+                      })
+                      .then(() => {
+                        this.props.history.push('/conversation');
+                      });
+                  } else {
+                    this.props.history.push('/signUpForm');
+                  }
                 }}>
                   <div>Send a message!</div>
                 </div>
               </div>
               <div onClick={() => {
-                this.sendInvite({
-                  event_id: event.id,
-                  user_id: event.creator_id,
-                  host: event.creator_username,
-                  chef_id: Number(window.localStorage.getItem('userId')),
-                  sender: window.localStorage.getItem('username'),
-                  chef: window.localStorage.getItem('username'),
-                  event_name: event.name,
-                  accepted: null,
-                });
+                if (window.localStorage.getItem('userId')) {
+                  this.sendInvite({
+                    event_id: event.id,
+                    user_id: event.creator_id,
+                    host: event.creator_username,
+                    chef_id: Number(window.localStorage.getItem('userId')),
+                    sender: window.localStorage.getItem('username'),
+                    chef: window.localStorage.getItem('username'),
+                    event_name: event.name,
+                    accepted: null,
+                  });
+                } else {
+                  this.props.history.push('/signUpForm');
+                }
               }}>Send an offer!</div>
           </Card.Content>
         </Card>
