@@ -12,6 +12,7 @@ class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: null,
       isChef: null,
       id: window.localStorage.getItem('userId'),
       name: '',
@@ -36,6 +37,7 @@ class ContactInfo extends Component {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
         const isChef = userInfo.data.is_chef;
+        const { username } = userInfo.data;
         const { name, city, state, phone, email, twitter, facebook, instagram } = userInfo.data;
         const cuisine = {
           Asian: false,
@@ -56,6 +58,7 @@ class ContactInfo extends Component {
           Custom: false,
         };
         this.setState({
+          username,
           isChef,
           name,
           streetAddress,
@@ -109,6 +112,16 @@ class ContactInfo extends Component {
                 fluid
                 selection
                 options={options.userOptions}
+              />
+            </Form.Field>
+          }
+          {this.state.isChef === null &&
+            <Form.Field required>
+              <label>Username</label>
+              <Input
+                type='username'
+                placeholder='This will be your display name and your username'
+                onChange={this.setUsername}
               />
             </Form.Field>
           }

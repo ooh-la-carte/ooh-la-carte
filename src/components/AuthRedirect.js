@@ -18,8 +18,7 @@ class AuthRedirect extends React.Component {
         window.localStorage.accessToken = response.data.token;
         window.localStorage.userId = response.data.userId;
         window.localStorage.username = response.data.username;
-
-        if (response.data.is_chef === null) {
+        if (response.data.is_chef === undefined) {
           this.setState({
             callbackReturned: true,
             newUser: true,
@@ -34,7 +33,6 @@ class AuthRedirect extends React.Component {
   }
   /* eslint-disable */
   render() {
-    console.log(this.state);
     return (
       <div>
         {this.state.callbackReturned 

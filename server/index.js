@@ -153,6 +153,7 @@ app.post('/api/signup', (req, res) => {
 
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
+  console.log(req.body);
   const { id,
     name,
     streetAddress,
