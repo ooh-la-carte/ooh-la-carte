@@ -13,6 +13,10 @@ class LoginForm extends Component {
     };
   }
 
+  componentDidMount = () => {
+    window.scrollTo(0, 0);
+  }
+
   setUsername = (e) => {
     this.setState({ username: e.target.value });
   }
