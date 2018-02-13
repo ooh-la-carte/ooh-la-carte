@@ -100,7 +100,9 @@ class LandingPage extends Component {
       <Collapse isOpened={this.state.user === 'chef'}>
       <Grid>
         <Grid.Row>
-          <Grid.Column width={16}>Create a personalized account and show off your abilities</Grid.Column>
+          <Grid.Column width={16}>
+            Create a personalized account and show off your abilities
+          </Grid.Column>
           <Grid.Column width={16}>Browse user events available in your area</Grid.Column>
           <Grid.Column width={16}>
             chat with each other in real time to discuss the details
