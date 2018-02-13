@@ -1,7 +1,6 @@
 import React from 'react';
 // import io from 'socket.io-client';
 import axios from 'axios';
-import moment from 'moment';
 import { Segment, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
