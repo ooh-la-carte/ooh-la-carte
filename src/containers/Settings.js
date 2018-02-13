@@ -18,7 +18,7 @@ class Settings extends Component {
       menu: [],
       menuOpen: false,
       id: window.localStorage.getItem('userId'),
-      menuName: '',
+      menu_name: '',
       type: '',
       price: '',
       description: '',
@@ -74,7 +74,7 @@ class Settings extends Component {
   saveMenuItem = () => {
     axios.post('/api/user/saveMenuItem', {
       chef_id: Number(this.state.id),
-      menuName: this.state.menuName,
+      menu_name: this.state.menu_name,
       pic: this.state.pic,
       description: this.state.description,
       cuisine_type: this.state.type,
@@ -83,12 +83,12 @@ class Settings extends Component {
         menu: [...this.state.menu, {
           id: 7777,
           chef_id: Number(this.state.id),
-          menuName: this.state.menuName,
+          menu_name: this.state.menu_name,
           pic: this.state.pic,
           description: this.state.description,
           cuisine_type: this.state.type,
         }],
-        menuName: '',
+        menu_name: '',
         pic: '',
         description: '',
         type: '',
@@ -274,7 +274,7 @@ class Settings extends Component {
             }}>
                 <Form.Field>
                   <label>Menu name</label>
-                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menuName' value={this.state.menuName}/>
+                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menu_name' value={this.state.menu_name}/>
                 </Form.Field>
                 <Form.Field style={{ width: '50%' }}>
                   <label>Cuisine / Theme</label>
