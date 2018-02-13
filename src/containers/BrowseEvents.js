@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import '../style.scss';
 import { changeSelectedEvent } from '../actions';
-import { cuisineOptions, sizeOptions, cityOptions, budgetOptions } from '../formOptions';
+import { cuisineOptions, sizeOptions, budgetOptions } from '../formOptions';
 // import data from '../MockData';
 
 
@@ -17,6 +17,7 @@ class BrowseEvents extends Component {
       events: [],
       sorted: [],
       sortValue: '',
+      input: '',
     };
   }
 
@@ -75,6 +76,17 @@ class BrowseEvents extends Component {
       });
       this.setState({ sorted: sorting });
       console.log('After sorting: ', sorting);
+    }
+  }
+
+  changeInput = (e) => {
+    this.setState({ input: e.target.value });
+  }
+
+  handleLocationSubmit = (e) => {
+    if (e.which === 13 && this.state.input !== '') {
+      this.handleChange(null, { value: this.state.input }, 'city', this.state.events);
+      this.setState({ input: '' });
     }
   }
 
@@ -165,11 +177,13 @@ class BrowseEvents extends Component {
       {this.props.sortReducer === 'Location'
         ?
           <div>
-            <Dropdown
-            value={ this.state.sortValue }
-            onChange={(e, value) => { this.handleChange(e, value, 'city', this.state.events); }}
-            placeholder='Select a city'
-            fluid selection options={cityOptions} />
+            <input
+            value={ this.state.input }
+            onChange={ this.changeInput }
+            onKeyPress={ this.handleLocationSubmit }
+            placeholder='Find your city!'
+            style={{ width: '100%' }}
+            />
             {this.state.sorted.map(event => (
               event.chef_id === null
               ?
@@ -206,8 +220,6 @@ class BrowseEvents extends Component {
       {this.props.sortReducer === 'Budget'
         ?
           <div>
-            <br/>
-            <br/>
             <Dropdown
             value={ this.state.sortValue }
             onChange={(e, value) => { this.handleChange(e, value, 'budget', this.state.events); }}
@@ -237,8 +249,8 @@ class BrowseEvents extends Component {
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
-                    <span className='partySize'>Size: {event.party_size}</span>
-                    <span className='eventBudget'>Budget: {event.budget}</span>
+                    <span>Size: {event.party_size}</span>
+                    <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>
               : null

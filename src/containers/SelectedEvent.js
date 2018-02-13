@@ -112,7 +112,7 @@ class SelectedEvent extends Component {
                       this.props.history.push('/conversation');
                     });
                 }}>
-                  <div style={{ textAlign: 'center' }}>Send a message!</div>
+                  <div>Send a message!</div>
                 </div>
               </div>
               <div onClick={() => {

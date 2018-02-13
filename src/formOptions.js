@@ -338,3 +338,26 @@ module.exports.budgetOptions = [
     value: '$$$$',
   },
 ];
+
+module.exports.chefRating = [
+  {
+    text: '1 Star',
+    value: '1',
+  },
+  {
+    text: '2 Star',
+    value: '2',
+  },
+  {
+    text: '3 Star',
+    value: '3',
+  },
+  {
+    text: '4 Star',
+    value: '4',
+  },
+  {
+    text: '5 Star',
+    value: '5',
+  },
+];
