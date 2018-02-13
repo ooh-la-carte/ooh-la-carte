@@ -5,7 +5,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import logo from '../../public/android-chrome-512x512.png';
 import chatPic from '../../public/chat.png';
 import chefPic from '../../public/chef.png';
-// import eventPic from '../../public/event.png';
+import eventPic from '../../public/event.png';
 
 class LandingPage extends Component {
   constructor(props) {
@@ -87,12 +87,12 @@ class LandingPage extends Component {
                 <Image size='small' centered rounded id="logo" src={chatPic} alt='logo image' />
               </Grid.Column>
               <Grid.Column className='scriptFont storyText' width={16}>
-                    Chat with your desired chef in real time to discuss the details of your event
+                Chat with your desired chef in real time to discuss the details of your event
               </Grid.Column>
               <Grid.Column width={16}>
                 <Segment className='textBox'>
                   <h4 className='nav center'>
-                 Set up the perfect time for your event and professionally catered dining experience
+        Set up the perfect time for your event and enjoy a professionally catered dining experience
                   </h4>
                 </Segment>
                 <br />
@@ -112,22 +112,42 @@ class LandingPage extends Component {
         </div>
       </Collapse>
     {/* chef story */}
-      <Collapse isOpened={this.state.user === 'chef'}>
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            Create a personalized account and show off your abilities
-          </Grid.Column>
-          <Grid.Column width={16}>Browse user events available in your area</Grid.Column>
-          <Grid.Column width={16}>
-            chat with each other in real time to discuss the details
-          </Grid.Column>
-          <Grid.Column width={16}>Arrange a time for the event</Grid.Column>
-          <Grid.Column width={16}>Provide a personalized dining experience</Grid.Column>
-          <Grid.Column width={16}>
-            Start your search now by browsing our events!
-          </Grid.Column>
-
+              <Collapse isOpened={this.state.user === 'chef'}>
+          <Grid>
+            <Grid.Row>
+                <Grid.Column className='scriptFont storyText' width={16}>
+                  Create a personalized account and show off your abilities
+                </Grid.Column>
+                <br />
+              <Grid.Column width={9}>
+                <Image size='medium' rounded id="logo" src={eventPic} alt='logo image' />
+              </Grid.Column>
+              <Grid.Column className='textColumn' verticalAlign='middle' width={7}>
+                <Segment className='textBox'>
+                  <h4 className='nav center'>
+                    Browse user created events available in your area and find opportunities
+                    that fit your schedule
+                  </h4>
+                </Segment>
+              </Grid.Column>
+              <Grid.Column width={16}> <br /></Grid.Column>
+              <Grid.Column width={16}>
+                <Image size='small' centered rounded id="logo" src={chatPic} alt='logo image' />
+              </Grid.Column>
+              <Grid.Column className='scriptFont storyText' width={16}>
+                Chat with your patrons in real time to discuss and finalize their event details
+              </Grid.Column>
+              <Grid.Column width={16}>
+                <Segment className='textBox'>
+                  <h4 className='nav center'>
+                    Deliver a professionally catered dining experience that amazes your clients
+                  </h4>
+                </Segment>
+                <br />
+              </Grid.Column>
+              <Grid.Column className='scriptFont storyText' width={16}>
+                Start your search now by browsing our events!
+              </Grid.Column>
         </Grid.Row>
       </Grid>
       <div className='cardHolder'>
@@ -139,9 +159,8 @@ class LandingPage extends Component {
         </Card>
       </div>
       </Collapse>
-
-        </div>
-        </div>
+      </div>
+    </div>
     }
   </div>
     );
