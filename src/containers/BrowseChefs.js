@@ -376,6 +376,7 @@ class BrowseChefs extends Component {
         </div>
       : null
       }
+      <br /> <br />
     </div>
   )
 }
