@@ -1,6 +1,7 @@
 import React from 'react';
 // import io from 'socket.io-client';
 import axios from 'axios';
+import { Segment, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -29,32 +30,40 @@ class ChatTab extends React.Component {
       .catch(err => console.log(err));
   }
 
-  render = () => (
-        <div className='container topLevelDiv'>
-            <div>
-              {this.state.convos.length === 0
-                ? <div className='chatMessages'>You have not started any chats yet!</div>
-                : null
-              }
-              {this.state.convos.map(convo =>
-                <div key={convo.chatId} className='chatMessages'>
-                  <div onClick={() => {
-                    axios.get('/api/user/info', { params: { id: convo.recipientId } })
-                      .then((user) => {
-                        const obj = user.data;
-                        obj.convo_id = convo.chatId;
-                        obj.user_id = convo.recipientId;
-                        console.log(obj);
-                        this.props.selectConversation(obj);
-                      })
-                      .then(() => {
-                        this.props.history.push('/conversation');
-                      });
-                  }}>{convo.recipientUsername}</div>
-                </div>)}
-            </div>
-        </div>
-  );
+  render = () => {
+    const timeOrder =
+    this.state.convos.sort((a, b) => Number(b.last_updated) - Number(a.last_updated));
+    console.log(timeOrder);
+    return (
+      <div>
+        <Segment.Group className='whiteBackground standardWidth'>
+            <Segment className='chatHeader'>Your Conversations</Segment>
+            <Segment.Group>
+              {timeOrder.length === 0
+              ? <Segment>You have not started any chats yet!</Segment>
+              : null
+            }
+            {timeOrder.map(convo =>
+              <Segment className='chatListItems' key={convo.chatId}>
+                <div onClick={() => {
+                  axios.get('/api/user/info', { params: { id: convo.recipientId } })
+                    .then((user) => {
+                      const obj = user.data;
+                      obj.convo_id = convo.chatId;
+                      obj.user_id = convo.recipientId;
+                      console.log(obj);
+                      this.props.selectConversation(obj);
+                    })
+                    .then(() => {
+                      this.props.history.push('/conversation');
+                    });
+                }}><Icon name='comment'/> {convo.recipientUsername} <span className='convoTime'><div>Last message</div><div>{convo.formatted_time}</div></span></div>
+              </Segment>)}
+            </Segment.Group>
+        </Segment.Group>
+      </div>
+    );
+  };
 }
 
 function mapStateToProps(state) {

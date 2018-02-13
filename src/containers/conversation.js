@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import io from 'socket.io-client';
 // import { Input } from 'semantic-ui-react';
 import axios from 'axios';
+import moment from 'moment';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { setSocket, listenerOn } from '../actions';
@@ -24,14 +25,14 @@ class Conversation extends Component {
     })
       .then((chat) => {
         console.log(chat.data);
-        this.setState({ chat: chat.data.slice(-10) });
+        this.setState({ chat: chat.data });
         this.scrollToBottom();
       });
     // this.listen();
   }
 
   // componentDidUpdate = () => {
-  //    this.scrollToBottom();
+  //   this.scrollToBottom();
   // }
 
   scrollToBottom = () => {
@@ -49,10 +50,12 @@ class Conversation extends Component {
       });
       this.props.socketReducer.on('self message', (data) => {
         if (Number(window.localStorage.getItem('userId')) === data.sender) {
-          console.log('Chat data for chef sender: ', data);
-          axios.post('/api/insertMessage', data)
+          const withDate = data;
+          withDate.time_sent = moment().format('MM/DD/YY, h:mm a');
+          console.log('Chat data for chef sender: ', withDate);
+          axios.post('/api/insertMessage', withDate)
             .then(() => {
-              const chatData = data;
+              const chatData = withDate;
               chatData.self = true;
               const newChat = [...this.state.chat, chatData];
               this.addToChat(newChat);
@@ -100,14 +103,9 @@ class Conversation extends Component {
   render = () => (
       <div className='chatDiv'>
         {this.state.chat.map((message, i) => (message.self === true
-          ? <div key={i} className='senderMessages'>{message.text}</div>
-          : <div key={i} className='receiverMessages'>{message.text}</div>))}
-        <div ref={ (el) => { this.el = el; }} />
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+          ? <div key={i} className='senderMessages'>{message.text} <span className='chatTime'>{message.time_sent}</span></div>
+          : <div key={i} className='receiverMessages'>{message.text} <span className='chatTime'>{message.time_sent}</span></div>))}
+        <div style={{ clear: 'both' }} ref={ (el) => { this.el = el; }} />
         <div className='chatInput'>
           <input id='chatInput'
           value={ this.state.input }
