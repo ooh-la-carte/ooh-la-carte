@@ -113,6 +113,8 @@ class SelectedChef extends Component {
               </div>
             <Card.Content extra>
                 <div onClick={() => {
+                  console.log(window.localStorage.getItem('userId'));
+                  if (window.localStorage.getItem('userId')) {
                     const convo = {
                       user: window.localStorage.getItem('userId'),
                       chef: chef.id,
@@ -131,10 +133,19 @@ class SelectedChef extends Component {
                       .then(() => {
                         this.props.history.push('/conversation');
                       });
+                  } else {
+                    this.props.history.push('/signUpForm');
+                  }
                   }}><div>Send a message!</div>
                 </div>
                 <br/>
-                <div onClick={() => { this.openMyEvents(); }}>Send an invitation</div>
+                <div onClick={() => {
+                  if (window.localStorage.getItem('userId')) {
+                    this.openMyEvents();
+                  } else {
+                    this.props.history.push('/signUpForm');
+                  }
+                }}>Send an invitation</div>
                 {this.state.eventsDropdown
                   ? this.state.myEvents.map(event =>
                     <div key={event.id}>
