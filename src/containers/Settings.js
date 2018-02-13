@@ -286,7 +286,7 @@ class Settings extends Component {
                 </Form.Field>
                 <Form.Field>
                   <label>Picture</label>
-                  <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='picture' value={this.state.picture}/>
+                  <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
                 </Form.Field>
                 <Button type='submit'>Save!</Button>
               </Form>
