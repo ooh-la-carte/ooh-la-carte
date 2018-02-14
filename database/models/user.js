@@ -37,7 +37,7 @@ User.insertOAuth = (info) => {
   row.state = info.state;
   row.zip_code = info.zip;
 
-  return knex('users').insert(row).then();
+  return knex('users').returning('id').insert(row).then();
 };
 
 User.sendInvite = inviteObj => (

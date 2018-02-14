@@ -29,11 +29,12 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 router.get('/verify', (req, res) => {
   const user = req.user[0];
   const token = jwt.sign({ id: user.id }, 'super-secret');
+  console.log(user);
   // send the token back to the client
   res.json({
     token,
     userId: user.id,
-    isChef: user.isChef,
+    isChef: user.is_chef,
     username: user.username,
   });
 });

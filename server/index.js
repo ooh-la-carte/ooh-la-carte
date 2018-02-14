@@ -159,7 +159,6 @@ app.post('/api/signup', (req, res) => {
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const user = req.body;
-  console.log(user);
   const params = {
     id: user.id,
     street_name: user.streetAddress,
@@ -172,6 +171,11 @@ app.post('/api/updateContactInfo', (req, res) => {
     twitter: user.twitter,
     instagram: user.instagram,
   };
+
+  if (user.isChef !== null) {
+    params.is_chef = !!user.isChef;
+    params.username = user.username;
+  }
 
   User.insertContactInfo(params)
     .then(() => {

@@ -15,15 +15,17 @@ class AuthRedirect extends React.Component {
   componentDidMount() {
     axios.get('/auth/verify')
       .then((response) => {
+        console.log(response.data);
         window.localStorage.accessToken = response.data.token;
         window.localStorage.userId = response.data.userId;
         window.localStorage.username = response.data.username;
-        if (response.data.is_chef === undefined) {
+        if (response.data.isChef === null) {
           this.setState({
             callbackReturned: true,
             newUser: true,
           });
         } else {
+          window.localStorage.isChef = response.data.isChef;
           this.setState({
             callbackReturned: true,
             newUser: false,
