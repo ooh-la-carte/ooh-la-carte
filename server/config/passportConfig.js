@@ -17,7 +17,6 @@ const googleConfig = {
 };
 
 passport.use(new GoogleStrategy(googleConfig, (accessToken, refreshToken, profile, done) => {
-  console.log('google strategy has been called', profile.emails[0].value);
   User.findUserByEmail(profile.emails[0].value).then((users) => {
     if (users.length === 0) {
       /* eslint-disable */
@@ -37,7 +36,6 @@ passport.use(new GoogleStrategy(googleConfig, (accessToken, refreshToken, profil
         info.zip = array[2];
       }
       /* eslint-enable */
-      console.log('info inserting into db', info);
       return User.insertOAuth(info).then(ids => ids[0]);
     } else if (!users[0].google_id) {
       User.update({
