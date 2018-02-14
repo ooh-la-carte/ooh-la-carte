@@ -86,6 +86,10 @@ User.editMenuItem = (menuObj) => {
   });
 };
 
+User.deleteMenuItem = id => (
+  knex('menu').where('id', id.id).del()
+);
+
 User.getMenuItems = id => (
   knex('menu').where('chef_id', id)
 );

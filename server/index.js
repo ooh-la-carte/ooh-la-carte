@@ -321,8 +321,12 @@ app.post('/api/user/saveMenuItem', (req, res) => {
 });
 
 app.post('/api/user/editMenuItem', (req, res) => {
-  console.log('Server: ', req.body);
   User.editMenuItem(req.body)
+    .then(() => res.sendStatus(201));
+});
+
+app.post('/api/user/deleteMenuItem', (req, res) => {
+  User.deleteMenuItem(req.body)
     .then(() => res.sendStatus(201));
 });
 

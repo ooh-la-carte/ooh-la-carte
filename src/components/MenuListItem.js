@@ -58,6 +58,18 @@ class MenuListItem extends Component {
       });
   }
 
+  deleteMenuItem = (item) => {
+    console.log('delete clicked');
+    this.setState({ editOpen: !this.state.editOpen });
+    axios.post('/api/user/deleteMenuItem', { id: item.id })
+      .then(() => {
+        axios.get('/api/user/menus', { params: { id: window.localStorage.getItem('userId') } })
+          .then((menuItems) => {
+            this.props.setMenu(menuItems.data);
+          });
+      });
+  }
+
   handleUpdate = (e, { type, value }) => this.setState({ [type]: value })
 
   render = () => (
@@ -108,7 +120,13 @@ class MenuListItem extends Component {
                           <label>Picture</label>
                           <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
                         </Form.Field>
-                        <Button className='btn' type='submit'>Save!</Button><Button onClick={this.openEditForm}>Cancel</Button>
+                        <div className='cardHolder' style={{ marginBottom: '3%' }}>
+                          <Button className='btn menuBtns' type='submit'>Save!</Button>
+                        </div>
+                        <div className='cardHolder'>
+                          <Button className='menuBtns' onClick={this.openEditForm}>Cancel</Button>
+                          <Button className='menuBtns' color='red' onClick={() => this.deleteMenuItem(this.props.item)}>Delete</Button>
+                        </div>
                       </Form>
                   </Segment>
                 : null
