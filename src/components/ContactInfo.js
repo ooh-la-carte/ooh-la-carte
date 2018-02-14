@@ -97,6 +97,8 @@ class ContactInfo extends Component {
           if (response.status === 200) {
             // can maybe add a first time property to user
             // that tracks the first time they fill this out and redirects that time only
+            window.localStorage.username = eventObj.username;
+            window.localStorage.isChef = eventObj.isChef;
             this.props.history.push('/userProfile');
           }
         })
