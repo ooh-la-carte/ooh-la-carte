@@ -5,11 +5,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const socket = require('socket.io');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
 const auth = require('./authHelpers.js');
 const User = require('../database/models/user.js');
 const Event = require('../database/models/event.js');
 const Messaging = require('../database/models/messaging');
 const SocketManager = require('./SocketManager');
+const authRoutes = require('./routes/authRoutes.js');
 
 
 /*
@@ -32,25 +35,29 @@ const io = socket(server);
 
 io.on('connection', SocketManager);
 
-// http.listen(8888, () => {
-//   console.log('listening on *:8888');
-// });
-
 /*
   ==============================
     Middleware
   ==============================
 */
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(express.static(path.join(__dirname, '/../public')));
 // log each request to the console
 app.use((req, res, next) => {
   console.log(req.method, req.url);
   // continue doing what we were doing and go to the route
   next();
 });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: ['super-secret-key'],
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/auth', authRoutes);
 
 // middleware to return a compressed bundle
 app.get('*bundle.js', (req, res, next) => {
@@ -61,7 +68,6 @@ app.get('*bundle.js', (req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, '/../public')));
 /*
   ==============================
     Post Routes
@@ -152,30 +158,26 @@ app.post('/api/signup', (req, res) => {
 
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
-  const { id,
-    name,
-    streetAddress,
-    city,
-    state,
-    zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram } = req.body;
-  User.insertContactInfo(
-    id,
-    name,
-    streetAddress,
-    city,
-    state,
-    zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram
-  )
+  const user = req.body;
+  const params = {
+    id: user.id,
+    street_name: user.streetAddress,
+    city: user.city,
+    state: user.state,
+    zip_code: user.zip_code,
+    phone: user.phone,
+    email: user.email,
+    facebook: user.facebook,
+    twitter: user.twitter,
+    instagram: user.instagram,
+  };
+
+  if (user.isChef !== null) {
+    params.is_chef = !!user.isChef;
+    params.username = user.username;
+  }
+
+  User.insertContactInfo(params)
     .then(() => {
       res.sendStatus(200);
     });
@@ -250,13 +252,6 @@ app.post('/api/user/sendInvite', (req, res) => {
 
 // This should be a protected route
 app.get('/api/user/info', (req, res) => {
-  // console.log(req.headers);
-  // res.end();
-  // const token = req.headers.authorization;
-  // console.log(token);
-
-  // const decoded = jwt.verify(token, 'super-secret');
-  // console.log(decoded);
   User.findUserById(req.query.id).then((data) => {
     res.set('Content-Type', 'application/json');
     res.end(JSON.stringify(data[0]));
@@ -306,7 +301,6 @@ app.get('/api/user/invitations', (req, res) => {
 });
 
 app.get('/api/user/cuisines', (req, res) => {
-  console.log('in the query', req.query.id);
   User.findCuisinesById(req.query.id)
     .then((results) => {
       res.type('json').json(results);

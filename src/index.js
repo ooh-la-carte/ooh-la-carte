@@ -21,6 +21,7 @@ import ChatTab from './containers/ChatList';
 import Conversation from './containers/conversation';
 import Notifications from './containers/notifications';
 import LoggedOut from './components/LoggedOut';
+import AuthRedirect from './components/AuthRedirect';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -38,6 +39,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/createEvent' component={CreateEvent} />
                         <Route exact path='/editEvent' component={CreateEvent} />
                         <Route exact path='/userProfile' component={UserProfile}/>
+                        <Route exact path='/auth/google/redirect' component={AuthRedirect}/>
                         <Route exact path='/userEvents' component={UserEvents}/>
                         <Route exact path='/chatList' component={ChatTab} />
                         <Route exact path='/conversation' component={Conversation} />
