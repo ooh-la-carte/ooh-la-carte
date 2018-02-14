@@ -3,16 +3,16 @@ exports.up = (knex, Promise) => (
   Promise.all([
     knex.schema.createTable('users', (table) => {
       table.increments('id').unsigned().primary();
-      table.boolean('is_chef').defaultTo(false);
+      table.boolean('is_chef');
       table.string('street_name');
       table.string('city');
       table.string('state');
       table.string('zip_code');
       table.string('name');
-      table.string('username').unique().notNullable();
+      table.string('username').unique();
       table.string('phone');
       table.string('cuisine');
-      table.string('password').notNullable();
+      table.string('password');
       table.string('menu');
       table.string('img');
       table.string('availability');
@@ -22,7 +22,9 @@ exports.up = (knex, Promise) => (
       table.string('facebook');
       table.string('instagram');
       table.string('rating');
-      table.string('email').unique().notNullable();
+      table.string('email');
+      table.string('google_id');
+      table.string('facebook_id').unique();
       table.timestamp('last_prompted').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));

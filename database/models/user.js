@@ -16,11 +16,29 @@ User.findUserByName = username => (
     .catch((err) => { console.log(err); })
 );
 
-// OLD MODEL
-// knex.select('*').from('users').innerJoin('addresses', function() {
-//   this.on('users.address_id', 'addresses.id');
-//   this.on('users.id', id);
-// }).toSQL().sql;
+User.findUserByEmail = email => (
+  knex('users').where({ email }).then()
+);
+
+// the info object should have
+// { idType: 'facebook_id | google_id', id: 'id', name: 'name', img: 'url | undefined' }
+// returns a promise
+User.insertOAuth = (info) => {
+  const row = { name: info.name };
+  if (info.type === 'google') {
+    row.google_id = info.id;
+  }
+
+  if (info.img) {
+    row.img = info.img;
+  }
+  row.email = info.email;
+  row.city = info.city;
+  row.state = info.state;
+  row.zip_code = info.zip;
+
+  return knex('users').returning('id').insert(row).then();
+};
 
 User.sendInvite = inviteObj => (
   knex('invitations').insert(inviteObj)
@@ -77,6 +95,10 @@ User.insertCuisineById = (userObj) => {
     .catch((err) => { console.log(err); });
 };
 
+User.update = userObj => (
+  knex('users').where('id', userObj.id).update({ google_id: userObj.google_id }).then()
+);
+
 User.deleteCuisineById = (userObj) => {
   const { id, cuisine } = userObj;
   return knex('users_cuisines')
@@ -111,20 +133,9 @@ User.insertUser = (username, password, email, accType) => {
     .catch((err) => { console.log(err); });
 };
 
-User.insertContactInfo = (id, name, streetAddress, city, state, zipcode, phone, email, facebook, twitter, instagram) => knex('users')
-  .where('id', id)
-  .update({
-    name,
-    street_name: streetAddress,
-    city,
-    state,
-    zip_code: zipcode,
-    phone,
-    email,
-    facebook,
-    twitter,
-    instagram,
-  });
+User.insertContactInfo = params => (
+  knex('users').where('id', params.id).update(params).then()
+);
 
 User.updateCuisineSelection = (id, cuisine) => knex('users')
   .where('id', id)

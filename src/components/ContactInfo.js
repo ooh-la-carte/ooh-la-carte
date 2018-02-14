@@ -3,14 +3,18 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Form, Grid, Input } from 'semantic-ui-react';
+import { Button, Form, Grid, Input, Dropdown } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
+import options from '../formOptions';
 
 class ContactInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstOAuth: false,
+      username: null,
+      isChef: null,
       error: false,
       id: window.localStorage.getItem('userId'),
       name: '',
@@ -34,6 +38,8 @@ class ContactInfo extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
+        const isChef = userInfo.data.is_chef;
+        const { username } = userInfo.data;
         const { name, city, state, phone, email, twitter, facebook, instagram } = userInfo.data;
         const cuisine = {
           Asian: false,
@@ -53,7 +59,9 @@ class ContactInfo extends Component {
           Vegan: false,
           Custom: false,
         };
-        this.setState({
+        const update = {
+          username,
+          isChef,
           name,
           streetAddress,
           city,
@@ -65,7 +73,12 @@ class ContactInfo extends Component {
           twitter,
           facebook,
           instagram,
-        });
+        };
+
+        if (isChef === null) {
+          update.firstOAuth = true;
+        }
+        this.setState(update);
       });
   }
 
@@ -77,7 +90,8 @@ class ContactInfo extends Component {
     const eventObj = this.state;
     this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
-    if (eventObj.name && eventObj.phone && eventObj.email) {
+    if (eventObj.name && eventObj.phone && eventObj.email &&
+      (!eventObj.firstOAuth || (eventObj.username && eventObj.isChef))) {
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
@@ -98,6 +112,29 @@ class ContactInfo extends Component {
     return (
       <div className='topLevelDiv'>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
+          {this.state.firstOAuth &&
+            <Form.Field required>
+              <label>Account Type</label>
+              <Dropdown
+                type='isChef'
+                onChange={this.handleUpdate}
+                placeholder="Will this be a client or chef account?"
+                fluid
+                selection
+                options={options.userOptions}
+              />
+            </Form.Field>
+          }
+          {this.state.firstOAuth &&
+            <Form.Field required>
+              <label>Username</label>
+              <Input
+                type='username'
+                placeholder='This will be your display name and your username'
+                onChange={this.handleUpdate}
+              />
+            </Form.Field>
+          }
           <Form.Field required>
             <label>Name</label>
             <Form.Input
