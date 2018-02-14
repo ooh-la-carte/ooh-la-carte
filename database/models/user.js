@@ -76,6 +76,16 @@ User.insertMenuItem = menuObj => (
     .then(() => console.log('Inserted menu item'))
 );
 
+User.editMenuItem = (menuObj) => {
+  console.log('Database: ', menuObj);
+  return knex('menu').where('id', menuObj.id).update({
+    menu_name: menuObj.menu_name,
+    description: menuObj.description,
+    cuisine_type: menuObj.type,
+    pic: menuObj.pic,
+  });
+};
+
 User.getMenuItems = id => (
   knex('menu').where('chef_id', id)
 );

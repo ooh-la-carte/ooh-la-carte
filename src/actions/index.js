@@ -75,6 +75,13 @@ const changeSort = sortBy => (
   }
 );
 
+const setMenu = menuArray => (
+  {
+    type: 'SET_MENU',
+    payload: menuArray,
+  }
+);
+
 export {
   changeSelectedChef,
   changeSelectedEvent,
@@ -87,4 +94,5 @@ export {
   updateEventRating,
   changeSort,
   updateUserInfoByField,
+  setMenu,
 };

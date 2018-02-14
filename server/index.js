@@ -320,6 +320,12 @@ app.post('/api/user/saveMenuItem', (req, res) => {
     .then(() => res.sendStatus(201));
 });
 
+app.post('/api/user/editMenuItem', (req, res) => {
+  console.log('Server: ', req.body);
+  User.editMenuItem(req.body)
+    .then(() => res.sendStatus(201));
+});
+
 // example route that validates a token before sending a response
 app.get('/api/protected', auth.ensureToken, (req, res) => {
   // check the token against the secret to validate
