@@ -45,6 +45,19 @@ User.sendInvite = inviteObj => (
     .then(() => console.log('invitation inserted'))
 );
 
+User.removeInvites = removeObj => (
+  knex('invitations').where({ event_id: removeObj.event_id })
+    .then((data) => {
+      data.forEach((invite) => {
+        console.log(invite);
+        if (invite.chef_id !== removeObj.chef_id) {
+          knex('invitations').where('id', invite.id).del()
+            .then(() => console.log('deleted invite'));
+        }
+      });
+    })
+);
+
 User.getChefInvites = id => (
   knex('invitations').where('chef_id', id)
 );

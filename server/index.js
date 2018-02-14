@@ -111,7 +111,12 @@ app.post('/api/user/acceptEvent', (req, res) => {
   Event.acceptEvent(req.body)
     .then(() => {
       Event.addChefToEvent(req.body)
-        .then(() => res.sendStatus(201));
+        .then(() => {
+          User.removeInvites(req.body)
+            .then(() => {
+              res.sendStatus(201);
+            });
+        });
     });
 });
 

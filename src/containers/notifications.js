@@ -10,7 +10,10 @@ import '../style.scss';
 class Notifications extends Component {
   constructor(props) {
     super(props);
-    this.state = { invitations: [] };
+    this.state = {
+      invitations: [],
+      switch: true,
+    };
   }
 
   componentDidMount = () => {
@@ -85,8 +88,30 @@ class Notifications extends Component {
       });
   }
 
-  render = () => (
+  switchToInvite = () => {
+    this.setState({ switch: true });
+  }
+
+  switchToSent = () => {
+    this.setState({ switch: false });
+  }
+
+  render = () => {
+    let myInvites;
+    let sent;
+    if (this.state.switch) {
+      myInvites = 'blue';
+      sent = null;
+    } else {
+      myInvites = null;
+      sent = 'blue';
+    }
+    return (
       <div>
+        <div className='ui two buttons' style={{ marginBottom: '2%' }}>
+          <Button color={myInvites} onClick={this.switchToInvite}>My invites</Button>
+          <Button color={sent} onClick={this.switchToSent}>Sent invites</Button>
+        </div>
         {this.state.invitations.length !== 0
           ?
             this.state.invitations.map(invite => (
@@ -149,7 +174,8 @@ class Notifications extends Component {
           : <Segment className='whiteBackground standardWidth centerText'><h4>You don't have any current notifications!</h4></Segment>
         }
       </div>
-  );
+    );
+  };
 }
 
 function mapStateToProps(state) {
