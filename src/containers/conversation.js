@@ -44,6 +44,7 @@ class Conversation extends Component {
       this.props.listenerOn(true);
       this.props.socketReducer.on('private message', (data) => {
         if (window.localStorage.getItem('username') === data.reciever) {
+          console.log('chat data: ', data);
           const newChat = [...this.state.chat, data];
           this.setState({ chat: newChat });
         }

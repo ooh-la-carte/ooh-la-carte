@@ -89,12 +89,14 @@ class MenuListItem extends Component {
                   <Grid.Column width={12}>{this.props.item.description}</Grid.Column>
                 </Grid.Row>
               </Grid>
-              <Divider />
+              {window.localStorage.getItem('isChef') === 'true' ? <Divider /> : null}
               {window.localStorage.getItem('isChef') === 'true'
-                ? <div
-                className='centerText'
-                style={{ color: 'gray' }}
-                onClick={() => { this.openEditForm(this.props.item); }}>Edit</div>
+                ? <div className='cardHolder' style={{ marginBottom: '3%' }}>
+                  <Button
+                  style={{ color: 'gray' }}
+                  onClick={() => { this.openEditForm(this.props.item); }}>Edit</Button>
+                  <Button className='menuBtns' color='red' onClick={() => this.deleteMenuItem(this.props.item)}>Delete</Button>
+                </div>
                 : null
               }
               {this.state.editOpen
@@ -122,10 +124,6 @@ class MenuListItem extends Component {
                         </Form.Field>
                         <div className='cardHolder' style={{ marginBottom: '3%' }}>
                           <Button className='btn menuBtns' type='submit'>Save!</Button>
-                        </div>
-                        <div className='cardHolder'>
-                          <Button className='menuBtns' onClick={this.openEditForm}>Cancel</Button>
-                          <Button className='menuBtns' color='red' onClick={() => this.deleteMenuItem(this.props.item)}>Delete</Button>
                         </div>
                       </Form>
                   </Segment>

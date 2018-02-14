@@ -263,9 +263,18 @@ class Settings extends Component {
           </Link>
         </div>
         {/* ***** Add Menus ***** */}
-        <h1 className='center miniPadding softText'>Add Menus</h1>
-        <h5 className='center miniPadding softText'
-        onClick={this.openMenuForm}>Add a menu item!</h5>
+        <h1 className='center miniPadding softText'>Menus</h1>
+
+       {/* ***** Menu List ***** */}
+        <div>
+          {this.props.menu.map(item => (
+            <MenuListItem key={item.id} item={item} />
+          ))}
+        </div>
+        <div className='cardHolder' style={{ margin: '3% 0%' }}>
+          <Button className='btn' inverted
+          onClick={this.openMenuForm}>Add a menu item!</Button>
+        </div>
         {this.state.menuOpen
           ?
             <Segment className='standardWidth'>
@@ -294,13 +303,6 @@ class Settings extends Component {
             </Segment>
           : null
         }
-
-       {/* ***** Menu List ***** */}
-        <div>
-          {this.props.menu.map(item => (
-            <MenuListItem key={item.id} item={item} />
-          ))}
-        </div>
         <br /> <br />
       </div>
     );
