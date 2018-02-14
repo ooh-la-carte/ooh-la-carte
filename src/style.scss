@@ -122,10 +122,13 @@ body {
   font-family: $olc-font;
   text-align: center;
   font-size: 300%;
+  letter-spacing: -1px;
+
 }
 
 .scriptFont {
   font-family: $olc-font;
+  letter-spacing: 0px;
 }
 
 .scriptFont.storyText {
