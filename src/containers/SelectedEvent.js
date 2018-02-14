@@ -15,6 +15,10 @@ class SelectedEvent extends Component {
 
   componentDidMount = () => {
     window.scrollTo(0, 0);
+    axios.get(`/api/user/info?id=${this.props.selectedEventReducer.chef_id}`)
+      .then((foundChefInfo) => {
+        this.setState({ chefName: foundChefInfo.data.name });
+      });
   }
 
   handleRatingChange = (e, { rating }) => {
@@ -29,7 +33,6 @@ class SelectedEvent extends Component {
   sendInvite = (inviteObj) => {
     axios.post('/api/user/sendInvite', inviteObj);
   }
-
 
   render() {
     const event = this.props.selectedEventReducer;
@@ -53,6 +56,12 @@ class SelectedEvent extends Component {
                   />;
       }
     }
+    const chef = this.state.chefName ?
+      (<div className='date'>
+        Attending chef: {this.state.chefName}
+      </div>)
+      : '';
+
     return (
       <div className='selectedEventCardDiv'>
         <Card id='selectedEventCard'>
@@ -69,6 +78,7 @@ class SelectedEvent extends Component {
               <span className='date'>
                 Hosted by {event.creator_username}
               </span>
+              {chef}
               <div className='date'>
                 Cuisine: {event.cuisine}
               </div>
