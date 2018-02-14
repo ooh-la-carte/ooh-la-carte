@@ -1,4 +1,4 @@
-const sortReducer = (state = 'None', action) => {
+const sortReducer = (state = 'none', action) => {
   if (action.type === 'CHANGE_SORT') {
     return action.payload;
   }

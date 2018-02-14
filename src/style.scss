@@ -107,11 +107,16 @@ body {
   padding-bottom: 5%;
 }
 
+
 /*
   ====================
   Landing Page Styling
   ====================
 */
+
+.flexy {
+  display: flex;
+}
 
 .OLCtitle {
   font-family: $olc-font;
@@ -119,11 +124,22 @@ body {
   font-size: 300%;
 }
 
-.scriptFontTitle {
+.scriptFont {
   font-family: $olc-font;
+}
+
+.scriptFont.storyText {
+  text-align: center;
+  font-size: 135%;
+  padding-bottom: 1em;
+}
+
+.scriptFont.title {
   text-align: center;
   font-size: 200%;
 }
+
+
 
 .logoColumn {
   padding-right: 0 !important;
