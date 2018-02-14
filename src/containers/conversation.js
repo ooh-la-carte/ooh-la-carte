@@ -44,9 +44,11 @@ class Conversation extends Component {
       this.props.listenerOn(true);
       this.props.socketReducer.on('private message', (data) => {
         if (window.localStorage.getItem('username') === data.reciever) {
+          const temp = data;
+          temp.time_sent = moment().format('MM/DD/YY, h:mm a');
           console.log('chat data: ', data);
-          const newChat = [...this.state.chat, data];
-          this.setState({ chat: newChat });
+          const newChat = [...this.state.chat, temp];
+          this.addToChat(newChat);
         }
       });
       this.props.socketReducer.on('self message', (data) => {
