@@ -9,16 +9,28 @@ $light-color: #e6fcff;
 $soft-text: 'Arima Madurai', cursive;
 $olc-font: 'Dancing Script', cursive;
 
+.orbutton {
+  display: inline-block;
+}
+
+.myButton {
+  background-color: #4285F4 !important;
+  color: white !important;
+  margin: auto !important;
+}
 .softText {
   font-family: 'Asap', sans-serif;
 }
 
 body {
     font-family: 'Asap', sans-serif;
-    // background-color: #e5f8fa;
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
     margin-top: 15% !important;
     margin-bottom: 25% !important;
+}
+
+.centerText {
+  text-align: center;
 }
 
 .standardWidth {
@@ -107,6 +119,15 @@ body {
   padding-bottom: 5%;
 }
 
+/*
+  ====================
+  Landing Page Styling
+  ====================
+*/
+
+.iconPadding {
+  margin-bottom: 14px;
+}
 
 /*
   ====================
@@ -140,8 +161,6 @@ body {
   text-align: center;
   font-size: 200%;
 }
-
-
 
 .logoColumn {
   padding-right: 0 !important;
@@ -340,3 +359,5 @@ body {
     display: flex;
     justify-content: space-around;
 }
+
+

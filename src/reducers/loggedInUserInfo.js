@@ -39,6 +39,20 @@ const loggedInUserInfo = (state = {}, action) => {
     const url = '/api/updateUserDataByField';
     axios.post(url, updatedInfoObj);
     return newState;
+  } else if (action.type === 'UPDATE_LAST_PROMPTED') {
+    const { field, updatedValue } = action.payload;
+    const newState = {
+      ...state,
+      lastPrompt: updatedValue,
+    };
+    const updatedInfoObj = {
+      id: state.id,
+      field,
+      updatedValue,
+    };
+    const url = '/api/updateUserDataByField';
+    axios.post(url, updatedInfoObj);
+    return newState;
   }
   return state;
 };

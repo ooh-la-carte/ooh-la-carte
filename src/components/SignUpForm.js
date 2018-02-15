@@ -64,8 +64,11 @@ class SignUpForm extends Component {
   }
 
   submitCreds = (credsObj) => {
+    const copy = Object.assign(credsObj);
+    copy.username = copy.username.toLowerCase();
     const url = '/api/signup';
     const { username, password1, password2, email, value } = this.state.creds;
+
     if (!(username && password1 && password2 && email && value)) {
       this.showRequiredFieldsLabel();
       console.log('invalid entries');
@@ -73,8 +76,7 @@ class SignUpForm extends Component {
       this.showPasswordMismatch();
       console.log('password mismatch');
     } else {
-      console.log('submitting');
-      axios.post(url, credsObj)
+      axios.post(url, copy)
         .then((response) => {
           if (response.status === 200) {
             console.log('response received from server');

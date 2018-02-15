@@ -5,7 +5,8 @@ import { Card, Image, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { changeSelectedEvent, setUserInfo, setSocket } from '../actions';
+import moment from 'moment';
+import { changeSelectedEvent, setUserInfo, setSocket, updateUserInfoByField, updateLastPrompted } from '../actions';
 import '../style.scss';
 import data from '../MockData';
 
@@ -22,6 +23,7 @@ class UserProfile extends Component {
       .then((userInfo) => {
         const streetAddress = userInfo.data.street_name;
         const zipcode = userInfo.data.zip_code;
+        const lastPrompt = userInfo.data.last_prompted;
         const { id, username, name, city, state, phone, rate } = userInfo.data;
         const { email, facebook, twitter, instagram } = userInfo.data;
         const cuisine = {
@@ -61,8 +63,19 @@ class UserProfile extends Component {
           facebook,
           twitter,
           instagram,
+          lastPrompt,
         };
         this.props.setUserInfo(user);
+      }).then(() => {
+        if (this.needsToSeePrompt()) {
+          const updateLastPromptObj = {
+            field: 'last_prompted',
+            updatedValue: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+          };
+          this.props.updateLastPrompted(updateLastPromptObj);
+          console.log('new test', this.needsToSeePrompt());
+          this.props.history.push('/addToHomescreen');
+        }
       });
 
     // need an ter op here assigning the params object to diff between
@@ -98,6 +111,17 @@ class UserProfile extends Component {
         socket.emit('add user', window.localStorage.getItem('username'));
       });
     }
+  }
+
+  needsToSeePrompt = (standalone) => {
+    if (navigator.standalone || standalone) {
+      return false;
+    }
+    const today = moment();
+    const { lastPrompt } = this.props.user;
+    const days = today.diff(lastPrompt, 'days'); // the number of days between now and the last prompt
+    const isApple = ['iPhone', 'iPad', 'iPod'].includes(navigator.platform);
+    return (Number.isNaN(days) || days > 14) && isApple;
   }
 
   handleChange = (e, { value }) => {
@@ -175,6 +199,8 @@ function mapDispatchToProps(dispatch) {
     changeSelectedEvent,
     setUserInfo,
     setSocket,
+    updateUserInfoByField,
+    updateLastPrompted,
   }, dispatch);
 }
 
