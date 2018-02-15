@@ -75,14 +75,29 @@ class CreateEventForm extends Component {
     this.setState({ error: true });
     if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#nameRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!(eventObj.city && eventObj.state && eventObj.zip)) {
       document.getElementById('locationRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#locationRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!(eventObj.month && eventObj.date && eventObj.year)) {
       document.getElementById('dateRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#dateRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!eventObj.partySize) {
       document.getElementById('partySizeRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#partySizeRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!eventObj.budget) {
       document.getElementById('budgetRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#budgetRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else {
       this.setState({ error: false });
       console.log('submitting event');
@@ -177,7 +192,7 @@ class CreateEventForm extends Component {
                         value={this.state.month}
                         onChange={this.handleUpdate}
                         options={options.monthOptions}
-                        onFocus={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -193,7 +208,7 @@ class CreateEventForm extends Component {
                         value={this.state.date}
                         onChange={this.handleUpdate}
                         options={options.dateOptions}
-                        onFocus={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -209,7 +224,7 @@ class CreateEventForm extends Component {
                         value={this.state.year}
                         onChange={this.handleUpdate}
                         options={options.yearOptions}
-                        onFocus={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
 
                       />
                     </Form.Field>
@@ -230,7 +245,7 @@ class CreateEventForm extends Component {
                     value={this.state.partySize} type='partySize'
                     onChange={this.handleUpdate}
                     options={options.partySizeOptions}
-                    onFocus={() => { document.getElementById('partySizeRequiredNotifier').classList.add('hidden'); } }
+                    onClick={() => { document.getElementById('partySizeRequiredNotifier').classList.add('hidden'); } }
 
                   />
                 </Form.Field>
