@@ -1,15 +1,19 @@
-{
-  "short_name": "OohLaCarte",
-  "name": "Ooh La Carte",
-  "icons": [
-    {
-      "src": "/favicon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "/userProfile",
-  "background_color": "#222",
-  "theme_color": "#222",
-  "display": "standalone"
+'use strict';
+
+module.exports = function() {
+  return {
+    "short_name": "OohLaCarte",
+    "name": "Ooh La Carte",
+    "icons": [
+      {
+        "src": "/favicon.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "'/?standalone'",
+    "background_color": "#222",
+    "theme_color": "#222",
+    "display": "standalone"
+  }
 }
