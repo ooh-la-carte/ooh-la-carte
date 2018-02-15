@@ -45,6 +45,19 @@ User.sendInvite = inviteObj => (
     .then(() => console.log('invitation inserted'))
 );
 
+User.removeInvites = removeObj => (
+  knex('invitations').where({ event_id: removeObj.event_id })
+    .then((data) => {
+      data.forEach((invite) => {
+        console.log(invite);
+        if (invite.chef_id !== removeObj.chef_id) {
+          knex('invitations').where('id', invite.id).del()
+            .then(() => console.log('deleted invite'));
+        }
+      });
+    })
+);
+
 User.getChefInvites = id => (
   knex('invitations').where('chef_id', id)
 );
@@ -74,6 +87,20 @@ User.findCuisinesById = id => (
 User.insertMenuItem = menuObj => (
   knex('menu').insert(menuObj)
     .then(() => console.log('Inserted menu item'))
+);
+
+User.editMenuItem = (menuObj) => {
+  console.log('Database: ', menuObj);
+  return knex('menu').where('id', menuObj.id).update({
+    menu_name: menuObj.menu_name,
+    description: menuObj.description,
+    cuisine_type: menuObj.type,
+    pic: menuObj.pic,
+  });
+};
+
+User.deleteMenuItem = id => (
+  knex('menu').where('id', id.id).del()
 );
 
 User.getMenuItems = id => (

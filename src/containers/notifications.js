@@ -3,14 +3,17 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Segment } from 'semantic-ui-react';
 import { selectConversation } from '../actions';
 import '../style.scss';
 
 class Notifications extends Component {
   constructor(props) {
     super(props);
-    this.state = { invitations: [] };
+    this.state = {
+      invitations: [],
+      switch: true,
+    };
   }
 
   componentDidMount = () => {
@@ -22,7 +25,7 @@ class Notifications extends Component {
       .then((invites) => {
         const invitesForMe = invites.data.filter(invite => invite.sender !== window.localStorage.getItem('username'));
         console.log(invitesForMe);
-        this.setState({ invitations: invitesForMe });
+        this.setState({ invitations: invitesForMe.filter(invite => invite.chef_id === null) });
       });
   }
 
@@ -85,67 +88,94 @@ class Notifications extends Component {
       });
   }
 
-  render = () => (
+  switchToInvite = () => {
+    this.setState({ switch: true });
+  }
+
+  switchToSent = () => {
+    this.setState({ switch: false });
+  }
+
+  render = () => {
+    let myInvites;
+    let sent;
+    if (this.state.switch) {
+      myInvites = 'blue';
+      sent = null;
+    } else {
+      myInvites = null;
+      sent = 'blue';
+    }
+    return (
       <div>
-        {this.state.invitations.map(invite => (
-          // if else here to check for boolean for whether or not to render
-          invite.accepted === null
-            ?
-              <Card style={{ margin: '2% auto' }} key={invite.id}>
-                <Card.Content>
-                  <Card.Header>
-                    {invite.event_name}
-                  </Card.Header>
-                  <Card.Meta>
-                    Hosted by {invite.host}
-                  </Card.Meta>
-                  <Card.Description>
-                    {invite.host} would like you to cook at their event: {invite.name}
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <div className='ui two buttons' style={{ marginBottom: '2%' }}>
-                    <Button basic color='green'
-                    onClick={() => {
-                      this.acceptEvent({
-                        id: invite.id,
-                        event_id: invite.event_id,
-                        chef_id: invite.chef_id,
-                        accepted: true,
-                      });
-                    }}>Accept</Button>
-                    <Button basic color='red'
-                    onClick={() => {
-                      this.declineEvent({
-                        id: invite.id,
-                        event_id: invite.event_id,
-                        chef_id: invite.chef_id,
-                        accepted: false,
-                      });
-                    }}>Decline</Button>
-                  </div>
-                  <div>
-                    <Button basic color='blue' style= {{ width: '100%' }}
-                    onClick={() => {
-                      let receiver = '';
-                      if (window.localStorage.getItem('isChef') === 'true') {
-                        receiver = invite.host;
-                      } else {
-                        receiver = invite.chef;
-                      }
-                      this.sendMessage({
-                        username: receiver,
-                        user_id: invite.user_id,
-                        chef_id: invite.chef_id,
-                      });
-                    }}>Message!</Button>
-                  </div>
-                </Card.Content>
-              </Card>
-            : null
-          ))}
+        <div className='ui two buttons' style={{ marginBottom: '2%' }}>
+          <Button color={myInvites} onClick={this.switchToInvite}>My invites</Button>
+          <Button color={sent} onClick={this.switchToSent}>Sent invites</Button>
+        </div>
+        {this.state.invitations.length !== 0
+          ?
+            this.state.invitations.map(invite => (
+              // if else here to check for boolean for whether or not to render
+              invite.accepted === null
+                ?
+                  <Card style={{ margin: '2% auto' }} key={invite.id}>
+                    <Card.Content>
+                      <Card.Header>
+                        {invite.event_name}
+                      </Card.Header>
+                      <Card.Meta>
+                        Hosted by {invite.host}
+                      </Card.Meta>
+                      <Card.Description>
+                        {invite.host} would like you to cook at their event: {invite.name}
+                      </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                      <div className='ui two buttons' style={{ marginBottom: '2%' }}>
+                        <Button basic color='green'
+                        onClick={() => {
+                          this.acceptEvent({
+                            id: invite.id,
+                            event_id: invite.event_id,
+                            chef_id: invite.chef_id,
+                            accepted: true,
+                          });
+                        }}>Accept</Button>
+                        <Button basic color='red'
+                        onClick={() => {
+                          this.declineEvent({
+                            id: invite.id,
+                            event_id: invite.event_id,
+                            chef_id: invite.chef_id,
+                            accepted: false,
+                          });
+                        }}>Decline</Button>
+                      </div>
+                      <div>
+                        <Button basic color='blue' style= {{ width: '100%' }}
+                        onClick={() => {
+                          let receiver = '';
+                          if (window.localStorage.getItem('isChef') === 'true') {
+                            receiver = invite.host;
+                          } else {
+                            receiver = invite.chef;
+                          }
+                          this.sendMessage({
+                            username: receiver,
+                            user_id: invite.user_id,
+                            chef_id: invite.chef_id,
+                          });
+                        }}>Message!</Button>
+                      </div>
+                    </Card.Content>
+                  </Card>
+                : null
+              ))
+          : <Segment className='whiteBackground standardWidth centerText'><h4>You don't have any current notifications!</h4></Segment>
+        }
       </div>
-  );
+    );
+  };
 }
 
 function mapStateToProps(state) {
