@@ -15,7 +15,6 @@ $olc-font: 'Dancing Script', cursive;
 
 body {
     font-family: 'Asap', sans-serif;
-    // background-color: #e5f8fa;
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
     margin-top: 15% !important;
     margin-bottom: 25% !important;
@@ -107,6 +106,15 @@ body {
   padding-bottom: 5%;
 }
 
+/*
+  ====================
+  Landing Page Styling
+  ====================
+*/
+
+.iconPadding {
+  margin-bottom: 14px;
+}
 
 /*
   ====================
@@ -140,8 +148,6 @@ body {
   text-align: center;
   font-size: 200%;
 }
-
-
 
 .logoColumn {
   padding-right: 0 !important;
