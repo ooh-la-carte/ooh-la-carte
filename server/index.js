@@ -164,6 +164,7 @@ app.post('/api/signup', (req, res) => {
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const user = req.body;
+  console.log(user);
   const params = {
     id: user.id,
     name: user.name,
@@ -171,7 +172,7 @@ app.post('/api/updateContactInfo', (req, res) => {
     street_name: user.streetAddress,
     city: user.city,
     state: user.state,
-    zip_code: user.zip_code,
+    zip_code: user.zipcode,
     phone: user.phone,
     email: user.email,
     facebook: user.facebook,

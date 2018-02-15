@@ -135,9 +135,56 @@ class Settings extends Component {
     return (
       <div className='topLevelDiv'>
         <div className='boxed center'>
-          {/* ***** Cuisine Accordian ***** */}
+        {/* ***** Contact Info ***** */}
+        <div className='miniPadding boxed center'>
+          <Segment>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column width={4}>Name:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.name}</Grid.Column>
+                <Grid.Column width={4}>Address:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.streetAddress}</Grid.Column>
+                <Grid.Column width={4}></Grid.Column>
+                  <Grid.Column width={12}>
+                    {
+                      this.props.user.city
+                      ?
+                        `${this.props.user.city}, ${this.props.user.state}`
+                      :
+                        null
+                    } {this.props.user.zipcode}
+                  </Grid.Column>
+                <Grid.Column width={4}>Phone:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
+                <Grid.Column width={4}>Email:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
+              {window.localStorage.getItem('userId')
+              ? <div className='boxed center'>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column width={4}>Rate:</Grid.Column>
+                <Grid.Column width={12}>{this.props.user.rate}</Grid.Column>
+                <Grid.Column width={4}>Cuisines:</Grid.Column>
+                <Grid.Column width={12}>{this.state.cuisineList}</Grid.Column>
+              </Grid.Row>
+            </Grid>
+                </div>
+              : null}
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        </div>
+        <div className='center miniPadding'>
+          <Link to='/contactInfo'>
+            <Button className='btn' inverted> Update Contact Info</Button>
+          </Link>
+        </div>
+      {/* ***** Cuisine Accordian ***** */}
+      {window.localStorage.getItem('isChef')
+        ?
+        <div>
           <div className='miniPadding'>
-            <Accordion className='lightlyColored' fluid styled>
+            <Accordion fluid styled>
               <Accordion.Title index={0} onClick={this.handleClick}>
                 <Icon name='dropdown' />
                 Cuisines
@@ -177,20 +224,13 @@ class Settings extends Component {
                       </Form.Group>
                     </Form>
                   </Grid.Column>
-                  <Checkbox checked={this.props.user.cuisine.custom} label='Custom' />
-                  <Form.Field>
-                    <input
-                      placeholder='Description...'
-                      value={this.state.custom}
-                    />
-                  </Form.Field>
                 </Grid>
               </Accordion.Content>
             </Accordion>
           </div>
           {/* ***** Rate Accordian ***** */}
           <div>
-            <Accordion className='lightlyColored' fluid styled>
+            <Accordion fluid styled>
               <Accordion.Title index={1} onClick={this.handleClick}>
                 <Icon name='dropdown' />
                 Rate
@@ -210,39 +250,13 @@ class Settings extends Component {
             </Accordion>
           </div>
         </div>
-        {/* ***** Contact Info ***** */}
-        <div className='miniPadding boxed center'>
-          <Segment className='lightlyColored'>
-            <Grid>
-              <Grid.Row>
-                <Grid.Column width={4}>Name:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.name}</Grid.Column>
-                <Grid.Column width={4}>Address:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.streetAddress}</Grid.Column>
-                <Grid.Column width={4}></Grid.Column>
-                  <Grid.Column width={12}>
-                    {
-                      this.props.user.city
-                      ?
-                        `${this.props.user.city}, ${this.props.user.state}`
-                      :
-                        null
-                    } {this.props.user.zipcode}
-                  </Grid.Column>
-                <Grid.Column width={4}>Phone:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.phone}</Grid.Column>
-                <Grid.Column width={4}>Email:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.email}</Grid.Column>
-                <Grid.Column width={4}>Rate:</Grid.Column>
-                <Grid.Column width={12}>{this.props.user.rate}</Grid.Column>
-                <Grid.Column width={4}>Cuisines:</Grid.Column>
-                <Grid.Column width={12}>{this.state.cuisineList}</Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Segment>
-        </div>
+      :
+      null
+      }
         {/* ***** Social Media Links ***** */}
         {socialMediaEntry}
+      {window.localStorage.getItem('isChef') ?
+      <div>
         <div className='center miniPadding'>
           {this.props.user.facebook ?
             <Icon name='facebook square' className='OLCcolor' size='huge' onClick={() => { this.setSocialMediaLink('facebook'); }}/>
@@ -257,11 +271,6 @@ class Settings extends Component {
             : <Icon name='instagram' style={{ opacity: '0.2' }} color='grey' size='huge' onClick={() => { this.setSocialMediaLink('instagram'); }}/>
           }
         </div>
-        <div className='center miniPadding'>
-          <Link to='/contactInfo'>
-            <Button className='btn' inverted> Update Contact Info</Button>
-          </Link>
-        </div>
         {/* ***** Add Menus ***** */}
         <h1 className='center miniPadding softText'>Menus</h1>
 
@@ -273,7 +282,7 @@ class Settings extends Component {
         </div>
         <div className='cardHolder' style={{ margin: '3% 0%' }}>
           <Button className='btn' inverted
-          onClick={this.openMenuForm}>Add a menu item!</Button>
+          onClick={this.openMenuForm}>Add a new menu</Button>
         </div>
         {this.state.menuOpen
           ?
@@ -298,13 +307,19 @@ class Settings extends Component {
                     <label>Picture</label>
                     <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
                   </Form.Field>
-                  <Button className='btn' type='submit'>Save!</Button><Button onClick={this.openMenuForm}>Cancel</Button>
+                  <div className='btnDiv'>
+                    <Button className='btn' inverted type='submit'>Save</Button><Button className='btn' inverted onClick={this.openMenuForm}>Cancel</Button>
+                  </div>
                 </Form>
             </Segment>
           : null
         }
         <br /> <br />
       </div>
+    : null
+    }
+      </div>
+    </div>
     );
   }
 }

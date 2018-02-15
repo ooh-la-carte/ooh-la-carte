@@ -195,11 +195,13 @@ class UserProfile extends Component {
               See All Your Events
             </Button>
           </Link>
-          <Link to='/createEvent'>
-            <Button className='btn' type='submit' inverted>
-              Create New Event
-            </Button>
-          </Link>
+          {!window.localStorage.getItem('isChef')
+          ? <Link to='/createEvent'>
+              <Button className='btn' type='submit' inverted>
+                Create New Event
+              </Button>
+            </Link>
+          : null }
         </div>
         </div>
       </div>

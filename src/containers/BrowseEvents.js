@@ -25,7 +25,6 @@ class BrowseEvents extends Component {
     window.scrollTo(0, 0);
     axios.get('/api/events')
       .then((events) => {
-        console.log('events data: ', events.data);
         this.setState({
           events: events.data,
           sorted: events.data,
