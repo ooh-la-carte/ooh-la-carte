@@ -93,27 +93,38 @@ class LoginForm extends Component {
           <Form.Field>
           </Form.Field>
           <br/>
+          <div className='center'>
+            <Link to='/'>
+              <Button
+                color='grey'
+                onClick={this.props.handleClose}
+              >
+                <Icon name='x' /> Cancel
+              </Button>
+            </Link>
 
-          <Link to='/'>
             <Button
-              color='grey'
-              onClick={this.props.handleClose}
+              type='button'
+              color='green'
+              onClick={() => {
+                  this.submitCreds(this.state.username.toLowerCase(), this.state.password);
+                }
+              }
             >
-              <Icon name='x' /> Cancel
+              <Icon name='checkmark' /> Login
+            </Button>
+          </div>
+        </Form>
+        <h4 className='center orbutton'>
+         - or -
+        </h4>
+        <div className='center'>
+          <Link to='/auth/google'>
+            <Button className='myButton' onClick={() => this.props.history.push('/auth/google')}>
+              <Icon name='google plus' /> Sign in with Google
             </Button>
           </Link>
-
-          <Button
-            type='button'
-            color='green'
-            onClick={() => {
-                this.submitCreds(this.state.username.toLowerCase(), this.state.password);
-              }
-            }
-          >
-            <Icon name='checkmark' /> Login
-          </Button>
-        </Form>
+        </div>
       </div>
     );
   }

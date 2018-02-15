@@ -9,6 +9,15 @@ $light-color: #e6fcff;
 $soft-text: 'Arima Madurai', cursive;
 $olc-font: 'Dancing Script', cursive;
 
+.orbutton {
+  display: inline-block;
+}
+
+.myButton {
+  background-color: #4285F4 !important;
+  color: white !important;
+  margin: auto !important;
+}
 .softText {
   font-family: 'Asap', sans-serif;
 }
