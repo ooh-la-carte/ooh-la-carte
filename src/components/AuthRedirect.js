@@ -15,7 +15,6 @@ class AuthRedirect extends React.Component {
   componentDidMount() {
     axios.get('/auth/verify')
       .then((response) => {
-        console.log(response.data);
         window.localStorage.accessToken = response.data.token;
         window.localStorage.userId = response.data.userId;
         window.localStorage.username = response.data.username;
