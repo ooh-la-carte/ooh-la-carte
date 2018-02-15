@@ -119,11 +119,9 @@ class LoginForm extends Component {
          - or -
         </h4>
         <div className='center'>
-          <Link to='/auth/google'>
-            <Button className='myButton' onClick={() => this.props.history.push('/auth/google')}>
+            <Button className='myButton' href='/auth/google'>
               <Icon name='google plus' /> Sign in with Google
             </Button>
-          </Link>
         </div>
       </div>
     );
