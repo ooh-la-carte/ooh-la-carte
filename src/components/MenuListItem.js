@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
+import { Grid, Segment, Image, Divider, Form, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { setMenu } from '../actions';
-import { Grid, Segment, Image, Divider, Form, Button } from 'semantic-ui-react';
 
 class MenuListItem extends Component {
   constructor(props) {
