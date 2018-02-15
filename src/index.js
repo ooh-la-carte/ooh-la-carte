@@ -22,6 +22,7 @@ import Conversation from './containers/conversation';
 import Notifications from './containers/notifications';
 import LoggedOut from './components/LoggedOut';
 import AuthRedirect from './components/AuthRedirect';
+import AddToHomescreen from './components/AddToHomescreen';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
@@ -47,6 +48,7 @@ ReactDOM.render(<Provider store={createStoreWithMiddleware(reducers)}>
                         <Route exact path='/contactInfo' component={ContactInfo}/>
                         <Route exact path='/notifications' component={Notifications}/>
                         <Route exact path='/loggedOut' component={LoggedOut}/>
+                        <Route exact path='/addToHomescreen' component={AddToHomescreen}/>
                       </div>
                   </BrowserRouter>
                 </Provider>, document.getElementById('app'));
