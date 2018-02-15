@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
-import { setUserInfo, updateCuisineSelection, updateUserInfoByField } from '../actions';
+import { setUserInfo, updateCuisineSelection, updateUserInfoByField, setMenu } from '../actions';
 import MenuListItem from '../components/MenuListItem';
 import { budgetOptions } from '../formOptions';
 import Helpers from '../helpers';
@@ -35,7 +35,8 @@ class Settings extends Component {
     window.scrollTo(0, 0);
     axios.get('/api/user/menus', { params: { id: this.state.id } })
       .then((menuItems) => {
-        this.setState({ menu: menuItems.data });
+        this.props.setMenu(menuItems.data);
+        // this.setState({ menu: menuItems.data });
       });
     this.setState({ cuisineList: Helpers.getCuisineList(this.props.user.cuisine) });
   }
@@ -79,20 +80,19 @@ class Settings extends Component {
       description: this.state.description,
       cuisine_type: this.state.type,
     })
-      .then(() => this.setState({
-        menu: [...this.state.menu, {
-          id: 7777,
-          chef_id: Number(this.state.id),
-          menu_name: this.state.menu_name,
-          pic: this.state.pic,
-          description: this.state.description,
-          cuisine_type: this.state.type,
-        }],
-        menu_name: '',
-        pic: '',
-        description: '',
-        type: '',
-      }));
+      .then(() => {
+        this.setState({
+          menu_name: '',
+          pic: '',
+          description: '',
+          type: '',
+        });
+        axios.get('/api/user/menus', { params: { id: this.state.id } })
+          .then((menuItems) => {
+            this.props.setMenu(menuItems.data);
+            // this.setState({ menu: menuItems.data });
+          });
+      });
   }
 
   openMenuForm = () => {
@@ -263,42 +263,46 @@ class Settings extends Component {
           </Link>
         </div>
         {/* ***** Add Menus ***** */}
-        <h1 className='center miniPadding softText'>Add Menus</h1>
-        <h5 className='center miniPadding softText'
-        onClick={this.openMenuForm}>Add a menu item!</h5>
-        {this.state.menuOpen
-          ?
-            <Form className='boxed center' onSubmit={() => {
-              this.openMenuForm();
-              this.saveMenuItem();
-            }}>
-                <Form.Field>
-                  <label>Menu name</label>
-                  <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menu_name' value={this.state.menu_name}/>
-                </Form.Field>
-                <Form.Field style={{ width: '50%' }}>
-                  <label>Cuisine / Theme</label>
-                  <Form.Input placeholder='Cuisine / Theme' onChange={this.handleUpdate} type='type' value={this.state.type}/>
-                </Form.Field>
-                <Form.Field>
-                  <label>Description</label>
-                  <Form.Input placeholder='Description' onChange={this.handleUpdate} type='description' value={this.state.description}/>
-                </Form.Field>
-                <Form.Field>
-                  <label>Picture</label>
-                  <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
-                </Form.Field>
-                <Button type='submit'>Save!</Button>
-              </Form>
-          : null
-        }
+        <h1 className='center miniPadding softText'>Menus</h1>
 
        {/* ***** Menu List ***** */}
         <div>
-          {this.state.menu.map(item => (
+          {this.props.menu.map(item => (
             <MenuListItem key={item.id} item={item} />
           ))}
         </div>
+        <div className='cardHolder' style={{ margin: '3% 0%' }}>
+          <Button className='btn' inverted
+          onClick={this.openMenuForm}>Add a menu item!</Button>
+        </div>
+        {this.state.menuOpen
+          ?
+            <Segment className='standardWidth'>
+              <Form className='boxed center' onSubmit={() => {
+                this.openMenuForm();
+                this.saveMenuItem();
+              }}>
+                  <Form.Field>
+                    <label>Menu name</label>
+                    <Form.Input placeholder='Menu name' onChange={this.handleUpdate} type='menu_name' value={this.state.menu_name}/>
+                  </Form.Field>
+                  <Form.Field style={{ width: '50%' }}>
+                    <label>Cuisine / Theme</label>
+                    <Form.Input placeholder='Cuisine / Theme' onChange={this.handleUpdate} type='type' value={this.state.type}/>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Description</label>
+                    <Form.Input placeholder='Description' onChange={this.handleUpdate} type='description' value={this.state.description}/>
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Picture</label>
+                    <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
+                  </Form.Field>
+                  <Button className='btn' type='submit'>Save!</Button><Button onClick={this.openMenuForm}>Cancel</Button>
+                </Form>
+            </Segment>
+          : null
+        }
         <br /> <br />
       </div>
     );
@@ -310,11 +314,15 @@ function mapDispatchToProps(dispatch) {
     setUserInfo,
     updateCuisineSelection,
     updateUserInfoByField,
+    setMenu,
   }, dispatch);
 }
 
 function mapStateToProps(state) {
-  return { user: state.loggedInUserInfo };
+  return {
+    user: state.loggedInUserInfo,
+    menu: state.menuReducer,
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Settings));

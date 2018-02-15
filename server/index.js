@@ -111,7 +111,12 @@ app.post('/api/user/acceptEvent', (req, res) => {
   Event.acceptEvent(req.body)
     .then(() => {
       Event.addChefToEvent(req.body)
-        .then(() => res.sendStatus(201));
+        .then(() => {
+          User.removeInvites(req.body)
+            .then(() => {
+              res.sendStatus(201);
+            });
+        });
     });
 });
 
@@ -319,6 +324,16 @@ app.get('/api/user/menus', (req, res) => {
 
 app.post('/api/user/saveMenuItem', (req, res) => {
   User.insertMenuItem(req.body)
+    .then(() => res.sendStatus(201));
+});
+
+app.post('/api/user/editMenuItem', (req, res) => {
+  User.editMenuItem(req.body)
+    .then(() => res.sendStatus(201));
+});
+
+app.post('/api/user/deleteMenuItem', (req, res) => {
+  User.deleteMenuItem(req.body)
     .then(() => res.sendStatus(201));
 });
 
