@@ -129,22 +129,26 @@ class SelectedEvent extends Component {
                   <div>Send a message!</div>
                 </div>
               </div>
-              <div onClick={() => {
-                if (window.localStorage.getItem('userId')) {
-                  this.sendInvite({
-                    event_id: event.id,
-                    user_id: event.creator_id,
-                    host: event.creator_username,
-                    chef_id: Number(window.localStorage.getItem('userId')),
-                    sender: window.localStorage.getItem('username'),
-                    chef: window.localStorage.getItem('username'),
-                    event_name: event.name,
-                    accepted: null,
-                  });
-                } else {
-                  this.props.history.push('/signUpForm');
-                }
-              }}>Send an offer!</div>
+              {window.localStorage.getItem('isChef') === 'true'
+                ?
+                  <div onClick={() => {
+                    if (window.localStorage.getItem('userId')) {
+                      this.sendInvite({
+                        event_id: event.id,
+                        user_id: event.creator_id,
+                        host: event.creator_username,
+                        chef_id: Number(window.localStorage.getItem('userId')),
+                        sender: window.localStorage.getItem('username'),
+                        chef: window.localStorage.getItem('username'),
+                        event_name: event.name,
+                        accepted: null,
+                      });
+                    } else {
+                      this.props.history.push('/signUpForm');
+                    }
+                  }}>Send an offer!</div>
+                : null
+              }
           </Card.Content>
         </Card>
       </div>

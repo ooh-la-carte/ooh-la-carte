@@ -13,7 +13,7 @@ passport.deserializeUser((id, done) => {
 const googleConfig = {
   clientID: process.env.GOOGLE_APP_ID,
   clientSecret: process.env.GOOGLE_APP_SECRET,
-  callbackURL: 'http://localhost:3000/auth/google/redirect',
+  callbackURL: `${process.env.GOOGLE_APP_URL}/auth/google/redirect`,
 };
 
 passport.use(new GoogleStrategy(googleConfig, (accessToken, refreshToken, profile, done) => {

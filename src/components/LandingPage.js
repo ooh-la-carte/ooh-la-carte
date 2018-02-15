@@ -14,11 +14,12 @@ class LandingPage extends Component {
   }
 
   setStoryVersion = (selectedUser) => {
-    let user = selectedUser;
     if (this.state.user !== '') {
-      user = '';
+      this.setState({ user: '' });
+      setTimeout(() => this.setState({ user: selectedUser }), 1000);
+    } else {
+      this.setState({ user: selectedUser });
     }
-    this.setState({ user });
   }
 
   render() {

@@ -108,7 +108,6 @@ class LoginForm extends Component {
           <Form.Field>
           </Form.Field>
           <br/>
-
           <div className='btnDiv'>
             <Link to='/'>
               <Button
@@ -130,6 +129,16 @@ class LoginForm extends Component {
             </Button>
             </div>
         </Form>
+        <h4 className='center orbutton'>
+         - or -
+        </h4>
+        <div className='center'>
+          <Link to='/auth/google'>
+            <Button className='myButton' onClick={() => this.props.history.push('/auth/google')}>
+              <Icon name='google plus' /> Log in with Google
+            </Button>
+          </Link>
+        </div>
       </div>
       </div>
     );
