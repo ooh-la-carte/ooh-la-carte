@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Button, Form, Grid, Input, Dropdown, Label } from 'semantic-ui-react';
+import { Button, Form, Grid, Input, Dropdown } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
 import options from '../formOptions';
@@ -90,27 +90,8 @@ class ContactInfo extends Component {
     const eventObj = this.state;
     this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
-    // if there is a name, phone and email
-    // if (eventObj.name && eventObj.phone && eventObj.email &&
-    //   (!eventObj.firstOAuth || (eventObj.username && eventObj.isChef))) {
-    if (!eventObj.name) {
-      document.getElementById('nameRequiredNotifier').classList.remove('hidden');
-      this.setState({ error: true });
-    } else if (!(eventObj.city && eventObj.state && eventObj.zipcode)) {
-      document.getElementById('cityStateZipRequiredNotifier').classList.remove('hidden');
-      this.setState({ error: true });
-    } else if (!eventObj.email) {
-      document.getElementById('emailRequiredNotifier').classList.remove('hidden');
-      this.setState({ error: true });
-    } else if (eventObj.firstOAuth) {
-      if (!eventObj.username) {
-        document.getElementById('usernameRequiredNotifier').classList.remove('hidden');
-        this.setState({ error: true });
-      } else if (!eventObj.isChef) {
-        document.getElementById('isChefRequiredNotifier').classList.remove('hidden');
-        this.setState({ error: true });
-      }
-    } else {
+    if (eventObj.name && eventObj.phone && eventObj.email &&
+      (!eventObj.firstOAuth || (eventObj.username && eventObj.isChef))) {
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
@@ -124,8 +105,8 @@ class ContactInfo extends Component {
         .catch((error) => {
           console.log('submission error: ', error);
         });
-    // } else {
-    //   this.setState({ error: true }, () => { window.scrollTo(0, document.body.scrollHeight); });
+    } else {
+      this.setState({ error: true }, () => { window.scrollTo(0, document.body.scrollHeight); });
     }
   }
 
@@ -134,44 +115,27 @@ class ContactInfo extends Component {
       <div className='topLevelDiv'>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
           {this.state.firstOAuth &&
-            <div>
-              <Form.Field required>
-                <label>Account Type</label>
-                <Dropdown
-                  type='isChef'
-                  onChange={this.handleUpdate}
-                  placeholder="Will this be a client or chef account?"
-                  fluid
-                  selection
-                  options={options.userOptions}
-                  onFocus={
-                    () => { document.getElementById('isChefRequiredNotifier').classList.add('hidden'); }
-                  }
-
-                />
-              </Form.Field>
-              <div id="isChefRequiredNotifier" className="hidden">
-                <Label basic color='red' pointing>Please select an account type</Label>
-              </div>
-            </div>
+            <Form.Field required>
+              <label>Account Type</label>
+              <Dropdown
+                type='isChef'
+                onChange={this.handleUpdate}
+                placeholder="Will this be a client or chef account?"
+                fluid
+                selection
+                options={options.userOptions}
+              />
+            </Form.Field>
           }
           {this.state.firstOAuth &&
-            <div>
-              <Form.Field required>
-                <label>Username</label>
-                <Input
-                  type='username'
-                  placeholder='This will be your display name and your username'
-                  onChange={this.handleUpdate}
-                  onFocus={
-                    () => { document.getElementById('usernameRequiredNotifier').classList.add('hidden'); }
-                  }
-                />
-              </Form.Field>
-              <div id="usernameRequiredNotifier" className="hidden">
-                <Label basic color='red' pointing>Please enter a username</Label>
-              </div>
-            </div>
+            <Form.Field required>
+              <label>Username</label>
+              <Input
+                type='username'
+                placeholder='This will be your display name and your username'
+                onChange={this.handleUpdate}
+              />
+            </Form.Field>
           }
           <Form.Field required>
             <label>Name</label>
@@ -180,16 +144,8 @@ class ContactInfo extends Component {
               placeholder={this.state.name || 'Name'}
               onChange={this.handleUpdate}
               value={this.state.name || ''}
-              onFocus={
-                () => { document.getElementById('nameRequiredNotifier').classList.add('hidden'); }
-              }
             />
           </Form.Field>
-
-          <div id="nameRequiredNotifier" className="hidden">
-            <Label basic color='red' pointing>Please enter a name</Label>
-          </div>
-
           <Form.Field>
             <label>Bio</label>
             <Form.Input
@@ -213,41 +169,32 @@ class ContactInfo extends Component {
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column style={{ paddingRight: '0px' }} width={8}>
-                    <Form.Field required>
+                    <Form.Field>
                       <Input
                         placeholder={this.state.city || 'City'}
                         type='city'
                         value={this.state.city || ''}
                         onChange={this.handleUpdate}
-                        onFocus={
-                          () => { document.getElementById('cityStateZipRequiredNotifier').classList.add('hidden'); }
-                        }
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ padding: '0px' }} width={3}>
-                    <Form.Field required>
+                    <Form.Field>
                       <Input
                         placeholder={this.state.state || 'State'}
                         type='state'
                         value={this.state.state || ''}
                         onChange={this.handleUpdate}
-                        onFocus={
-                          () => { document.getElementById('cityStateZipRequiredNotifier').classList.add('hidden'); }
-                        }
                       />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
-                    <Form.Field required>
+                    <Form.Field>
                       <Input
                         placeholder={this.state.zipcode || 'Zipcode'}
                         type='zipcode'
                         value={this.state.zipcode || ''}
                         onChange={this.handleUpdate}
-                        onFocus={
-                          () => { document.getElementById('cityStateZipRequiredNotifier').classList.add('hidden'); }
-                        }
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -255,12 +202,7 @@ class ContactInfo extends Component {
                 </Grid>
 
           </Form.Field>
-
-          <div id="cityStateZipRequiredNotifier" className="hidden">
-            <Label basic color='red' pointing>Please enter a city, state, and zip</Label>
-          </div>
-
-          <Form.Field>
+          <Form.Field required>
           <label>Phone</label>
             <Form.Input
               type='phone'
@@ -276,16 +218,8 @@ class ContactInfo extends Component {
               placeholder={this.state.email || 'Email'}
               onChange={this.handleUpdate}
               value={this.state.email || ''}
-              onFocus={
-                () => { document.getElementById('emailRequiredNotifier').classList.add('hidden'); }
-              }
             />
           </Form.Field>
-
-          <div id="emailRequiredNotifier" className="hidden">
-            <Label basic color='red' pointing>Please enter an email address</Label>
-          </div>
-
           <Form.Field>
           <label>Facebook Link</label>
             <Form.Input
