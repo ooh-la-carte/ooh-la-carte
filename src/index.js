@@ -22,7 +22,7 @@ import Conversation from './containers/conversation';
 import Notifications from './containers/notifications';
 import LoggedOut from './components/LoggedOut';
 import AuthRedirect from './components/AuthRedirect';
-import AddToHomescreen from './components/addToHomescreen';
+import AddToHomescreen from './components/AddToHomescreen';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
