@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Icon, Form, Label } from 'semantic-ui-react';
+import { Button, Icon, Form, Label, Grid, Segment, Image } from 'semantic-ui-react';
+import logo from '../../public/android-chrome-512x512.png';
 import '../style.scss';
 
 class LoginForm extends Component {
@@ -65,9 +66,23 @@ class LoginForm extends Component {
 
   render() {
     return (
-      <div className='loginForms'>
+      <div>
+        <h4 className='OLCtitle'>Ooh La Carte</h4>
+        <div className='center boxed'>
+          <Grid>
+            <Grid.Column verticalAlign='middle' width={5}>
+              <Image size='small' id="logo" src={logo} alt='logo image' />
+            </Grid.Column>
+            <Grid.Column className='textColumn' verticalAlign='middle' width={11}>
+              <Segment className='textBox'>
+                  <h4 className='nav center'>Welcome back!  Please enter your login information.</h4>
+              </Segment>
+            </Grid.Column>
+          </Grid>
+          <br />
+        </div>
+      <div className='boxed center loginForms'>
         <Form>
-          <h3><Icon name='user circle' /> Login!</h3>
           <Form.Field>
             <label>Username</label>
             <input
@@ -93,27 +108,26 @@ class LoginForm extends Component {
           <Form.Field>
           </Form.Field>
           <br/>
-          <div className='center'>
+          <div className='btnDiv'>
             <Link to='/'>
               <Button
-                color='grey'
+                className='btn'
+                inverted
                 onClick={this.props.handleClose}
-              >
-                <Icon name='x' /> Cancel
+              > <Icon name='x' /> Cancel
               </Button>
             </Link>
-
             <Button
-              type='button'
-              color='green'
+              className='btn'
+              type='submit'
+              inverted
               onClick={() => {
-                  this.submitCreds(this.state.username.toLowerCase(), this.state.password);
-                }
-              }
+                this.submitCreds(this.state.username.toLowerCase(), this.state.password);
+              }}
             >
               <Icon name='checkmark' /> Login
             </Button>
-          </div>
+            </div>
         </Form>
         <h4 className='center orbutton'>
          - or -
@@ -121,10 +135,11 @@ class LoginForm extends Component {
         <div className='center'>
           <Link to='/auth/google'>
             <Button className='myButton' onClick={() => this.props.history.push('/auth/google')}>
-              <Icon name='google plus' /> Sign in with Google
+              <Icon name='google plus' /> Log in with Google
             </Button>
           </Link>
         </div>
+      </div>
       </div>
     );
   }

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
-import { Card, Image, Button } from 'semantic-ui-react';
+import { Card, Image, Button, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import { changeSelectedEvent, setUserInfo, setSocket, updateUserInfoByField, updateLastPrompted } from '../actions';
 import '../style.scss';
+import logo from '../../public/android-chrome-512x512.png';
 import data from '../MockData';
 
 const socketUrl = '/';
@@ -131,6 +132,18 @@ class UserProfile extends Component {
   render() {
     return (
       <div className='topLevelDiv'>
+        <div className='center boxed'>
+          <Grid>
+            <Grid.Column verticalAlign='middle' width={5}>
+              <Image size='small' id="logo" src={logo} alt='logo image' />
+            </Grid.Column>
+            <Grid.Column className='textColumn' verticalAlign='middle' width={11}>
+              <Segment>
+                <h4 className='center titleFont scriptFont'>Ooh La Carte</h4>
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </div>
         <Card className='profile userCard'>
           <Card.Content>
             <Image floated='right' size='tiny' src={data.chefs[0].image} />

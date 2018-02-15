@@ -5,7 +5,7 @@
 */
 
 $primary-color: #00bcd4;
-$light-color: #e6fcff;
+$light-color: #e2e9e9;
 $soft-text: 'Arima Madurai', cursive;
 $olc-font: 'Dancing Script', cursive;
 
@@ -24,10 +24,21 @@ $olc-font: 'Dancing Script', cursive;
 
 body {
     font-family: 'Asap', sans-serif;
-    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
     margin-top: 15% !important;
     margin-bottom: 25% !important;
-}
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+  @media only screen and (max-device-width: 480px) {
+    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
+  }
+  @media only screen and (min-device-width: 481px) {
+    background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x900");
+  }
+    }
+
+
 
 .centerText {
   text-align: center;
@@ -77,10 +88,9 @@ body {
 .loginForms {
   margin: 5% auto;
   width: 80%;
-  background-color: white;
+  background-color: $light-color;
   padding: 5%;
   border-radius: 10px;
-  margin-top: 50% !important;
 }
 
 .chefCheckbox {
@@ -344,6 +354,9 @@ body {
   text-decoration: italic;
 }
 
+.titleFont {
+  font-size: 200%;
+}
 
 /*
   ====================
