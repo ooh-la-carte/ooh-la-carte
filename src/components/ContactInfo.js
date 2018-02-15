@@ -15,7 +15,6 @@ class ContactInfo extends Component {
       firstOAuth: false,
       username: null,
       isChef: null,
-      error: false,
       id: window.localStorage.getItem('userId'),
       name: '',
       streetAddress: '',
@@ -92,21 +91,34 @@ class ContactInfo extends Component {
     const url = '/api/updateContactInfo';
     // if (eventObj.name && eventObj.phone && eventObj.email &&
     //   (!eventObj.firstOAuth || (eventObj.username && eventObj.isChef))) {
-    this.setState({ error: true });
     if (eventObj.firstOAuth) {
       if (!eventObj.isChef) {
         document.getElementById('accountTypeRequiredNotifier').classList.remove('hidden');
+        const bubble = document.querySelector('#accountTypeRequiredNotifier');
+        const rect = bubble.getBoundingClientRect();
+        window.scroll(0, rect.top);
       } else if (eventObj.username) {
         document.getElementById('usernameRequiredNotifier').classList.remove('hidden');
+        const bubble = document.querySelector('#usernameRequiredNotifier');
+        const rect = bubble.getBoundingClientRect();
+        window.scroll(0, rect.top);
       }
     } else if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#nameRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!(eventObj.city && eventObj.state && eventObj.zipcode)) {
       document.getElementById('locationRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#locationRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else if (!eventObj.email) {
       document.getElementById('emailRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#emailRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else {
-      this.setState({ error: false });
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
@@ -292,10 +304,7 @@ class ContactInfo extends Component {
               value={this.state.instagram || ''}
             />
           </Form.Field>
-          {this.state.error
-            ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
-            : null
-          }
+
           <div className='btnDiv'>
           <Link to='/settings'>
             <Button

@@ -13,7 +13,6 @@ class CreateEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: false,
       name: '',
       eventId: null,
       hostId: window.localStorage.getItem('userId'),
@@ -72,7 +71,6 @@ class CreateEventForm extends Component {
     } else {
       url = '/api/createevent';
     }
-    this.setState({ error: true });
     if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
       const bubble = document.querySelector('#nameRequiredNotifier');
@@ -99,7 +97,6 @@ class CreateEventForm extends Component {
       const rect = bubble.getBoundingClientRect();
       window.scroll(0, rect.top);
     } else {
-      this.setState({ error: false });
       console.log('submitting event');
       axios.post(url, eventObj)
         .then((response) => {
@@ -314,11 +311,6 @@ class CreateEventForm extends Component {
                 type='description'
                 />
               </Form.Field>
-
-              {this.state.error
-                ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
-                : null
-              }
 
               <div className='btnDiv'>
                 <Link to='/userProfile'>
