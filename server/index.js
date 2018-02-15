@@ -171,7 +171,7 @@ app.post('/api/updateContactInfo', (req, res) => {
     street_name: user.streetAddress,
     city: user.city,
     state: user.state,
-    zip_code: user.zip_code,
+    zip_code: user.zipcode,
     phone: user.phone,
     email: user.email,
     facebook: user.facebook,

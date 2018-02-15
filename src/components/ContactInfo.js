@@ -97,7 +97,7 @@ class ContactInfo extends Component {
         const bubble = document.querySelector('#accountTypeRequiredNotifier');
         const rect = bubble.getBoundingClientRect();
         window.scroll(0, rect.top);
-      } else if (eventObj.username) {
+      } else if (!eventObj.username) {
         document.getElementById('usernameRequiredNotifier').classList.remove('hidden');
         const bubble = document.querySelector('#usernameRequiredNotifier');
         const rect = bubble.getBoundingClientRect();
