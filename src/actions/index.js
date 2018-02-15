@@ -61,6 +61,13 @@ const updateUserInfoByField = updatedInfoObj => (
   }
 );
 
+const updateLastPrompted = newPromptInfo => (
+  {
+    type: 'UPDATE_LAST_PROMPTED',
+    payload: newPromptInfo,
+  }
+);
+
 const updateEventRating = rating => (
   {
     type: 'UPDATE_EVENT_RATING',
@@ -95,4 +102,5 @@ export {
   changeSort,
   updateUserInfoByField,
   setMenu,
+  updateLastPrompted,
 };

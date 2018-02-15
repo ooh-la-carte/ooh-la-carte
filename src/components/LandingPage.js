@@ -32,16 +32,14 @@ class LandingPage extends Component {
         <h4 className='OLCtitle'>Ooh La Carte</h4>
         <div className='center boxed'>
           <Grid>
-            <Grid.Row>
-              <Grid.Column className='logoColumn' width={5}>
-                <Image size='small' id="logo" src={logo} alt='logo image' />
-              </Grid.Column>
-              <Grid.Column className='textColumn' width={11}>
-                <Segment className='textBox'>
+            <Grid.Column verticalAlign='middle' width={5}>
+              <Image size='small' id="logo" src={logo} alt='logo image' />
+            </Grid.Column>
+            <Grid.Column className='textColumn' verticalAlign='middle' width={11}>
+              <Segment className='textBox'>
                   <h4 className='nav center'>A new and exciting way to connect chefs with clients for individualized dining experiences!</h4>
-                </Segment>
-              </Grid.Column>
-            </Grid.Row>
+              </Segment>
+            </Grid.Column>
           </Grid>
           <br />
           <Image rounded src='https://source.unsplash.com/zhiZOpm99Iw'/>
