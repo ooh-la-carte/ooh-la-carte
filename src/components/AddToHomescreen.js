@@ -1,23 +1,15 @@
 import React, { Component } from 'react';
 import { Modal, Segment, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { updateUserInfoByField, updateLastPrompted } from '../actions';
 import iconLogo from '../../public/apple-touch-icon.png';
 import iOSshare from '../../public/share.png';
 import '../style.scss';
 
 class AddToHomescreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { modalOpen: false };
-  }
-
-  handleOpen = () => {
-    this.setState({ modalOpen: true });
-  }
-
   handleClose = () => {
-    this.setState({ modalOpen: false });
     this.props.history.push('/userProfile');
   }
 
@@ -47,9 +39,16 @@ class AddToHomescreen extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    updateUserInfoByField,
+    updateLastPrompted,
+  }, dispatch);
+}
+
 function mapStateToProps(state) {
   return { user: state.loggedInUserInfo };
 }
 
-export default connect(mapStateToProps)(withRouter(AddToHomescreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(AddToHomescreen));
 
