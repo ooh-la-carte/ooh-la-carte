@@ -41,7 +41,6 @@ io.on('connection', SocketManager);
   ==============================
 */
 
-app.use(express.static(path.join(__dirname, '/../public')));
 // log each request to the console
 app.use((req, res, next) => {
   console.log(req.method, req.url);
@@ -67,6 +66,7 @@ app.get('*bundle.js', (req, res, next) => {
   res.set('Content-Type', 'text/javascript');
   next();
 });
+app.use(express.static(path.join(__dirname, '/../public')));
 
 /*
   ==============================
