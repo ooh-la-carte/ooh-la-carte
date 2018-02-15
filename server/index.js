@@ -166,6 +166,8 @@ app.post('/api/updateContactInfo', (req, res) => {
   const user = req.body;
   const params = {
     id: user.id,
+    name: user.name,
+    bio: user.bio,
     street_name: user.streetAddress,
     city: user.city,
     state: user.state,
