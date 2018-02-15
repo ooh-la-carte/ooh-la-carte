@@ -112,6 +112,7 @@ class ContactInfo extends Component {
 
   render() {
     return (
+
       <div className='topLevelDiv'>
         <Form onSubmit={this.handleSubmit} className='boxed center'>
           {this.state.firstOAuth &&
