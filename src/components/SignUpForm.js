@@ -76,7 +76,6 @@ class SignUpForm extends Component {
       this.showPasswordMismatch();
       console.log('password mismatch');
     } else {
-      console.log('submitting');
       axios.post(url, copy)
         .then((response) => {
           if (response.status === 200) {

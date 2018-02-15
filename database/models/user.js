@@ -58,7 +58,7 @@ User.findChefs = () => (
 );
 
 User.findUserById = id => (
-  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'email', 'id', 'rate', 'cuisine', 'username', 'twitter', 'instagram', 'facebook').then()
+  knex('users').where('id', id).select('is_chef', 'street_name', 'city', 'state', 'zip_code', 'name', 'phone', 'cuisine', 'email', 'id', 'rate', 'bio', 'username', 'twitter', 'instagram', 'facebook', 'last_prompted').then()
 );
 
 User.findCuisinesById = id => (

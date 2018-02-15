@@ -25,7 +25,7 @@ exports.up = (knex, Promise) => (
       table.string('email');
       table.string('google_id');
       table.string('facebook_id').unique();
-      table.timestamp('last_prompted').notNullable().defaultTo(knex.raw('now()'));
+      table.timestamp('last_prompted');
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'));
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'));
     }),
