@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Icon, Form, Input, Dropdown, Label } from 'semantic-ui-react';
+import { Button, Icon, Form, Input, Dropdown, Label, Grid, Segment, Image } from 'semantic-ui-react';
 import axios from 'axios';
 import '../style.scss';
 import options from '../formOptions';
+import logo from '../../public/android-chrome-512x512.png';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -95,9 +96,22 @@ class SignUpForm extends Component {
 
   render() {
     return (
+      <div>
+        <h4 className='OLCtitle'>Ooh La Carte</h4>
+        <div className='center boxed'>
+          <Grid>
+            <Grid.Column verticalAlign='middle' width={5}>
+              <Image size='small' id="logo" src={logo} alt='logo image' />
+            </Grid.Column>
+            <Grid.Column className='textColumn' verticalAlign='middle' width={11}>
+              <Segment className='textBox'>
+                  <h4 className='nav center'>Easily sign up below or for faster account creation sign up with your Google account!</h4>
+              </Segment>
+            </Grid.Column>
+          </Grid>
+        </div>
       <div className='loginForms'>
         <Form>
-          <h3><Icon name='user circle' /> Sign up!</h3>
           <Form.Field>
             <label>Username</label>
             <Input placeholder='Username'
@@ -134,7 +148,7 @@ class SignUpForm extends Component {
           <Form.Field>
             <label>Email</label>
             <Input
-              placeholder='anthonyB@confidential.com'
+              placeholder='yourname@email.com'
               onChange={this.setEmail}
               value={this.state.creds.email}
               onFocus={this.hideRequiredFieldsLabel}
@@ -160,25 +174,28 @@ class SignUpForm extends Component {
 
           <br/>
 
-          <Link to='/'>
+          <div className='btnDiv'>
+            <Link to='/'>
+              <Button
+                className='btn'
+                inverted
+                onClick={this.props.handleClose}
+              > <Icon name='x' /> Cancel
+              </Button>
+            </Link>
             <Button
-              color='grey'
-            >
-              <Icon name='x' /> Cancel
-            </Button>
-          </Link>
-
-          <Button
-            type='button'
-            color='green'
+              className='btn'
+              type='submit'
+              inverted
             onClick={() => {
               this.submitCreds(this.state.creds);
             }}
-          >
-            <Icon name='checkmark' /> Sign Up
-          </Button>
-
+            >
+              <Icon name='checkmark' /> Sign Up
+            </Button>
+            </div>
         </Form>
+      </div>
       </div>
     );
   }

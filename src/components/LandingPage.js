@@ -14,11 +14,12 @@ class LandingPage extends Component {
   }
 
   setStoryVersion = (selectedUser) => {
-    let user = selectedUser;
     if (this.state.user !== '') {
-      user = '';
+      this.setState({ user: '' });
+      setTimeout(() => this.setState({ user: selectedUser }), 1000);
+    } else {
+      this.setState({ user: selectedUser });
     }
-    this.setState({ user });
   }
 
   render() {
@@ -100,7 +101,7 @@ class LandingPage extends Component {
               </Grid.Column>
         </Grid.Row>
       </Grid>
-        <div>
+        <div className='center'>
           <Card className='landingCards' onClick={() => { this.props.history.push('/browseChefs'); }}>
             <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
             <Card.Content>
@@ -148,7 +149,7 @@ class LandingPage extends Component {
               </Grid.Column>
         </Grid.Row>
       </Grid>
-      <div className='cardHolder'>
+      <div className='center'>
         <Card className='landingCards' onClick={() => { this.props.history.push('/browseEvents'); }}>
           <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
           <Card.Content>

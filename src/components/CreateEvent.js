@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import axios from 'axios';
-import { Dropdown, Button, Form, Input, TextArea, Grid } from 'semantic-ui-react';
+import { Dropdown, Button, Form, Input, TextArea, Grid, Label } from 'semantic-ui-react';
 import { selectConversation, updateEventRating } from '../actions';
 import '../style.scss';
 
@@ -13,7 +13,6 @@ class CreateEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: false,
       name: '',
       eventId: null,
       hostId: window.localStorage.getItem('userId'),
@@ -72,9 +71,31 @@ class CreateEventForm extends Component {
     } else {
       url = '/api/createevent';
     }
-    if (!eventObj.date || !eventObj.partySize || !eventObj.budget ||
-        !eventObj.name || !eventObj.zip) {
-      this.setState({ error: true }, () => { window.scrollTo(0, document.body.scrollHeight); });
+    if (!eventObj.name) {
+      document.getElementById('nameRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#nameRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
+    } else if (!(eventObj.city && eventObj.state && eventObj.zip)) {
+      document.getElementById('locationRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#locationRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
+    } else if (!(eventObj.month && eventObj.date && eventObj.year)) {
+      document.getElementById('dateRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#dateRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
+    } else if (!eventObj.partySize) {
+      document.getElementById('partySizeRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#partySizeRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
+    } else if (!eventObj.budget) {
+      document.getElementById('budgetRequiredNotifier').classList.remove('hidden');
+      const bubble = document.querySelector('#budgetRequiredNotifier');
+      const rect = bubble.getBoundingClientRect();
+      window.scroll(0, rect.top);
     } else {
       console.log('submitting event');
       axios.post(url, eventObj)
@@ -99,30 +120,62 @@ class CreateEventForm extends Component {
 
               <Form.Field required>
                 <label>Event Name</label>
-                <Input placeholder='Event Title' type='name' onChange={this.handleUpdate} value={this.state.name} />
+                <Input
+                placeholder='Event Title'
+                type='name'
+                onChange={this.handleUpdate}
+                value={this.state.name}
+                onFocus={() => { document.getElementById('nameRequiredNotifier').classList.add('hidden'); } }
+                />
               </Form.Field>
+
+              <div id="nameRequiredNotifier" className="hidden">
+                <Label basic color='red' pointing>Please enter a name for the event</Label>
+              </div>
 
               <Grid columns={3}>
                 <Grid.Row>
                   <Grid.Column style={{ paddingRight: '0px' }} width={8}>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>City</label>
-                      <Input placeholder='City' value={this.state.city} type='city' onChange={this.handleUpdate} />
+                      <Input
+                      placeholder='City'
+                      value={this.state.city}
+                      type='city'
+                      onChange={this.handleUpdate}
+                      onFocus={() => { document.getElementById('locationRequiredNotifier').classList.add('hidden'); } }
+                      />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ padding: '0px' }} width={3}>
-                    <Form.Field>
+                    <Form.Field required>
                       <label>State</label>
-                      <Input placeholder='State' value={this.state.state} type='state' onChange={this.handleUpdate} />
+                      <Input
+                      placeholder='State'
+                      value={this.state.state}
+                      type='state'
+                      onChange={this.handleUpdate}
+                      onFocus={() => { document.getElementById('locationRequiredNotifier').classList.add('hidden'); } }
+                      />
                     </Form.Field>
                   </Grid.Column>
                   <Grid.Column style={{ paddingLeft: '0px' }} width={5}>
                     <Form.Field required>
                       <label>Zip</label>
-                      <Input placeholder='Zipcode' value={this.state.zip} type='zip' onChange={this.handleUpdate} />
+                      <Input
+                        placeholder='Zipcode'
+                        value={this.state.zip}
+                        type='zip'
+                        onChange={this.handleUpdate}
+                        onFocus={() => { document.getElementById('locationRequiredNotifier').classList.add('hidden'); } }
+                      />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
+
+                <div id="locationRequiredNotifier" className="hidden">
+                  <Label basic color='red' pointing>Please enter a city, state, and zip</Label>
+                </div>
 
                 <Grid.Row>
                   <Grid.Column style={{ paddingRight: '0px' }}>
@@ -136,6 +189,7 @@ class CreateEventForm extends Component {
                         value={this.state.month}
                         onChange={this.handleUpdate}
                         options={options.monthOptions}
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -151,6 +205,7 @@ class CreateEventForm extends Component {
                         value={this.state.date}
                         onChange={this.handleUpdate}
                         options={options.dateOptions}
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
                       />
                     </Form.Field>
                   </Grid.Column>
@@ -166,23 +221,37 @@ class CreateEventForm extends Component {
                         value={this.state.year}
                         onChange={this.handleUpdate}
                         options={options.yearOptions}
+                        onClick={() => { document.getElementById('dateRequiredNotifier').classList.add('hidden'); } }
+
                       />
                     </Form.Field>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
-              <div className='miniPadding'>
-              <Form.Field required>
-                <label>Party Size</label>
-                <Dropdown
-                  placeholder="Party Size"
-                  fluid upward selection
-                  value={this.state.partySize} type='partySize'
-                  onChange={this.handleUpdate}
-                  options={options.partySizeOptions}
-                />
-              </Form.Field>
+
+              <div id="dateRequiredNotifier" className="hidden">
+                <Label basic color='red' pointing>Please enter a month, date, and year</Label>
               </div>
+
+              <div className='miniPadding'>
+                <Form.Field required>
+                  <label>Party Size</label>
+                  <Dropdown
+                    placeholder="Party Size"
+                    fluid upward selection
+                    value={this.state.partySize} type='partySize'
+                    onChange={this.handleUpdate}
+                    options={options.partySizeOptions}
+                    onClick={() => { document.getElementById('partySizeRequiredNotifier').classList.add('hidden'); } }
+
+                  />
+                </Form.Field>
+              </div>
+
+              <div id="partySizeRequiredNotifier" className="hidden">
+                <Label basic color='red' pointing>Please enter a party size</Label>
+              </div>
+
               <div className='miniPadding center'>
                 <Button.Group size='medium' className='center btn'>
                   <Button
@@ -222,9 +291,14 @@ class CreateEventForm extends Component {
                   onChange={this.handleUpdate}
                   value={`${this.state.budget}`}
                   type='budget'
+                  onFocus={() => { document.getElementById('budgetRequiredNotifier').classList.add('hidden'); } }
+
                 />
               </Form.Field>
 
+              <div id="budgetRequiredNotifier" className="hidden">
+                <Label basic color='red' pointing>Please enter a budget</Label>
+              </div>
 
               <Form.Field>
               <label>Description</label>
@@ -237,10 +311,7 @@ class CreateEventForm extends Component {
                 type='description'
                 />
               </Form.Field>
-              {this.state.error
-                ? <div className='center miniPadding' style={{ color: 'red' }}>* Please complete all required fields</div>
-                : null
-              }
+
               <div className='btnDiv'>
                 <Link to='/userProfile'>
                   <Button
