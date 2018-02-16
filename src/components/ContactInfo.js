@@ -86,6 +86,7 @@ class ContactInfo extends Component {
   }
 
   handleSubmit = () => {
+    console.log('submit was clicked');
     const eventObj = this.state;
     this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
@@ -103,7 +104,8 @@ class ContactInfo extends Component {
         const rect = bubble.getBoundingClientRect();
         window.scroll(0, rect.top);
       }
-    } else if (!eventObj.name) {
+    }
+    if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
       const bubble = document.querySelector('#nameRequiredNotifier');
       const rect = bubble.getBoundingClientRect();
@@ -119,6 +121,7 @@ class ContactInfo extends Component {
       const rect = bubble.getBoundingClientRect();
       window.scroll(0, rect.top);
     } else {
+      console.log('it never got here');
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
