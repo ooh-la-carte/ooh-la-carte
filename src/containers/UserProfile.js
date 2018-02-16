@@ -198,8 +198,10 @@ class UserProfile extends Component {
               See All Your Events
             </Button>
           </Link>
-          {!window.localStorage.getItem('isChef')
-          ? <Link to='/createEvent'>
+          {console.log(window.localStorage.getItem('isChef'))}
+          {window.localStorage.getItem('isChef') === 'false'
+          ? 
+          <Link to='/createEvent'>
               <Button className='btn' type='submit' inverted>
                 Create New Event
               </Button>

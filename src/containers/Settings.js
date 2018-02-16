@@ -182,7 +182,7 @@ class Settings extends Component {
           </Link>
         </div>
       {/* ***** Cuisine Accordian ***** */}
-      {window.localStorage.getItem('isChef')
+      {window.localStorage.getItem('isChef') === 'true'
         ?
         <div>
           <div className='miniPadding'>
@@ -257,7 +257,7 @@ class Settings extends Component {
       }
         {/* ***** Social Media Links ***** */}
         {socialMediaEntry}
-      {window.localStorage.getItem('isChef') ?
+      {window.localStorage.getItem('isChef') === 'true' ?
       <div>
         <div className='center miniPadding'>
           {this.props.user.facebook ?
