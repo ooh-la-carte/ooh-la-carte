@@ -120,7 +120,6 @@ class ContactInfo extends Component {
       const rect = bubble.getBoundingClientRect();
       window.scroll(0, rect.top);
     } else {
-      console.log('it never got here');
       axios.post(url, eventObj)
         .then((response) => {
           if (response.status === 200) {
