@@ -126,7 +126,8 @@ class BrowseChefs extends Component {
           </Card.Header>
           <Card.Meta>
             <div>Name: {chef.name}</div>
-            <div>Cuisine: {Helpers.getCuisineList(chef.id)}</div>
+            <div>Cuisine: {Helpers.getCuisineList(JSON.parse(chef.cuisine))}</div>
+            {console.log(chef)}
              {chef.city ?
               <div>{chef.city}, {chef.state}</div>
               : null }
