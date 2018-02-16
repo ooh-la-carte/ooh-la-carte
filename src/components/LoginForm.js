@@ -129,9 +129,9 @@ class LoginForm extends Component {
             </Button>
             </div>
         </Form>
-        <h4 className='center orbutton'>
+        <div className='center'>
          - or -
-        </h4>
+        </div>
         <div className='center'>
           <Button className='myButton' href='/auth/google'>
             <Icon name='google plus' /> Sign in with Google

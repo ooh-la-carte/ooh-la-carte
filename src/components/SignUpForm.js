@@ -195,6 +195,14 @@ class SignUpForm extends Component {
             </Button>
             </div>
         </Form>
+        <div className='center'>
+         - or -
+        </div>
+        <div className='center'>
+          <Button className='myButton' href='/auth/google'>
+            <Icon name='google plus' /> Sign up with Google
+          </Button>
+        </div>
       </div>
       </div>
     );
