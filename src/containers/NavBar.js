@@ -30,13 +30,13 @@ class NavBar extends Component {
     this.props.removeSocket();
   }
 
-  listen = () => {
-    console.log('listening...');
-    this.props.socketReducer.on('notification alert', () => {
-      console.log('new notification received');
-      this.setState({ alertColor: true });
-    });
-  }
+  // listen = () => {
+  //   console.log('listening...');
+  //   // this.props.socketReducer.on('notification alert', () => {
+  //   //   console.log('new notification received');
+  //   //   this.setState({ alertColor: true });
+  //   // });
+  // }
 
   render() {
     const currentPage = window.location.pathname.split('/')[1];
