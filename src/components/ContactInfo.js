@@ -86,7 +86,6 @@ class ContactInfo extends Component {
   }
 
   handleSubmit = () => {
-    console.log('submit was clicked');
     const eventObj = this.state;
     this.props.setUserInfo(eventObj);
     const url = '/api/updateContactInfo';
