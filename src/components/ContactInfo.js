@@ -100,7 +100,8 @@ class ContactInfo extends Component {
         document.getElementById('usernameRequiredNotifier').classList.remove('hidden');
         Helpers.scrollToHere('usernameRequiredNotifier');
       }
-    } else if (!eventObj.name) {
+    }
+    if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
       Helpers.scrollToHere('nameRequiredNotifier');
     } else if (!(eventObj.city && eventObj.state && eventObj.zipcode)) {
@@ -190,7 +191,7 @@ class ContactInfo extends Component {
               value={this.state.bio || ''}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
             <label>Address</label>
               <Form.Group>
                 <Form.Input

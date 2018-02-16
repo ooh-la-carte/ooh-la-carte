@@ -9,10 +9,6 @@ $light-color: #e2e9e9;
 $soft-text: 'Arima Madurai', cursive;
 $olc-font: 'Dancing Script', cursive;
 
-.orbutton {
-  display: inline-block;
-}
-
 .myButton {
   background-color: #4285F4 !important;
   color: white !important;
@@ -27,11 +23,9 @@ body {
     margin-top: 15% !important;
     margin-bottom: 25% !important;
     background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size:cover;
   @media only screen and (max-device-width: 480px) {
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
+    height: 1000px;
   }
   @media only screen and (min-device-width: 481px) {
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x900");

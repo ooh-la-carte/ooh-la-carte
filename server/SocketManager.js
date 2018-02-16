@@ -16,6 +16,13 @@ module.exports = (socket) => {
     delete connectedUsers[string];
   });
 
+  socket.on('new notification', (chefName) => {
+    console.log(chefName);
+    if (connectedUsers[chefName]) {
+      socket.broadcast.to(connectedUsers[chefName].id).emit('notification alert');
+    }
+  });
+
   socket.on('send', (obj) => {
     console.log('Send object: ', obj);
     if (connectedUsers[obj.reciever]) {

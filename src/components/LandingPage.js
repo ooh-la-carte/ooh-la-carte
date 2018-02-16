@@ -43,26 +43,26 @@ class LandingPage extends Component {
             </Grid.Column>
           </Grid>
           <br />
-          <Image rounded src='https://source.unsplash.com/zhiZOpm99Iw'/>
+          <Image rounded alt='Delicious Salad' src='https://source.unsplash.com/zhiZOpm99Iw/640x480'/>
         </div>
         <br />
         <h3 className='scriptFont title'>Interested in being...</h3>
         <div className='cardHolder'>
           <Card className='landingCards' onClick={() => { this.setStoryVersion('user'); }}>
-            <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
+            <Image size='small' alt='Dining Room' src='https://source.unsplash.com/Fw6nOTesO4c/640x480' />
             <Card.Content>
               a patron?
             </Card.Content>
           </Card>
           <Card className='landingCards' onClick={() => { this.setStoryVersion('chef'); }}>
-            <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
+            <Image size='small' alt='Black and White Chef' src='https://source.unsplash.com/nvsHAsuFC54/640x480' />
             <Card.Content>
                  a chef?
             </Card.Content>
           </Card>
         </div>
         <div className='center boxed'>
-      {/* user story */}
+        {/* user story */}
           <Collapse isOpened={this.state.user === 'user'}>
           <Grid>
             <Grid.Row>
@@ -103,7 +103,7 @@ class LandingPage extends Component {
       </Grid>
         <div className='center'>
           <Card className='landingCards' onClick={() => { this.props.history.push('/browseChefs'); }}>
-            <Image size='small' src='https://source.unsplash.com/nvsHAsuFC54' />
+            <Image size='small' alt='Black and White Chef' src='https://source.unsplash.com/nvsHAsuFC54/640x480' />
             <Card.Content>
                 Browse Chefs
             </Card.Content>
@@ -151,7 +151,7 @@ class LandingPage extends Component {
       </Grid>
       <div className='center'>
         <Card className='landingCards' onClick={() => { this.props.history.push('/browseEvents'); }}>
-          <Image size='small' src='https://source.unsplash.com/Fw6nOTesO4c' />
+          <Image size='small' alt='Dining Room' src='https://source.unsplash.com/Fw6nOTesO4c/640x480' />
           <Card.Content>
               Browse Events
           </Card.Content>
