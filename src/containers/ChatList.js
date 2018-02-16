@@ -33,7 +33,6 @@ class ChatTab extends React.Component {
   render = () => {
     const timeOrder =
     this.state.convos.sort((a, b) => Number(b.last_updated) - Number(a.last_updated));
-    console.log(timeOrder);
     return (
       <div>
         <Segment.Group className='whiteBackground standardWidth'>
