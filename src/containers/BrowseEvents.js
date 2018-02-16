@@ -112,14 +112,13 @@ class BrowseEvents extends Component {
                   key={event.id}
                   className='eventCard'
                   onClick={() => {
-                    console.log('Selected Event store: ', event);
                     this.props.changeSelectedEvent(event);
                     this.props.history.push('/selectedEvent');
                 }}>
                   <Card.Content>
                     <Image floated='right' size='mini' src={event.img} />
                     <Card.Header>
-                      {event.name} ({event.cuisine_type})
+                      {event.name}
                     </Card.Header>
                     <Card.Meta>
                       <div>{event.creator_username}</div>
@@ -130,6 +129,7 @@ class BrowseEvents extends Component {
                   </Card.Content>
                   <Card.Content extra>
                     <span>Size: {event.party_size}</span>
+                    <span>Cuisine: {event.cuisine_type}</span>
                     <span className='floatRight'>Budget: {event.budget}</span>
                   </Card.Content>
                 </Card>

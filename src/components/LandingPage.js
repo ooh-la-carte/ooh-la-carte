@@ -101,8 +101,8 @@ class LandingPage extends Component {
               </Grid.Column>
         </Grid.Row>
       </Grid>
-        <div className='center'>
-          <Card className='landingCards' onClick={() => { this.props.history.push('/browseChefs'); }}>
+        <div>
+          <Card className='bottomLandingCards' onClick={() => { this.props.history.push('/browseChefs'); }}>
             <Image size='small' alt='Black and White Chef' src='https://source.unsplash.com/nvsHAsuFC54/640x480' />
             <Card.Content>
                 Browse Chefs
@@ -149,8 +149,8 @@ class LandingPage extends Component {
               </Grid.Column>
         </Grid.Row>
       </Grid>
-      <div className='center'>
-        <Card className='landingCards' onClick={() => { this.props.history.push('/browseEvents'); }}>
+      <div>
+        <Card className='bottomLandingCards' onClick={() => { this.props.history.push('/browseEvents'); }}>
           <Image size='small' alt='Dining Room' src='https://source.unsplash.com/Fw6nOTesO4c/640x480' />
           <Card.Content>
               Browse Events
