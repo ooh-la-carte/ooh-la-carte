@@ -103,7 +103,8 @@ class ContactInfo extends Component {
         const rect = bubble.getBoundingClientRect();
         window.scroll(0, rect.top);
       }
-    } else if (!eventObj.name) {
+    }
+    if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
       const bubble = document.querySelector('#nameRequiredNotifier');
       const rect = bubble.getBoundingClientRect();
