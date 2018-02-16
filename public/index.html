@@ -27,12 +27,18 @@
   <!-- Make sure theme-color is defined -->
   <meta name="theme-color" content="#52bad1">
   <style type='text/css'>
-    body {
-        font-family: 'Asap', sans-serif;
-        margin-top: 15% !important;
-        margin-bottom: 25% !important;
-    }
-
+    
+body {
+    font-family: 'Asap', sans-serif;
+    margin-top: 15% !important;
+    margin-bottom: 25% !important;
+    background-attachment: fixed;
+    margin: auto;
+  @media only screen and (min-width: $max-width) {
+    width: $max-width;
+    justify-content: center;
+  }
+}
     .navBarTitle {
       margin: 0% 0% 0% 5%;
       color: rgb(255, 255, 255) !important;
@@ -40,13 +46,18 @@
       line-height: 50px;
     }
 
-    .navBarContainer {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: #00bcd4;
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  .navBarContainer {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    background-color: #00bcd4;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+      @media only screen and (min-width: 900px) {
+      width: 900px !important;
+      justify-content: center;
     }
+  }
 
   </style>
 </head>

@@ -7,6 +7,7 @@
 $primary-color: #00bcd4;
 $light-color: #e2e9e9;
 $olc-font: 'Dancing Script', cursive;
+$max-width: 900px;
 
 .myButton {
   background-color: #4285F4 !important;
@@ -22,6 +23,7 @@ body {
     margin-top: 15% !important;
     margin-bottom: 25% !important;
     background-attachment: fixed;
+    margin: auto;
   @media only screen and (max-device-width: 480px) {
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/800x600");
     height: 1000px;
@@ -29,9 +31,11 @@ body {
   @media only screen and (min-device-width: 481px) {
     background-image: url("https://source.unsplash.com/EWDvHNNfUmQ/1600x900");
   }
-    }
-
-
+  @media only screen and (min-width: $max-width) {
+    width: $max-width;
+    justify-content: center;
+  }
+}
 
 .centerText {
   text-align: center;
@@ -222,8 +226,12 @@ body {
   top: 0;
   z-index: 999;
   width: 100%;
-  display: flex;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    @media only screen and (min-width: $max-width) {
+    width: $max-width !important;
+    justify-content: center;
+  }
+
 }
 
 .bottom {

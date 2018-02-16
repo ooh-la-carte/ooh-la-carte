@@ -43,7 +43,7 @@ class LandingPage extends Component {
             </Grid.Column>
           </Grid>
           <br />
-          <Image rounded alt='Delicious Salad' src='https://source.unsplash.com/zhiZOpm99Iw/640x480'/>
+          <Image centered rounded alt='Delicious Salad' src='https://source.unsplash.com/zhiZOpm99Iw/640x480'/>
         </div>
         <br />
         <h3 className='scriptFont title'>Interested in being...</h3>
