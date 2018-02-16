@@ -164,6 +164,7 @@ app.post('/api/signup', (req, res) => {
 // post route for updating contact info
 app.post('/api/updateContactInfo', (req, res) => {
   const user = req.body;
+  console.log(user);
   const params = {
     id: user.id,
     name: user.name,

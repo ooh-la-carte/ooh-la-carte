@@ -199,7 +199,7 @@ class ContactInfo extends Component {
               value={this.state.bio || ''}
             />
           </Form.Field>
-          <Form.Field>
+          <Form.Field required>
             <label>Address</label>
               <Form.Group>
                 <Form.Input

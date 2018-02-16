@@ -24,7 +24,6 @@ class Notifications extends Component {
     } })
       .then((invites) => {
         const invitesForMe = invites.data.filter(invite => invite.sender !== window.localStorage.getItem('username'));
-        console.log(invitesForMe);
         this.setState({ invitations: invitesForMe });
       });
   }
