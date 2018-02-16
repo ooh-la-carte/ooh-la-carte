@@ -7,6 +7,7 @@ import { Button, Form, Grid, Input, Dropdown, Label } from 'semantic-ui-react';
 import { setUserInfo, updateCuisineSelection } from '../actions';
 import '../style.scss';
 import options from '../formOptions';
+import Helpers from '../helpers';
 
 class ContactInfo extends Component {
   constructor(props) {
@@ -94,30 +95,20 @@ class ContactInfo extends Component {
     if (eventObj.firstOAuth) {
       if (!eventObj.isChef) {
         document.getElementById('accountTypeRequiredNotifier').classList.remove('hidden');
-        const bubble = document.querySelector('#accountTypeRequiredNotifier');
-        const rect = bubble.getBoundingClientRect();
-        window.scroll(0, rect.top);
+        Helpers.scrollToHere('accountTypeRequiredNotifier');
       } else if (!eventObj.username) {
         document.getElementById('usernameRequiredNotifier').classList.remove('hidden');
-        const bubble = document.querySelector('#usernameRequiredNotifier');
-        const rect = bubble.getBoundingClientRect();
-        window.scroll(0, rect.top);
+        Helpers.scrollToHere('usernameRequiredNotifier');
       }
     } else if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#nameRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('nameRequiredNotifier');
     } else if (!(eventObj.city && eventObj.state && eventObj.zipcode)) {
       document.getElementById('locationRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#locationRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('locationRequiredNotifier');
     } else if (!eventObj.email) {
       document.getElementById('emailRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#emailRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('emailRequiredNotifier');
     } else {
       axios.post(url, eventObj)
         .then((response) => {
