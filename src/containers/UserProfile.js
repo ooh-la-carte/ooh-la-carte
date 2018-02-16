@@ -110,7 +110,6 @@ class UserProfile extends Component {
       const socket = io(socketUrl);
       socket.on('connect', () => {
         this.props.setSocket(socket);
-        console.log('Connected');
         socket.userId = window.localStorage.getItem('userId');
         socket.emit('add user', window.localStorage.getItem('username'));
       });
@@ -198,9 +197,8 @@ class UserProfile extends Component {
               See All Your Events
             </Button>
           </Link>
-          {console.log(window.localStorage.getItem('isChef'))}
           {window.localStorage.getItem('isChef') === 'false'
-          ? 
+          ?
           <Link to='/createEvent'>
               <Button className='btn' type='submit' inverted>
                 Create New Event
