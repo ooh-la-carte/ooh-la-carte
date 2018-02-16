@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
+/* eslint-disable */
 import { Accordion, Icon, Grid, Checkbox, Form, Segment, Button } from 'semantic-ui-react';
+/* eslint-enable */
 import { setUserInfo, updateCuisineSelection, updateUserInfoByField, setMenu } from '../actions';
 import MenuListItem from '../components/MenuListItem';
 import { budgetOptions } from '../formOptions';
