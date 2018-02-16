@@ -26,7 +26,9 @@ class Conversation extends Component {
       .then((chat) => {
         console.log(chat.data);
         this.setState({ chat: chat.data });
-        this.scrollToBottom();
+        if (chat.data.lenght > 10) {
+          this.scrollToBottom();
+        }
       });
     // this.listen();
   }
@@ -80,7 +82,9 @@ class Conversation extends Component {
       chat,
       input: '',
     });
-    this.scrollToBottom();
+    if (this.state.chat.length > 10) {
+      this.scrollToBottom();
+    }
   }
 
   changeInput = (e) => {
