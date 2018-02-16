@@ -284,7 +284,7 @@ class Settings extends Component {
         </div>
         <div className='cardHolder' style={{ margin: '3% 0%' }}>
           <Button className='btn' inverted
-          onClick={this.openMenuForm}>Add a new menu</Button>
+          onClick={this.openMenuForm}>{this.state.menuOpen ? 'Cancel' : 'Add a new menu'}</Button>
         </div>
         {this.state.menuOpen
           ?
@@ -310,7 +310,6 @@ class Settings extends Component {
                     <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
                   </Form.Field>
                   <Button className='btn' inverted type='submit'>Save!</Button>
-                  <Button className='btn' inverted onClick={() => { this.openMenuForm(); }}>Cancel</Button>
                 </Form>
             </Segment>
           : null
