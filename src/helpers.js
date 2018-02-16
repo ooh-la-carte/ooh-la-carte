@@ -17,4 +17,10 @@ Helpers.calculateRating = ratingString => (
   JSON.parse(ratingString)
 );
 
+Helpers.scrollToHere = (elementId) => {
+  const bubble = document.querySelector(`#${elementId}`);
+  const rect = bubble.getBoundingClientRect();
+  window.scroll(0, rect.top);
+};
+
 module.exports = Helpers;

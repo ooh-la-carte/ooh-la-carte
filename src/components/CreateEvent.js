@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Dropdown, Button, Form, Input, TextArea, Grid, Label } from 'semantic-ui-react';
 import { selectConversation, updateEventRating } from '../actions';
 import '../style.scss';
+import Helpers from '../helpers';
 
 import options from '../formOptions';
 
@@ -73,29 +74,19 @@ class CreateEventForm extends Component {
     }
     if (!eventObj.name) {
       document.getElementById('nameRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#nameRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('nameRequiredNotifier');
     } else if (!(eventObj.city && eventObj.state && eventObj.zip)) {
       document.getElementById('locationRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#locationRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('locationRequiredNotifier');
     } else if (!(eventObj.month && eventObj.date && eventObj.year)) {
       document.getElementById('dateRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#dateRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('dateRequiredNotifier');
     } else if (!eventObj.partySize) {
       document.getElementById('partySizeRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#partySizeRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('partySizeRequiredNotifier');
     } else if (!eventObj.budget) {
       document.getElementById('budgetRequiredNotifier').classList.remove('hidden');
-      const bubble = document.querySelector('#budgetRequiredNotifier');
-      const rect = bubble.getBoundingClientRect();
-      window.scroll(0, rect.top);
+      Helpers.scrollToHere('budgetRequiredNotifier');
     } else {
       console.log('submitting event');
       axios.post(url, eventObj)
