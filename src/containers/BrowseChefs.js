@@ -23,7 +23,6 @@ class BrowseChefs extends Component {
     window.scrollTo(0, 0);
     axios.get('/api/getChefs')
       .then((chefs) => {
-        console.log('Chefs: ', chefs.data);
         this.setState({
           chefs: chefs.data,
           sorted: chefs.data,
@@ -127,7 +126,6 @@ class BrowseChefs extends Component {
           <Card.Meta>
             <div>Name: {chef.name}</div>
             <div>Cuisine: {Helpers.getCuisineList(JSON.parse(chef.cuisine))}</div>
-            {console.log(chef)}
              {chef.city ?
               <div>{chef.city}, {chef.state}</div>
               : null }
