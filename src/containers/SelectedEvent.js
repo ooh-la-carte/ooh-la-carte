@@ -102,7 +102,6 @@ class SelectedEvent extends Component {
                   ? <div style={{ textAlign: 'center' }} onClick={() => this.props.history.push('/editEvent')}>Edit Event</div>
                   : null
                 }
-              <span><Icon name='food'/>Food provided: {event.food ? 'Yes' : 'No'}</span>
                 <div onClick={() => {
                   if (window.localStorage.getItem('userId')) {
                     const convo = {

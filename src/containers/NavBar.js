@@ -9,7 +9,14 @@ import '../style.scss';
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      socket: false,
+      alertColor: false,
+    };
+  }
+
+  componentDidMount = () => {
+    setTimeout(this.listen, 500);
   }
 
   logout = (username) => {
@@ -21,6 +28,14 @@ class NavBar extends Component {
     this.props.socketReducer.close();
     this.props.listenerOn(false);
     this.props.removeSocket();
+  }
+
+  listen = () => {
+    console.log('listening...');
+    this.props.socketReducer.on('notification alert', () => {
+      console.log('new notification received');
+      this.setState({ alertColor: true });
+    });
   }
 
   render() {
@@ -133,7 +148,9 @@ class NavBar extends Component {
                 <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/browseChefs')}>Chefs</Menu.Item>
               }
             <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/chatList')}>Chat</Menu.Item>
-            <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/notifications')}>Alerts</Menu.Item>
+            <Menu.Item className='nav' fitted onClick={() => this.props.history.push('/notifications')}>
+            Alerts {this.state.alert ? <Icon name='alarm'/> : null}
+            </Menu.Item>
           </Menu>
         : null }
       </div>
