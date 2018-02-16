@@ -298,7 +298,8 @@ class Settings extends Component {
                     <label>Picture</label>
                     <Form.Input placeholder='picture URL' onChange={this.handleUpdate} type='pic' value={this.state.pic}/>
                   </Form.Field>
-                  <Button className='btn' type='submit'>Save!</Button><Button onClick={this.openMenuForm}>Cancel</Button>
+                  <Button className='btn' type='submit'>Save!</Button>
+                  <Button onClick={() => { this.openMenuForm(); }}>Cancel</Button>
                 </Form>
             </Segment>
           : null
