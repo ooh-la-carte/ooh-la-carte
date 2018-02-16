@@ -34,6 +34,7 @@ body {
   @media only screen and (min-width: $max-width) {
     width: $max-width;
     justify-content: center;
+    background-size: cover;
   }
 }
 
@@ -230,6 +231,7 @@ body {
     @media only screen and (min-width: $max-width) {
     width: $max-width !important;
     justify-content: center;
+
   }
 
 }
