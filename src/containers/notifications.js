@@ -25,7 +25,7 @@ class Notifications extends Component {
       .then((invites) => {
         const invitesForMe = invites.data.filter(invite => invite.sender !== window.localStorage.getItem('username'));
         console.log(invitesForMe);
-        this.setState({ invitations: invitesForMe.filter(invite => invite.chef_id === null) });
+        this.setState({ invitations: invitesForMe });
       });
   }
 
@@ -96,22 +96,8 @@ class Notifications extends Component {
     this.setState({ switch: false });
   }
 
-  render = () => {
-    let myInvites;
-    let sent;
-    if (this.state.switch) {
-      myInvites = 'blue';
-      sent = null;
-    } else {
-      myInvites = null;
-      sent = 'blue';
-    }
-    return (
+  render = () => (
       <div>
-        <div className='ui two buttons' style={{ marginBottom: '2%' }}>
-          <Button color={myInvites} onClick={this.switchToInvite}>My invites</Button>
-          <Button color={sent} onClick={this.switchToSent}>Sent invites</Button>
-        </div>
         {this.state.invitations.length !== 0
           ?
             this.state.invitations.map(invite => (
@@ -173,9 +159,8 @@ class Notifications extends Component {
               ))
           : <Segment className='whiteBackground standardWidth centerText'><h4>You don't have any current notifications!</h4></Segment>
         }
-      </div>
-    );
-  };
+       </div>
+  );
 }
 
 function mapStateToProps(state) {

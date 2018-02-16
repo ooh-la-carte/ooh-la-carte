@@ -42,6 +42,9 @@ class SelectedChef extends Component {
 
   sendInvite = (inviteObj) => {
     axios.post('/api/user/sendInvite', inviteObj);
+    // .then(() => {
+    //   this.props.socketReducer.emit('new notification', inviteObj.chef);
+    // })
   }
 
   render = () => {
@@ -174,7 +177,10 @@ class SelectedChef extends Component {
 }
 
 function mapStateToProps(state) {
-  return { selectedChefReducer: state.selectedChefReducer };
+  return {
+    selectedChefReducer: state.selectedChefReducer,
+    socketReducer: state.socketReducer,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
