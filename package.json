@@ -10,7 +10,7 @@
     "start": "node server/index.js",
     "postinstall": "webpack -p --config ./webpack.config.js --progress"
   },
-  "author": "Jake Lee",
+  "author": "Jake Lee, Rick Gomez, Jason McLaughlin, Mark Valentine",
   "license": "ISC",
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
