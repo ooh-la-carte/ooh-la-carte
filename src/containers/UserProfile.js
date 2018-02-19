@@ -117,7 +117,7 @@ class UserProfile extends Component {
   }
 
   needsToSeePrompt = (standalone) => {
-    if (navigator.standalone || standalone) {
+    if (window.navigator.standalone || standalone) {
       return false;
     }
     const today = moment();
